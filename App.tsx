@@ -1,3 +1,4 @@
+import "./global.css";
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';

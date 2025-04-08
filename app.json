@@ -1,4 +1,9 @@
 {
   "name": "did-it",
-  "slug": "did-it"
+  "slug": "did-it",
+  "userInterfaceStyle": "automatic",
+  "newArchEnabled": true,
+  "web": {
+    "bundler": "metro"
+  }
 }
