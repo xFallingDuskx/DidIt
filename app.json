@@ -2,8 +2,7 @@
   "name": "did-it",
   "slug": "did-it",
   "userInterfaceStyle": "automatic",
+  "scheme": "did-it",
   "newArchEnabled": true,
-  "web": {
-    "bundler": "metro"
-  }
+  "plugins": ["expo-router"]
 }
