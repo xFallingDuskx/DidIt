@@ -8,15 +8,6 @@ create table todos (
   updated_at timestamptz default now(),
   deleted boolean default false -- needed for soft deletes
 );
--- alter table todos enable row level security;
--- create policy "Individuals can create todos." on todos for
---     insert with check (auth.uid() = user_id);
--- create policy "Individuals can view their own todos. " on todos for
---     select using ((select auth.uid()) = user_id);
--- create policy "Individuals can update their own todos." on todos for
---     update using ((select auth.uid()) = user_id);
--- create policy "Individuals can delete their own todos." on todos for
---     delete using ((select auth.uid()) = user_id);
 
 -- Enable realtime
 alter
