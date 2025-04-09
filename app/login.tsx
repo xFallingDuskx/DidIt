@@ -30,12 +30,15 @@ export default function Screen() {
     <View className='flex-1 justify-center items-center'>
       <Text className='text-2xl font-bold mb-4'>Log In</Text>
       <TextInput
+        keyboardType='email-address'
+        textContentType='emailAddress'
         placeholder='Email'
         value={formState.email}
         onChangeText={(text) => setFormState({ ...formState, email: text })}
         className='w-3/4 p-2 mb-4 bg-white rounded'
       />
       <TextInput
+        textContentType='password'
         placeholder='Password'
         value={formState.password}
         onChangeText={(text) => setFormState({ ...formState, password: text })}
