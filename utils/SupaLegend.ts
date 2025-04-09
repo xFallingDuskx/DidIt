@@ -45,6 +45,7 @@ export const todos$ = observable(
   })
 );
 
+
 export async function getUserId() {
   const {
     data: { user },
