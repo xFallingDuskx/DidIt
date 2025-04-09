@@ -1,5 +1,5 @@
-import { Text } from 'react-native';
+import App from '../../App';
 
 export default function Screen() {
-  return <Text>Home Screen</Text>;
+  return <App />;
 }
