@@ -6,6 +6,7 @@ import { SessionProvider } from './contexts/SessionContext';
 import './global.css';
 import { todos$ as _todos$, addTodo, toggleDone } from './utils/SupaLegend';
 import { Tables } from './utils/database.types';
+import { supabase } from './supabase';
 
 // Emojis to decorate each todo.
 const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
@@ -65,18 +66,28 @@ const ClearTodos = () => {
   ) : null;
 };
 
+const SignOutButton = () => {
+  const handlePress = async () => {
+    await supabase.auth.signOut();
+  };
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <Text style={styles.clearTodos}>Sign Out</Text>
+    </TouchableOpacity>
+  );
+};
+
 // The main app.
 const App = observer(() => {
   return (
     <SafeAreaProvider>
-      <SessionProvider>
-        <SafeAreaView style={styles.container}>
-          <Text style={styles.heading}>Did It - PPP</Text>
-          <NewTodo />
-          <Todos todos$={_todos$} />
-          <ClearTodos />
-        </SafeAreaView>
-      </SessionProvider>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.heading}>Did It - PPP</Text>
+        <NewTodo />
+        <Todos todos$={_todos$} />
+        <ClearTodos />
+        <SignOutButton />
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 });
