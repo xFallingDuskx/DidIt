@@ -51,11 +51,7 @@ export default function RootLayout() {
           headerShown: false,
           animation: 'slide_from_right',
         }}
-      >
-        {/* TASK: remove? */}
-        <Stack.Screen name='login' />
-        <Stack.Screen name='signup' />
-      </Stack>
+      />
     </SessionProvider>
   );
 }
