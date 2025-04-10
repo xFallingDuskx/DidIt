@@ -1,8 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { supabase } from '../supabase';
-import { todos$ } from '../utils/SupaLegend';
 
 interface FormState {
   email: string;
@@ -28,7 +27,8 @@ export default function Screen() {
   };
 
   return (
-    <View className='flex-1 justify-center items-center'>
+    <View className='flex-1 justify-center items-center bg-white'>
+      <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 -translate-y-1/4' />
       <Text className='text-2xl font-bold mb-4'>Log In</Text>
       <TextInput
         keyboardType='email-address'
@@ -36,7 +36,7 @@ export default function Screen() {
         placeholder='Email'
         value={formState.email}
         onChangeText={(text) => setFormState({ ...formState, email: text })}
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
       />
       <TextInput
         textContentType='password'
@@ -44,13 +44,13 @@ export default function Screen() {
         value={formState.password}
         onChangeText={(text) => setFormState({ ...formState, password: text })}
         secureTextEntry
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
       />
-      <TouchableOpacity className='bg-blue-500 w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
+      <TouchableOpacity className='bg-accent w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
         <Text className='text-white text-center'>Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/signup')}>
-        <Text className='text-blue-700'>Don't have an account? Sign Up</Text>
+        <Text className='text-accent font-semibold'>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );

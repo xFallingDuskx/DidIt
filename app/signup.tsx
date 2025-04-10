@@ -1,6 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -41,7 +41,8 @@ export default function Screen() {
   };
 
   return (
-    <View className='flex-1 justify-center items-center'>
+    <View className='flex-1 justify-center items-center bg-white'>
+      <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 -translate-y-1/4' />
       <Text className='text-2xl font-bold mb-4'>Sign Up</Text>
       <TextInput
         keyboardType='email-address'
@@ -49,7 +50,7 @@ export default function Screen() {
         value={formState.email}
         onChangeText={(text) => setFormState({ ...formState, email: text })}
         placeholder='Email'
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
       />
       <TextInput
         textContentType='password'
@@ -57,7 +58,7 @@ export default function Screen() {
         onChangeText={(text) => setFormState({ ...formState, password: text })}
         placeholder='Password'
         secureTextEntry
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
       />
       <TextInput
         textContentType='password'
@@ -65,13 +66,13 @@ export default function Screen() {
         onChangeText={(text) => setFormState({ ...formState, confirmPassword: text })}
         placeholder='Confirm Password'
         secureTextEntry
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
       />
       <TouchableOpacity className='bg-blue-500 w-3/4 p-3 rounded mb-4' onPress={handleSignUp} disabled={isLoading}>
         <Text className='text-white text-center'>Sign Up</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.back()}>
-        <Text className='text-blue-700'>Already have an account? Log In</Text>
+        <Text className='text-accent font-semibold'>Already have an account? Log In</Text>
       </TouchableOpacity>
     </View>
   );
