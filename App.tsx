@@ -1,14 +1,10 @@
-import { useState } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { observer } from '@legendapp/state/react';
-import { addTodo, todos$ as _todos$, toggleDone } from './utils/SupaLegend';
+import { useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import './global.css';
+import { supabase } from './supabase';
+import { todos$ as _todos$, addTodo, toggleDone } from './utils/SupaLegend';
 import { Tables } from './utils/database.types';
 
 // Emojis to decorate each todo.
@@ -27,7 +23,7 @@ const NewTodo = () => {
       value={text}
       onChangeText={(text) => setText(text)}
       onSubmitEditing={handleSubmitEditing}
-      placeholder="What do you want to do today?"
+      placeholder='What do you want to do today?'
       style={styles.input}
     />
   );
@@ -39,11 +35,7 @@ const Todo = ({ todo }: { todo: Tables<'todos'> }) => {
     toggleDone(todo.id);
   };
   return (
-    <TouchableOpacity
-      key={todo.id}
-      onPress={handlePress}
-      style={[styles.todo, todo.done ? styles.done : null]}
-    >
+    <TouchableOpacity key={todo.id} onPress={handlePress} style={[styles.todo, todo.done ? styles.done : null]}>
       <Text style={styles.todoText}>
         {todo.done ? DONE_ICON : NOT_DONE_ICON} {todo.text}
       </Text>
@@ -55,17 +47,8 @@ const Todo = ({ todo }: { todo: Tables<'todos'> }) => {
 const Todos = observer(({ todos$ }: { todos$: typeof _todos$ }) => {
   // Get the todos from the state and subscribe to updates
   const todos = todos$.get();
-  const renderItem = ({ item: todo }: { item: Tables<'todos'> }) => (
-    <Todo todo={todo} />
-  );
-  if (todos)
-    return (
-      <FlatList
-        data={Object.values(todos)}
-        renderItem={renderItem}
-        style={styles.todos}
-      />
-    );
+  const renderItem = ({ item: todo }: { item: Tables<'todos'> }) => <Todo todo={todo} />;
+  if (todos) return <FlatList data={Object.values(todos)} renderItem={renderItem} style={styles.todos} />;
 
   return <></>;
 });
@@ -82,15 +65,27 @@ const ClearTodos = () => {
   ) : null;
 };
 
+const SignOutButton = () => {
+  const handlePress = async () => {
+    await supabase.auth.signOut();
+  };
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <Text style={styles.clearTodos}>Sign Out</Text>
+    </TouchableOpacity>
+  );
+};
+
 // The main app.
 const App = observer(() => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.heading}>Did It</Text>
+        <Text style={styles.heading}>Did It - PPP</Text>
         <NewTodo />
         <Todos todos$={_todos$} />
         <ClearTodos />
+        <SignOutButton />
       </SafeAreaView>
     </SafeAreaProvider>
   );

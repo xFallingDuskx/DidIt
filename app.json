@@ -1,4 +1,8 @@
 {
   "name": "did-it",
-  "slug": "did-it"
+  "slug": "did-it",
+  "userInterfaceStyle": "automatic",
+  "scheme": "did-it",
+  "newArchEnabled": true,
+  "plugins": ["expo-router"]
 }

@@ -1,17 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
-import { Database } from './database.types';
 import { observable } from '@legendapp/state';
+import { observablePersistAsyncStorage } from '@legendapp/state/persist-plugins/async-storage';
+import { configureSynced } from '@legendapp/state/sync';
 import { syncedSupabase } from '@legendapp/state/sync-plugins/supabase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from '@supabase/supabase-js';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { configureSynced } from '@legendapp/state/sync';
-import { observablePersistAsyncStorage } from '@legendapp/state/persist-plugins/async-storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const supabase = createClient<Database>(
-  process.env.EXPO_PUBLIC_SUPABASE_URL,
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
-);
+import { supabase } from '../supabase/index';
 
 // Provide a function to generate ids locally
 const generateId = () => uuidv4();
@@ -33,12 +28,13 @@ const customSynced = configureSynced(syncedSupabase, {
   fieldDeleted: 'deleted',
 });
 
+export const user$ = observable<User>();
+
 export const todos$ = observable(
   customSynced({
     supabase,
     collection: 'todos',
-    select: (from) =>
-      from.select('id,counter,text,done,created_at,updated_at,deleted'),
+    select: (from) => from.select('id,user_id,counter,text,done,created_at,updated_at,deleted'),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
     // Persist data and pending changes locally
@@ -52,12 +48,13 @@ export const todos$ = observable(
   })
 );
 
-export function addTodo(text: string) {
+export async function addTodo(text: string) {
   const id = generateId();
   // Add keyed by id to the todos$ observable to trigger a create in Supabase
   todos$[id].assign({
     id,
     text,
+    user_id: user$.peek().id,
   });
 }
 
