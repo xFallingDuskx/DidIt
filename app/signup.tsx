@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { GuestLogin } from '../components';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -74,6 +75,7 @@ export default function Screen() {
       <TouchableOpacity onPress={() => router.back()}>
         <Text className='text-accent font-body'>Already have an account? Log In</Text>
       </TouchableOpacity>
+      <GuestLogin />
     </View>
   );
 }

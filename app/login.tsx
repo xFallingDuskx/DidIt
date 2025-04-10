@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { GuestLogin } from '../components';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -27,11 +28,9 @@ export default function Screen() {
   };
 
   return (
-    <View className='flex-1 justify-start items-center bg-surface'>
+    <View className='relative h-screen-safe justify-start items-center bg-surface'>
       <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-10' />
-      <Text className='text-3xl font-header-bold mb-4'>
-        Log In
-      </Text>
+      <Text className='text-3xl font-header-bold mb-4'>Log In</Text>
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'
@@ -54,6 +53,7 @@ export default function Screen() {
       <TouchableOpacity onPress={() => router.push('/signup')}>
         <Text className='text-accent font-body'>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
+      <GuestLogin />
     </View>
   );
 }
