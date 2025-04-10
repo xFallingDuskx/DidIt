@@ -5,7 +5,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        surface: '#ffffff',
         accent: '#1877f2',
+      },
+      fontFamily: {
+        // Brand Fonts - Montserrat
+        brand: ['BrandRegular', 'sans-serif'],
+        'brand-medium': ['BrandMedium', 'sans-serif'],
+        'brand-semibold': ['BrandSemiBold', 'sans-serif'],
+        'brand-bold': ['BrandBold', 'sans-serif'],
+
+        // Header Fonts - Cabin
+        header: ['HeaderRegular', 'sans-serif'],
+        'header-medium': ['HeaderMedium', 'sans-serif'],
+        'header-semibold': ['HeaderSemiBold', 'sans-serif'],
+        'header-bold': ['HeaderBold', 'sans-serif'],
+
+        // Body Fonts - Catamaran
+        'body-thin': ['BodyThin', 'sans-serif'],
+        'body-extra-light': ['BodyExtraLight', 'sans-serif'],
+        'body-light': ['BodyLight', 'sans-serif'],
+        body: ['BodyRegular', 'sans-serif'],
+        'body-medium': ['BodyMedium', 'sans-serif'],
+        'body-semibold': ['BodySemiBold', 'sans-serif'],
+        'body-bold': ['BodyBold', 'sans-serif'],
+        'body-extra-bold': ['BodyExtraBold', 'sans-serif'],
+        'body-black': ['BodyBlack', 'sans-serif'],
       },
     },
   },

@@ -1,11 +1,18 @@
 {
   "dependencies": {
+    "@expo-google-fonts/cabin": "^0.3.0",
+    "@expo-google-fonts/catamaran": "^0.3.0",
+    "@expo-google-fonts/montserrat": "^0.3.0",
+    "@expo-google-fonts/mukta-vaani": "^0.3.0",
     "@expo/metro-runtime": "~4.0.0",
     "@legendapp/state": "^3.0.0-beta.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@supabase/supabase-js": "^2.45.1",
     "expo": "^52.0.16",
+    "expo-font": "~13.0.4",
+    "expo-image": "~2.0.7",
     "expo-router": "^4.0.20",
+    "expo-splash-screen": "~0.29.22",
     "nativewind": "^4.1.23",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -15,9 +22,7 @@
     "react-native-reanimated": "^3.16.2",
     "react-native-safe-area-context": "^4.12.0",
     "react-native-web": "~0.19.6",
-    "tailwindcss": "^3.4.17",
-    "expo-splash-screen": "~0.29.22",
-    "expo-image": "~2.0.7"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

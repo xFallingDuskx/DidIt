@@ -18,6 +18,25 @@
         },
         "imageWidth": 200
       }
-    ]
+    ],
+    ["expo-font", {
+      "fonts": [
+        {
+          "Roboto": "./assets/fonts/Roboto.ttf"
+        },
+        {
+          "Roboto-Bold": "./assets/fonts/Roboto-Bold.ttf"
+        },
+        {
+          "Roboto-Light": "./assets/fonts/Roboto-Light.ttf"
+        },
+        {
+          "Roboto-Medium": "./assets/fonts/Roboto-Medium.ttf"
+        },
+        {
+          "Roboto-Thin": "./assets/fonts/Roboto-Thin.ttf"
+        }
+      ]
+    }]
   ]
 }
