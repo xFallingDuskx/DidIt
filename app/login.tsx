@@ -27,9 +27,11 @@ export default function Screen() {
   };
 
   return (
-    <View className='flex-1 justify-center items-center bg-white'>
+    <View className='flex-1 justify-center items-center bg-surface'>
       <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 -translate-y-1/4' />
-      <Text className='text-2xl font-bold mb-4'>Log In</Text>
+      <Text className='text-3xl font-header-bold mb-4'>
+        Log In
+      </Text>
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'
@@ -47,10 +49,10 @@ export default function Screen() {
         className='input w-3/4'
       />
       <TouchableOpacity className='bg-accent w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
-        <Text className='text-white text-center'>Log In</Text>
+        <Text className='text-surface text-center text-lg font-body-medium'>Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/signup')}>
-        <Text className='text-accent font-semibold'>Don't have an account? Sign Up</Text>
+        <Text className='text-accent font-body'>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );

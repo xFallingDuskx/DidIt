@@ -4,6 +4,6 @@
 
 @layer components {
   .input {
-    @apply py-4 px-2 mb-4 bg-slate-100 rounded-md
+    @apply py-4 px-2 mb-4 bg-slate-100 rounded-md font-body-medium
   }
 }
