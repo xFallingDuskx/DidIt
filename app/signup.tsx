@@ -41,8 +41,8 @@ export default function Screen() {
   };
 
   return (
-    <View className='flex-1 justify-center items-center bg-surface'>
-      <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 -translate-y-1/4' />
+    <View className='flex-1 justify-start items-center bg-surface'>
+      <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-10' />
       <Text className='text-3xl font-header-bold mb-4'>Sign Up</Text>
       <TextInput
         keyboardType='email-address'
