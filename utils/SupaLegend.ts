@@ -3,6 +3,7 @@ import { observablePersistAsyncStorage } from '@legendapp/state/persist-plugins/
 import { configureSynced } from '@legendapp/state/sync';
 import { syncedSupabase } from '@legendapp/state/sync-plugins/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from '@supabase/supabase-js';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../supabase/index';
@@ -27,6 +28,8 @@ const customSynced = configureSynced(syncedSupabase, {
   fieldDeleted: 'deleted',
 });
 
+export const user$ = observable<User>();
+
 export const todos$ = observable(
   customSynced({
     supabase,
@@ -45,31 +48,13 @@ export const todos$ = observable(
   })
 );
 
-
-export async function getUserId() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error) {
-    console.error('Error fetching user:', error);
-    return null;
-  }
-  if (user.id) {
-    return user.id;
-  }
-  return null;
-}
-
 export async function addTodo(text: string) {
   const id = generateId();
-  const userId = await getUserId();
-  if (!userId) return;
   // Add keyed by id to the todos$ observable to trigger a create in Supabase
   todos$[id].assign({
     id,
     text,
-    user_id: userId,
+    user_id: user$.peek().id,
   });
 }
 

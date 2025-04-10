@@ -1,9 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Session } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { supabase } from '../supabase';
-import { todos$ } from '../utils/SupaLegend';
+import { todos$, user$ } from '../utils/SupaLegend';
 import { Tables } from '../utils/database.types';
 
 type SessionContextType = {
@@ -23,6 +22,7 @@ export const useSession = () => {
 
 /** Clear the state of the app when the user logs out */
 function clearState() {
+  user$.set({} as User);
   todos$.set({});
 }
 
@@ -31,7 +31,7 @@ function clearState() {
  * @param session The session object from Supabase
  */
 async function fetchUserTodos(session: Session) {
-  if (Object.keys(todos$.peek()).length > 0) return
+  if (Object.keys(todos$.peek() ?? {}).length > 0) return;
 
   const { error, data } = await supabase.from('todos').select('*').eq('user_id', session.user.id);
   if (error) {
@@ -53,10 +53,13 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      if (session.user?.id) {
+        user$.set(session.user);
+      }
       setIsLoading(false);
     });
     supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (!session || !session.user) {
+      if (!session || !session.user?.id) {
         clearState();
         setSession(session);
         return;
@@ -65,6 +68,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       await fetchUserTodos(session);
       setSession(session);
+      user$.set(session.user);
       setIsLoading(false);
     });
   }, []);
