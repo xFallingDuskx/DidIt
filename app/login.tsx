@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { supabase } from '../supabase';
+import { todos$ } from '../utils/SupaLegend';
 
 interface FormState {
   email: string;

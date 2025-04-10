@@ -30,7 +30,9 @@ function clearState() {
  * Initialize user session and fetch data for the logged-in user
  * @param session The session object from Supabase
  */
-async function initUserSession(session: Session) {
+async function fetchUserTodos(session: Session) {
+  if (Object.keys(todos$.peek()).length > 0) return
+
   const { error, data } = await supabase.from('todos').select('*').eq('user_id', session.user.id);
   if (error) {
     Alert.alert('Error fetching todos:', error.message);
@@ -61,7 +63,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       }
 
       setIsLoading(true);
-      await initUserSession(session);
+      await fetchUserTodos(session);
       setSession(session);
       setIsLoading(false);
     });
