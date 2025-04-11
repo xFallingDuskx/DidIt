@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Image, KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native';
+import PrimaryButton from '../buttons/PrimaryButton';
 import GuestLogin from './GuestLogin';
 
 interface AuthScreenContainerProps {
@@ -29,11 +30,7 @@ export default function AuthScreenContainer({ type, isLoading, handleClick, chil
           <Image source={require('../../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-10' />
           <Text className='text-3xl font-header-bold mb-4'>{type === 'signup' ? 'Sign Up' : 'Log In'}</Text>
           {children}
-          <Pressable className='bg-accent w-3/4 p-3 rounded mb-4' onPress={handleClick} disabled={isLoading}>
-            <Text className='text-surface text-center text-lg font-body-medium'>
-              {type === 'signup' ? 'Sign Up' : 'Log In'}
-            </Text>
-          </Pressable>
+          <PrimaryButton text={type === 'signup' ? 'Sign Up' : 'Log In'} onPress={handleClick} disabled={isLoading} />
           <Pressable onPress={handleSwitch}>
             <Text className='text-accent font-body'>
               {type === 'signup' ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}

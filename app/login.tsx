@@ -1,8 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, TextInput } from 'react-native';
-import AuthScreenContainer from '../components/auth/AuthScreenContainer';
-import PasswordInput from '../components/form/PasswordInput';
+import { AuthScreenContainer, PasswordInput } from '../components';
 import { supabase } from '../supabase';
 
 interface FormState {
