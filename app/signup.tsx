@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, TextInput } from 'react-native';
 import { AuthScreenContainer, PasswordInput } from '../components';
+import PasswordCriteria from '../components/auth/PasswordCriteria';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -18,6 +19,7 @@ export default function Screen() {
     password: '',
     confirmPassword: '',
   });
+  const [showCriteria, setShowCriteria] = useState(false);
 
   const handleSignUp = async () => {
     if (formState.password !== formState.confirmPassword) {
@@ -53,13 +55,16 @@ export default function Screen() {
       />
       <PasswordInput
         value={formState.password}
-        onChange={(text) => setFormState({ ...formState, password: text })}
-        className='w-3/4'
+        onChangeText={(text) => setFormState({ ...formState, password: text })}
+        onFocus={() => setShowCriteria(true)}
+        onBlur={() => setShowCriteria(false)}
+        className='w-3/4 mb-1'
       />
+      <PasswordCriteria password={formState.password} expanded={showCriteria} />
       <PasswordInput
         placeholder='Confirm Password'
         value={formState.confirmPassword}
-        onChange={(text) => setFormState({ ...formState, confirmPassword: text })}
+        onChangeText={(text) => setFormState({ ...formState, confirmPassword: text })}
         className='w-3/4'
       />
     </AuthScreenContainer>

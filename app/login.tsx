@@ -39,7 +39,7 @@ export default function Screen() {
       />
       <PasswordInput
         value={formState.password}
-        onChange={(text) => setFormState({ ...formState, password: text })}
+        onChangeText={(text) => setFormState({ ...formState, password: text })}
         className='w-3/4'
       />
     </AuthScreenContainer>
