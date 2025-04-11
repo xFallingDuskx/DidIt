@@ -28,7 +28,7 @@ export default function Screen() {
   };
 
   return (
-    <AuthScreenContainer type='login' isLoading={isLoading} handleClick={handleLogIn}>
+    <AuthScreenContainer type='login' disableCtaButton={isLoading} handleClick={handleLogIn}>
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'

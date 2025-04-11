@@ -1,9 +1,10 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Alert, TextInput } from 'react-native';
+import { useMemo, useState } from 'react';
+import { Alert, Text, TextInput } from 'react-native';
 import { AuthScreenContainer, PasswordInput } from '../components';
 import PasswordCriteria from '../components/auth/PasswordCriteria';
 import { supabase } from '../supabase';
+import { join } from '../utils';
 
 interface FormState {
   email: string;
@@ -20,9 +21,14 @@ export default function Screen() {
     confirmPassword: '',
   });
   const [showCriteria, setShowCriteria] = useState(false);
+  const [criteriaMet, setCriteriaMet] = useState(false);
+  const passwordsMatch = useMemo(
+    () => formState.password === formState.confirmPassword,
+    [formState.password, formState.confirmPassword]
+  );
 
   const handleSignUp = async () => {
-    if (formState.password !== formState.confirmPassword) {
+    if (!passwordsMatch) {
       Alert.alert('Passwords do not match');
       return;
     }
@@ -44,7 +50,11 @@ export default function Screen() {
   };
 
   return (
-    <AuthScreenContainer type='signup' isLoading={isLoading} handleClick={handleSignUp}>
+    <AuthScreenContainer
+      type='signup'
+      disableCtaButton={isLoading || !criteriaMet || !passwordsMatch}
+      handleClick={handleSignUp}
+    >
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'
@@ -58,15 +68,20 @@ export default function Screen() {
         onChangeText={(text) => setFormState({ ...formState, password: text })}
         onFocus={() => setShowCriteria(true)}
         onBlur={() => setShowCriteria(false)}
-        className='w-3/4 mb-1'
+        className='w-3/4 !mb-1'
       />
-      <PasswordCriteria password={formState.password} expanded={showCriteria} />
+      <PasswordCriteria password={formState.password} expanded={showCriteria} setCriteriaMet={setCriteriaMet} />
       <PasswordInput
         placeholder='Confirm Password'
         value={formState.confirmPassword}
         onChangeText={(text) => setFormState({ ...formState, confirmPassword: text })}
-        className='w-3/4'
+        className={join('w-3/4', criteriaMet && '!mb-1')}
       />
+      {criteriaMet && (
+        <Text className={join('mb-4 font-body', passwordsMatch ? 'text-success' : 'text-muted')}>
+          {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
+        </Text>
+      )}
     </AuthScreenContainer>
   );
 }

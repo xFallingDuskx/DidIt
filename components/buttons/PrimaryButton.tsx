@@ -1,4 +1,5 @@
 import { Pressable, Text } from 'react-native';
+import { join } from '../../utils';
 
 interface PrimaryButtonProps {
   text: string;
@@ -10,7 +11,7 @@ interface PrimaryButtonProps {
 export default function PrimaryButton({ text, onPress, disabled = false, className = '' }: PrimaryButtonProps) {
   return (
     <Pressable
-      className={`bg-accent w-3/4 p-3 rounded mb-4 disabled:bg-slate-600 ${className}`}
+      className={join('bg-accent w-3/4 p-3 rounded mb-4 disabled:bg-slate-300', className)}
       onPress={onPress}
       disabled={disabled}
     >

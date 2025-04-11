@@ -8,6 +8,8 @@ module.exports = {
         surface: '#ffffff',
         accent: '#1877f2',
         input: '#f1f5f9',
+        success: '#16a34a', // green-500
+        muted: '#64748b', // slate-500
       },
       fontFamily: {
         // Brand Fonts - Montserrat
