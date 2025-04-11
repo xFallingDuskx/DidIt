@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TextInput, Pressable, View } from 'react-native';
 import { GuestLogin } from '../components';
+import PasswordInput from '../components/form/PasswordInput';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -39,20 +40,17 @@ export default function Screen() {
         onChangeText={(text) => setFormState({ ...formState, email: text })}
         className='input w-3/4'
       />
-      <TextInput
-        textContentType='password'
-        placeholder='Password'
+      <PasswordInput
         value={formState.password}
-        onChangeText={(text) => setFormState({ ...formState, password: text })}
-        secureTextEntry
-        className='input w-3/4'
+        onChange={(text) => setFormState({ ...formState, password: text })}
+        className='w-3/4'
       />
-      <TouchableOpacity className='bg-accent w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
+      <Pressable className='bg-accent w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
         <Text className='text-surface text-center text-lg font-body-medium'>Log In</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/signup')}>
+      </Pressable>
+      <Pressable onPress={() => router.push('/signup')}>
         <Text className='text-accent font-body'>Don't have an account? Sign Up</Text>
-      </TouchableOpacity>
+      </Pressable>
       <GuestLogin />
     </View>
   );

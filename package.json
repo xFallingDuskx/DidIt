@@ -5,10 +5,13 @@
     "@expo-google-fonts/montserrat": "^0.3.0",
     "@expo-google-fonts/mukta-vaani": "^0.3.0",
     "@expo/metro-runtime": "~4.0.0",
+    "@expo/vector-icons": "^14.1.0",
     "@legendapp/state": "^3.0.0-beta.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@supabase/supabase-js": "^2.45.1",
     "expo": "^52.0.16",
+    "expo-build-properties": "~0.13.2",
+    "expo-dev-client": "~5.0.19",
     "expo-font": "~13.0.4",
     "expo-image": "~2.0.7",
     "expo-router": "^4.0.20",
@@ -16,7 +19,7 @@
     "nativewind": "^4.1.23",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-native": "0.76.3",
+    "react-native": "0.76.9",
     "react-native-get-random-values": "~1.11.0",
     "react-native-mmkv": "^3.2.0",
     "react-native-reanimated": "^3.16.2",
@@ -36,8 +39,9 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "prebuild/a": "expo prebuild --no-install --platform android",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   }
 }

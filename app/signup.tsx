@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Pressable, Text, TextInput, View } from 'react-native';
 import { GuestLogin } from '../components';
+import PasswordInput from '../components/form/PasswordInput';
 import { supabase } from '../supabase';
 
 interface FormState {
@@ -53,28 +54,23 @@ export default function Screen() {
         placeholder='Email'
         className='input w-3/4'
       />
-      <TextInput
-        textContentType='password'
+      <PasswordInput
         value={formState.password}
-        onChangeText={(text) => setFormState({ ...formState, password: text })}
-        placeholder='Password'
-        secureTextEntry
-        className='input w-3/4'
+        onChange={(text) => setFormState({ ...formState, password: text })}
+        className='w-3/4'
       />
-      <TextInput
-        textContentType='password'
-        value={formState.confirmPassword}
-        onChangeText={(text) => setFormState({ ...formState, confirmPassword: text })}
+      <PasswordInput
         placeholder='Confirm Password'
-        secureTextEntry
-        className='input w-3/4'
+        value={formState.confirmPassword}
+        onChange={(text) => setFormState({ ...formState, confirmPassword: text })}
+        className='w-3/4'
       />
-      <TouchableOpacity className='bg-accent w-3/4 p-3 rounded mb-4' onPress={handleSignUp} disabled={isLoading}>
+      <Pressable className='bg-accent w-3/4 p-3 rounded mb-4' onPress={handleSignUp} disabled={isLoading}>
         <Text className='text-surface text-center text-lg font-body-medium'>Sign Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.back()}>
+      </Pressable>
+      <Pressable onPress={() => router.back()}>
         <Text className='text-accent font-body'>Already have an account? Log In</Text>
-      </TouchableOpacity>
+      </Pressable>
       <GuestLogin />
     </View>
   );

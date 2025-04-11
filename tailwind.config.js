@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         surface: '#ffffff',
         accent: '#1877f2',
+        input: '#f1f5f9',
       },
       fontFamily: {
         // Brand Fonts - Montserrat
