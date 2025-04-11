@@ -14,12 +14,12 @@ export default function AuthScreenContainer({ type, isLoading, handleClick, chil
   const router = useRouter();
 
   const handleSwitch = () => {
-    if (type === 'signup') {
+    if (router.canGoBack()) {
       router.back();
+      return;
     }
-    if (type === 'login') {
-      router.push('/signup');
-    }
+    const route = type === 'signup' ? '/login' : '/signup';
+    router.push(route);
   };
 
   // TASK: test KeyboardAvoidingView on iOS

@@ -90,8 +90,8 @@ export default function Screen() {
         </View>
       </View>
       <Animated.View style={{ opacity: buttonGroupOpacity }}>
-        <PrimaryButton text='Get Started' onPress={() => router.push('/signup')} className='w-full' />
-        <SecondaryButton text='Log In' onPress={() => router.push('/login')} className='w-full' />
+        <PrimaryButton text='Get Started' onPress={() => router.replace('/signup')} className='w-full' />
+        <SecondaryButton text='Log In' onPress={() => router.replace('/login')} className='w-full' />
       </Animated.View>
     </View>
   );
