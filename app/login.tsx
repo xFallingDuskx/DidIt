@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Image, Text, TextInput, Pressable, View } from 'react-native';
-import { GuestLogin } from '../components';
+import { Alert, TextInput } from 'react-native';
+import AuthScreenContainer from '../components/auth/AuthScreenContainer';
 import PasswordInput from '../components/form/PasswordInput';
 import { supabase } from '../supabase';
 
@@ -29,9 +29,7 @@ export default function Screen() {
   };
 
   return (
-    <View className='relative h-screen-safe justify-start items-center bg-surface'>
-      <Image source={require('../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-10' />
-      <Text className='text-3xl font-header-bold mb-4'>Log In</Text>
+    <AuthScreenContainer type='login' isLoading={isLoading} handleClick={handleLogIn}>
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'
@@ -45,13 +43,6 @@ export default function Screen() {
         onChange={(text) => setFormState({ ...formState, password: text })}
         className='w-3/4'
       />
-      <Pressable className='bg-accent w-3/4 p-3 rounded mb-4' disabled={isLoading} onPress={handleLogIn}>
-        <Text className='text-surface text-center text-lg font-body-medium'>Log In</Text>
-      </Pressable>
-      <Pressable onPress={() => router.push('/signup')}>
-        <Text className='text-accent font-body'>Don't have an account? Sign Up</Text>
-      </Pressable>
-      <GuestLogin />
-    </View>
+    </AuthScreenContainer>
   );
 }
