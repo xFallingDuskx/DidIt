@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { join } from '../../utils';
 
@@ -20,8 +20,13 @@ export default function PasswordCriteria({ password, expanded, setCriteriaMet }:
     []
   );
 
-  const allCriteriaMet = criteria.every((criterion) => criterion.test(password));
-  setCriteriaMet(allCriteriaMet);
+  const allCriteriaMet = useMemo(
+    () => criteria.every((criterion) => criterion.test(password)),
+    [criteria, password]
+  );
+  useEffect(() => {
+    setCriteriaMet(allCriteriaMet);
+  }, [allCriteriaMet, setCriteriaMet]);
 
   return (
     <View className='mb-4'>
