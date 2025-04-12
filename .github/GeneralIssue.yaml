@@ -1,0 +1,31 @@
+name: General Issue
+description: Report a general issue or suggestion.
+title: "[Issue]: "
+labels:
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a clear and concise description of the issue or request.
+      placeholder: Describe the issue here.
+    validations:
+      required: true
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: Describe what is currently happening.
+      placeholder: Explain the current behavior.
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: If you have any ideas for a solution, please share them here.
+      placeholder: Suggest a solution.
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: Include any other relevant details, such as steps to reproduce, error messages, or context.
+      placeholder: Add any extra information.
