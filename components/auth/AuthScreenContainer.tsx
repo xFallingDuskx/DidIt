@@ -32,7 +32,7 @@ export default function AuthScreenContainer({
     <KeyboardAvoidingView behavior='position'>
       <ScreenView className='items-center'>
         <View className='w-full justify-start items-center flex-1'>
-          <Image source={require('../../assets/logo-blue-transparent.png')} className='w-full h-48 mt-32 mb-8' />
+          <Image source={require('../../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-4' />
           <Text className='text-3xl font-header-bold mb-4'>{type === 'signup' ? 'Sign Up' : 'Log In'}</Text>
           {children}
           <PrimaryButton

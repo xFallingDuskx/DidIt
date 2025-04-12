@@ -4,6 +4,6 @@
 
 @layer components {
   .input {
-    @apply py-4 px-2 mb-4 bg-input rounded-md font-body-medium
+    @apply py-4 px-2 mb-4 bg-input rounded-md font-body-medium placeholder:text-gray-500
   }
 }
