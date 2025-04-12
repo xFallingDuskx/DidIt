@@ -8,6 +8,14 @@
   "plugins": [
     "expo-router",
     [
+      "expo-build-properties",
+      {
+        "android": {
+          "kotlinVersion": "1.9.25"
+        }
+      }
+    ],
+    [
       "expo-splash-screen",
       {
         "backgroundColor": "#FFFFFF",
@@ -18,25 +26,20 @@
         },
         "imageWidth": 200
       }
-    ],
-    ["expo-font", {
-      "fonts": [
-        {
-          "Roboto": "./assets/fonts/Roboto.ttf"
-        },
-        {
-          "Roboto-Bold": "./assets/fonts/Roboto-Bold.ttf"
-        },
-        {
-          "Roboto-Light": "./assets/fonts/Roboto-Light.ttf"
-        },
-        {
-          "Roboto-Medium": "./assets/fonts/Roboto-Medium.ttf"
-        },
-        {
-          "Roboto-Thin": "./assets/fonts/Roboto-Thin.ttf"
-        }
-      ]
-    }]
-  ]
+    ]
+  ],
+  "extra": {
+    "router": {
+      "origin": false
+    },
+    "eas": {
+      "projectId": "721c0e58-c99e-4454-910e-920a5f3a6af2"
+    }
+  },
+  "android": {
+    "package": "dev.moondreams.didit"
+  },
+  "ios": {
+    "bundleIdentifier": "dev.moondreams.didit"
+  }
 }
