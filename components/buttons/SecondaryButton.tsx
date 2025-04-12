@@ -11,7 +11,7 @@ interface SecondaryButtonProps {
 export default function SecondaryButton({ text, onPress, disabled = false, className = '' }: SecondaryButtonProps) {
   return (
     <Pressable
-      className={join('border-2 border-accent w-3/4 p-3 rounded mb-4 disabled:border-slate-600', className)}
+      className={join('border-2 border-accent w-3/4 p-3 rounded-full mb-4 disabled:border-slate-600', className)}
       onPress={onPress}
       disabled={disabled}
     >
