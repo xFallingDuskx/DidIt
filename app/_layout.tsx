@@ -6,6 +6,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import '.././global.css';
 import { SessionProvider, useSession } from '../contexts/SessionContext';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

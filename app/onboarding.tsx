@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { Animated, useAnimatedValue, View } from 'react-native';
-import { AnimatedFeature, PrimaryButton, SecondaryButton } from '../components';
+import { AnimatedFeature, PrimaryButton, ScreenView, SecondaryButton } from '../components';
 
 export default function Screen() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function Screen() {
   }, [logoTranslateY, text1TranslateX, text2TranslateX, text3TranslateX, text4TranslateX, buttonGroupOpacity]);
 
   return (
-    <View className='h-screen-safe bg-surface p-8'>
+    <ScreenView className='p-8 h-screen'>
       <Animated.Image
         source={require('../assets/logo-blue-transparent.png')}
         className='w-full h-48 my-5'
@@ -93,6 +93,6 @@ export default function Screen() {
         <PrimaryButton text='Get Started' onPress={() => router.replace('/signup')} className='w-full' />
         <SecondaryButton text='Log In' onPress={() => router.replace('/login')} className='w-full' />
       </Animated.View>
-    </View>
+    </ScreenView>
   );
 }
