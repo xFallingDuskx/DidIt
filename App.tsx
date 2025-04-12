@@ -1,6 +1,6 @@
 import { observer } from '@legendapp/state/react';
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, Pressable } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import './global.css';
 import { supabase } from './supabase';
@@ -35,11 +35,11 @@ const Todo = ({ todo }: { todo: Tables<'todos'> }) => {
     toggleDone(todo.id);
   };
   return (
-    <TouchableOpacity key={todo.id} onPress={handlePress} style={[styles.todo, todo.done ? styles.done : null]}>
+    <Pressable key={todo.id} onPress={handlePress} style={[styles.todo, todo.done ? styles.done : null]}>
       <Text style={styles.todoText}>
         {todo.done ? DONE_ICON : NOT_DONE_ICON} {todo.text}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -59,9 +59,9 @@ const ClearTodos = () => {
     console.log('delete');
   };
   return [].length ? (
-    <TouchableOpacity onPress={handlePress}>
+    <Pressable onPress={handlePress}>
       <Text style={styles.clearTodos}>Clear all</Text>
-    </TouchableOpacity>
+    </Pressable>
   ) : null;
 };
 
@@ -70,9 +70,9 @@ const SignOutButton = () => {
     await supabase.auth.signOut();
   };
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <Pressable onPress={handlePress}>
       <Text style={styles.clearTodos}>Sign Out</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

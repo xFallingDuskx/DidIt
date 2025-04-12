@@ -1,7 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Alert, Platform, Text, TextInput } from 'react-native';
+import { AuthScreenContainer, PasswordInput } from '../components';
+import PasswordCriteria from '../components/auth/PasswordCriteria';
 import { supabase } from '../supabase';
+import { join } from '../utils';
 
 interface FormState {
   email: string;
@@ -17,9 +20,15 @@ export default function Screen() {
     password: '',
     confirmPassword: '',
   });
+  const [showCriteria, setShowCriteria] = useState(false);
+  const [criteriaMet, setCriteriaMet] = useState(false);
+  const passwordsMatch = useMemo(
+    () => formState.password === formState.confirmPassword,
+    [formState.password, formState.confirmPassword]
+  );
 
   const handleSignUp = async () => {
-    if (formState.password !== formState.confirmPassword) {
+    if (!passwordsMatch) {
       Alert.alert('Passwords do not match');
       return;
     }
@@ -40,39 +49,48 @@ export default function Screen() {
     router.push('/');
   };
 
+  // delay show change to prevent flicker when using `KeyboardAvoidingView` in `AuthScreenContainer`
+  const handleShowCriteria = (show: boolean) => {
+    const duration = Platform.OS === 'ios' ? 400 : 300;
+    setTimeout(() => {
+      setShowCriteria(show);
+    }, duration);
+  };
+
   return (
-    <View className='flex-1 justify-center items-center'>
-      <Text className='text-2xl font-bold mb-4'>Sign Up</Text>
+    <AuthScreenContainer
+      type='signup'
+      disableCtaButton={isLoading || !criteriaMet || !passwordsMatch}
+      handleClick={handleSignUp}
+    >
       <TextInput
         keyboardType='email-address'
         textContentType='emailAddress'
         value={formState.email}
         onChangeText={(text) => setFormState({ ...formState, email: text })}
         placeholder='Email'
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className='input w-3/4'
+        returnKeyType='done'
       />
-      <TextInput
-        textContentType='password'
+      <PasswordInput
         value={formState.password}
         onChangeText={(text) => setFormState({ ...formState, password: text })}
-        placeholder='Password'
-        secureTextEntry
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        onFocus={() => handleShowCriteria(true)}
+        onBlur={() => handleShowCriteria(false)}
+        className='w-3/4 !mb-1'
       />
-      <TextInput
-        textContentType='password'
+      <PasswordCriteria password={formState.password} expanded={showCriteria} setCriteriaMet={setCriteriaMet} />
+      <PasswordInput
+        placeholder='Confirm Password'
         value={formState.confirmPassword}
         onChangeText={(text) => setFormState({ ...formState, confirmPassword: text })}
-        placeholder='Confirm Password'
-        secureTextEntry
-        className='w-3/4 p-2 mb-4 bg-white rounded'
+        className={join('w-3/4', criteriaMet && '!mb-1')}
       />
-      <TouchableOpacity className='bg-blue-500 w-3/4 p-3 rounded mb-4' onPress={handleSignUp} disabled={isLoading}>
-        <Text className='text-white text-center'>Sign Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text className='text-blue-700'>Already have an account? Log In</Text>
-      </TouchableOpacity>
-    </View>
+      {criteriaMet && (
+        <Text className={join('mb-4 font-body', passwordsMatch ? 'text-success' : 'text-muted')}>
+          {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
+        </Text>
+      )}
+    </AuthScreenContainer>
   );
 }
