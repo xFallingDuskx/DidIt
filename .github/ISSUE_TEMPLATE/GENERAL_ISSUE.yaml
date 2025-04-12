@@ -8,16 +8,11 @@ body:
       label: Perceived Difficulty
       description: Please indicate the level of effort you believe would be required to address this issue.
       options:
-        - label: Very Easy
-          description: Quick fix, likely a minor adjustment.
-        - label: Easy
-          description: Should be straightforward and not require significant changes.
-        - label: Medium
-          description: Might involve some investigation and moderate code modifications.
-        - label: Hard
-          description: Likely requires significant effort, architectural changes, or in-depth research.
-        - label: Very Hard
-          description: Potentially a complex undertaking with significant unknowns and dependencies.
+        - Very Easy (Quick fix, likely a minor adjustment(
+        - Easy (Should be straightforward and not require significant changes)
+        - Medium (Might involve some investigation and moderate code modifications)
+        - Hard (Likely requires significant effort, architectural changes, or in-depth research(
+        - Very Hard (Potentially a complex undertaking with significant unknowns and dependencies)
     validations:
       required: true
   - type: textarea
