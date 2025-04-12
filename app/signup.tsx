@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Alert, Text, TextInput } from 'react-native';
+import { Alert, Platform, Text, TextInput } from 'react-native';
 import { AuthScreenContainer, PasswordInput } from '../components';
 import PasswordCriteria from '../components/auth/PasswordCriteria';
 import { supabase } from '../supabase';
@@ -49,6 +49,14 @@ export default function Screen() {
     router.push('/');
   };
 
+  // delay show change to prevent flicker when using `KeyboardAvoidingView` in `AuthScreenContainer`
+  const handleShowCriteria = (show: boolean) => {
+    const duration = Platform.OS === 'ios' ? 400 : 300;
+    setTimeout(() => {
+      setShowCriteria(show);
+    }, duration);
+  };
+
   return (
     <AuthScreenContainer
       type='signup'
@@ -67,8 +75,8 @@ export default function Screen() {
       <PasswordInput
         value={formState.password}
         onChangeText={(text) => setFormState({ ...formState, password: text })}
-        onFocus={() => setShowCriteria(true)}
-        onBlur={() => setShowCriteria(false)}
+        onFocus={() => handleShowCriteria(true)}
+        onBlur={() => handleShowCriteria(false)}
         className='w-3/4 !mb-1'
       />
       <PasswordCriteria password={formState.password} expanded={showCriteria} setCriteriaMet={setCriteriaMet} />

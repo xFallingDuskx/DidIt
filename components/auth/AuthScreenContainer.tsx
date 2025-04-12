@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
-import { Image, KeyboardAvoidingView, Pressable, Text, View } from 'react-native';
+import { useMemo } from 'react';
+import { Image, KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native';
 import PrimaryButton from '../buttons/PrimaryButton';
 import ScreenView from '../util/ScreenView';
 import GuestLogin from './GuestLogin';
@@ -18,6 +19,21 @@ export default function AuthScreenContainer({
   children,
 }: AuthScreenContainerProps) {
   const router = useRouter();
+  const keyboardVerticalOffset = useMemo(() => {
+    if (Platform.OS === 'ios' && type === 'signup') {
+      return -150;
+    }
+    if (Platform.OS === 'ios' && type === 'login') {
+      return -250;
+    }
+    if (Platform.OS === 'android' && type === 'signup') {
+      return -50;
+    }
+    if (Platform.OS === 'android' && type === 'login') {
+      return -150;
+    }
+    return undefined;
+  }, [type]);
 
   const handleSwitch = () => {
     if (router.canGoBack()) {
@@ -29,7 +45,7 @@ export default function AuthScreenContainer({
   };
 
   return (
-    <KeyboardAvoidingView behavior='position'>
+    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
       <ScreenView className='items-center'>
         <View className='w-full justify-start items-center flex-1'>
           <Image source={require('../../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-4' />
