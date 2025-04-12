@@ -22,6 +22,7 @@ export default function PasswordInput({
         secureTextEntry={!showPassword}
         className={join('input !rounded-r-none !mb-0 flex-1', inputClassName)}
         placeholder={placeholder}
+        returnKeyType='done'
         {...textInputProps}
       />
       <Pressable className='shrink-0 h-fit rounded-r-md px-3 py-2' onPress={() => setShowPassword((prev) => !prev)}>

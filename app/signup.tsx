@@ -62,6 +62,7 @@ export default function Screen() {
         onChangeText={(text) => setFormState({ ...formState, email: text })}
         placeholder='Email'
         className='input w-3/4'
+        returnKeyType='done'
       />
       <PasswordInput
         value={formState.password}
