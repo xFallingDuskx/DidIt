@@ -1,20 +1,19 @@
 name: General Issue
 description: Report a general issue or suggestion.
-title: "[Issue]: "
 body:
-  - type: dropdown
-    id: difficulty
-    attributes:
-      label: Perceived Difficulty
-      description: Please indicate the level of effort you believe would be required to address this issue.
-      options:
-        - Very Easy (Quick resolution)
-        - Easy (Straightforward and not require significant changes)
-        - Medium (Moderate code modifications)
-        - Hard (Significant effort, architectural changes, or in-depth research)
-        - Very Hard (Possibly complex undertaking with significant unknowns and dependencies)
-    validations:
-      required: true
+  # - type: dropdown
+  #   id: difficulty
+  #   attributes:
+  #     label: Perceived Difficulty
+  #     description: Please indicate the level of effort you believe would be required to address this issue.
+  #     options:
+  #       - Very Easy (Quick resolution)
+  #       - Easy (Straightforward and not require significant changes)
+  #       - Medium (Moderate code modifications)
+  #       - Hard (Significant effort, architectural changes, or in-depth research)
+  #       - Very Hard (Possibly complex undertaking with significant unknowns and dependencies)
+  #   validations:
+  #     required: true
   - type: textarea
     id: description
     attributes:
