@@ -1,7 +1,6 @@
 name: General Issue
 description: Report a general issue or suggestion.
 title: "[Issue]: "
-labels:
 body:
   - type: textarea
     id: description
