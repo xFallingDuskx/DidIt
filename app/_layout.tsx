@@ -53,7 +53,9 @@ export default function RootLayout() {
           headerShown: false,
           animation: 'slide_from_right',
         }}
-      />
+      >
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+      </Stack>
     </SessionProvider>
   );
 }
