@@ -1,6 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Redirect, Tabs } from 'expo-router';
 import { useSession } from '../../contexts/SessionContext';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   const { session, isLoading } = useSession();
@@ -15,7 +16,24 @@ export default function TabLayout() {
 
   // This layout can be deferred because it's not the root layout.
   return (
-    <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: 'blue' }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: 'blue',
+        tabBarLabelStyle: {
+          fontSize: 16,
+          fontFamily: 'BodyRegular',
+          fontWeight: 300,
+        },
+        tabBarStyle: {
+          paddingVertical: 10,
+          ...(Platform.OS === 'android' ? { height: 65 } : {}),
+        },
+        tabBarItemStyle: {
+          ...(Platform.OS === 'ios' ? { paddingVertical: 5 } : { paddingVertical: 3 }),
+        },
+      }}
+    >
       <Tabs.Screen
         name='index'
         options={{
