@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Redirect, Tabs } from 'expo-router';
+import { Platform, Pressable } from 'react-native';
 import { useSession } from '../../contexts/SessionContext';
-import { Platform } from 'react-native';
 
 export default function TabLayout() {
   const { session } = useSession();
@@ -25,34 +25,32 @@ export default function TabLayout() {
           fontFamily: 'BodyRegular',
           fontWeight: 300,
         },
+        tabBarButton: (props) => <Pressable {...props} android_ripple={{ color: 'transparent' }} />,
         tabBarStyle: {
           paddingVertical: 10,
-          ...(Platform.OS === 'android' ? { height: 65 } : {}),
-        },
-        tabBarItemStyle: {
-          ...(Platform.OS === 'ios' ? { paddingVertical: 5 } : { paddingVertical: 3 }),
+          ...(Platform.OS === 'android' ? { height: 60 } : {}),
         },
       }}
     >
       <Tabs.Screen
         name='index'
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name='check-circle' color={color} />,
+          title: 'ToDos',
+          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='check-circle' color={color} />,
         }}
       />
       <Tabs.Screen
         name='lists'
         options={{
           title: 'Lists',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name='list-alt' color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='list-alt' color={color} />,
         }}
       />
       <Tabs.Screen
         name='routines'
         options={{
           title: 'Routines',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name='clock' color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='clock' color={color} />,
         }}
       />
     </Tabs>
