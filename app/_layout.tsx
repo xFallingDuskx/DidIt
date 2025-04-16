@@ -1,19 +1,20 @@
 import * as Cabin from '@expo-google-fonts/cabin';
-import * as Montserrat from '@expo-google-fonts/montserrat';
 import * as Catamaran from '@expo-google-fonts/catamaran';
+import * as Montserrat from '@expo-google-fonts/montserrat';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import '.././global.css';
-import { SessionProvider, useSession } from '../contexts/SessionContext';
+import { useEffect, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
+import '.././global.css';
+import { SessionProvider } from '../contexts/SessionContext';
 enableScreens();
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { isLoading } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
+
   const [brandFontsLoaded] = Montserrat.useFonts({
     BrandRegular: Montserrat.Montserrat_400Regular,
     BrandMedium: Montserrat.Montserrat_500Medium,
@@ -47,7 +48,7 @@ export default function RootLayout() {
 
   // Set up the auth context and render our layout inside of it.
   return (
-    <SessionProvider>
+    <SessionProvider isLoading={isLoading} setIsLoading={setIsLoading}>
       <Stack
         screenOptions={{
           headerShown: false,

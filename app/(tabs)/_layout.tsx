@@ -4,7 +4,11 @@ import { Platform, Pressable } from 'react-native';
 import { useSession } from '../../contexts/SessionContext';
 
 export default function TabLayout() {
-  const { session } = useSession();
+  const { session, isLoading } = useSession();
+
+  if (isLoading) {
+    return null;
+  }
 
   // Only require authentication within the (tabs) group's layout as users
   // need to be able to access the (auth) group and sign in again.
