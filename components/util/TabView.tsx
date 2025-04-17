@@ -1,5 +1,5 @@
-import { View } from 'react-native';
 import { join } from '../../utils';
+import ScreenView from './ScreenView';
 
 interface TabViewProps {
   children: React.ReactNode;
@@ -8,7 +8,5 @@ interface TabViewProps {
 
 export default function TabView({ children, className = '' }: TabViewProps) {
   // const tabBarHeight = useBottomTabBarHeight();
-  // console.log('tabBarHeight', tabBarHeight); // REMOVE
-
-  return <View className={join('flex-1', className)}>{children}</View>;
+  return <ScreenView className={join('flex-1 bg-slate-200', className)}>{children}</ScreenView>;
 }
