@@ -1,5 +1,5 @@
-import App from '../../App';
+import { MainTodoScreen } from '../../screens';
 
 export default function Screen() {
-  return <App />;
+  return <MainTodoScreen />;
 }
