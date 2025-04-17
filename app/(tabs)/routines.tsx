@@ -1,11 +1,5 @@
-import { Text } from 'react-native';
-import App from '../../App';
-import { ScreenView } from '../../components';
+import { MainRoutinesScreen } from '../../screens';
 
 export default function Screen() {
-  return (
-    <ScreenView>
-      <Text>Routines</Text>
-    </ScreenView>
-  );
+  return <MainRoutinesScreen />;
 }

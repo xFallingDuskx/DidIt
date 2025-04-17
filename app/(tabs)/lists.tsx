@@ -1,11 +1,5 @@
-import { Text } from 'react-native';
-import App from '../../App';
-import { ScreenView } from '../../components';
+import { MainListScreen } from '../../screens';
 
 export default function Screen() {
-  return (
-    <ScreenView>
-      <Text>Lists</Text>
-    </ScreenView>
-  );
+  return <MainListScreen />;
 }
