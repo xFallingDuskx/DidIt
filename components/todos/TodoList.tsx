@@ -23,7 +23,8 @@ const TodoList = observer(() => {
           height: height,
           width: width,
         }}
-        className='bg-surface-tab rounded-t-xl'
+        showsVerticalScrollIndicator={false}
+        className='bg-surface-tab rounded-xl '
       />
     );
 
