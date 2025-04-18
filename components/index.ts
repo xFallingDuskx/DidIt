@@ -20,3 +20,4 @@ export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
 
 // Util
 export { default as ScreenView } from './util/ScreenView';
+export { default as TabView } from './util/TabView';

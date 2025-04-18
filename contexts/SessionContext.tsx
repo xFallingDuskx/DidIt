@@ -31,8 +31,6 @@ function clearState() {
  * @param session The session object from Supabase
  */
 async function fetchUserTodos(session: Session) {
-  if (Object.keys(todos$.peek() ?? {}).length > 0) return;
-
   const { error, data } = await supabase.from('todos').select('*').eq('user_id', session.user.id);
   if (error) {
     Alert.alert('Error fetching todos:', error.message);
@@ -46,9 +44,14 @@ async function fetchUserTodos(session: Session) {
   }
 }
 
-export const SessionProvider = ({ children }: { children: ReactNode }) => {
+interface SessionProviderProps {
+  children: ReactNode;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+}
+
+export const SessionProvider = ({ children, isLoading, setIsLoading }: SessionProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -62,6 +65,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       if (!session || !session.user?.id) {
         clearState();
         setSession(session);
+        setIsLoading(false);
         return;
       }
 
