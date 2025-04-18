@@ -2,11 +2,11 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { Alert, Pressable, Text, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
-import { Tables } from '../../utils/database.types';
+import { Todo } from '../../utils';
 import join from '../../utils/join';
 
 interface TodoItemProps {
-  todo: Tables<'todos'>;
+  todo: Todo;
   isLastItem: boolean;
 }
 

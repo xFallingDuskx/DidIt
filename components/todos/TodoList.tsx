@@ -2,7 +2,7 @@ import { observer } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
 import { Dimensions, Text } from 'react-native';
 import { activeTodos$ } from '../../supalegend';
-import { Tables } from '../../utils/database.types';
+import { Todo } from '../../utils';
 import TodoItem from './TodoItem';
 
 const TodoList = observer(() => {
@@ -10,7 +10,7 @@ const TodoList = observer(() => {
   const activeTodos = Object.values(activeTodos$.get() || {});
   const { width, height } = Dimensions.get('window');
 
-  const renderItem = ({ item: todo, index }: { item: Tables<'todos'>; index: number }) => (
+  const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
     <TodoItem todo={todo} isLastItem={index === activeTodos.length - 1} />
   );
   if (activeTodos) {

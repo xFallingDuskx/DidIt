@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { Alert } from 'react-native';
 import { supabase } from '../supabase';
 import { todos$, user$ } from '../supalegend';
-import { Tables } from '../utils/database.types';
+import { Todo } from '../utils';
 
 type SessionContextType = {
   session: Session | null;
@@ -39,7 +39,7 @@ async function fetchUserTodos(session: Session) {
     const todosMap = data.reduce((acc, todo) => {
       acc[todo.id] = todo;
       return acc;
-    }, {} as Record<string, Tables<'todos'>>);
+    }, {} as Record<string, Todo>);
     todos$.set(todosMap);
   }
 }
