@@ -24,7 +24,7 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <Text className={join('text-lg font-body-medium', todo.done && 'line-through')}>{todo.text}</Text>
+      <Text className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}>{todo.text}</Text>
     </View>
   );
 }
