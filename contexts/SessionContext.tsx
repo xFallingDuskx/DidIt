@@ -2,7 +2,7 @@ import { Session, User } from '@supabase/supabase-js';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { supabase } from '../supabase';
-import { todos$, user$ } from '../utils/SupaLegend';
+import { todos$, user$ } from '../supalegend';
 import { Tables } from '../utils/database.types';
 
 type SessionContextType = {

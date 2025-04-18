@@ -1,7 +1,7 @@
 import { observer } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
 import { Dimensions, Text } from 'react-native';
-import { todos$ } from '../../utils/SupaLegend';
+import { todos$ } from '../../supalegend';
 import { Tables } from '../../utils/database.types';
 import TodoItem from './TodoItem';
 
