@@ -1,12 +1,15 @@
 import { Text } from 'react-native';
-import { TabView } from '../../components';
+import { TodoInput, TabView, TodoList } from '../../components';
+import { TodoTabProvider } from '../../contexts/TodoContext';
 
 export default function Screen() {
   return (
-    <TabView className='relative items-center justify-start'>
-      <Text className='text-2xl font-bold'>Todos</Text>
-      <Text className='text-lg text-gray-500'>This is the Todos screen.</Text>
-      <Text className='absolute bottom-0'>Test</Text>
-    </TabView>
+    <TodoTabProvider>
+      <TabView className='relative items-center justify-start'>
+        <Text className='text-2xl font-header-semibold my-4'>Todos</Text>
+        <TodoList />
+        <TodoInput />
+      </TabView>
+    </TodoTabProvider>
   );
 }

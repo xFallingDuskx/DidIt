@@ -1,0 +1,58 @@
+import { FontAwesome6 } from '@expo/vector-icons';
+import { Alert, Pressable, Text, View } from 'react-native';
+import { useTodoTab } from '../../contexts/TodoContext';
+import { Tables } from '../../utils/database.types';
+import join from '../../utils/join';
+import { deleteTodo, toggleDone } from '../../utils/SupaLegend';
+
+interface TodoItemProps {
+  todo: Tables<'todos'>;
+  isLastItem: boolean;
+}
+
+export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
+  const { setEditingTodoId } = useTodoTab();
+
+  const handleStatusPress = () => {
+    toggleDone(todo.id);
+  };
+  const handleEditPress = () => {
+    setEditingTodoId(todo.id);
+  };
+  const handleDeletePress = () => {
+    // FUTURE: create cloud function to delete todos
+    Alert.alert('Delete Todo', 'Are you sure you want to delete this todo?', [
+      {
+        text: 'Nevermind',
+        // onPress: () => Alert
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => {
+          deleteTodo(todo.id);
+        },
+      },
+    ]);
+  };
+
+  return (
+    <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-xl')}>
+      <Pressable onPress={handleStatusPress}>
+        <FontAwesome6
+          name={todo.done ? 'check-circle' : 'circle'}
+          size={20}
+          color={todo.done ? '#16a34a' : '#000'}
+          className={join(todo.done && 'opacity-70')}
+        />
+      </Pressable>
+      <Text
+        onPress={handleEditPress}
+        onLongPress={handleDeletePress}
+        className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}
+      >
+        {todo.text}
+      </Text>
+    </View>
+  );
+}

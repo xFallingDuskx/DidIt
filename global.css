@@ -6,4 +6,8 @@
   .input {
     @apply py-4 px-2 mb-4 bg-input rounded-md font-body-medium placeholder:text-gray-500
   }
+
+  .input-rounded {
+    @apply h-fit px-4 mb-4 bg-surface rounded-full font-body-medium text-lg border border-muted placeholder:text-gray-500
+  }
 }
