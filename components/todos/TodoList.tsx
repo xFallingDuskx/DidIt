@@ -19,7 +19,7 @@ const TodoList = observer(() => {
       <FlashList
         data={filteredTodos}
         renderItem={renderItem}
-        estimatedItemSize={Object.keys(todos).length}
+        estimatedItemSize={40}
         estimatedListSize={{
           height: height,
           width: width,

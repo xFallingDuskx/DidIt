@@ -10,7 +10,7 @@ interface TodoTabContextType {
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
 
 export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNode => {
-  const inputRef = useRef<TextInput>(); // Create a ref for the TextInput
+  const inputRef = useRef<TextInput>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
 
   const handleSetEditingTodoId = (id: string | null) => {
