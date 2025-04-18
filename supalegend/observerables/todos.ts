@@ -22,5 +22,6 @@ export const todos$ = observable(
 
 export const activeTodos$ = computed(() => {
   const todos = todos$.get() || {};
-  return Object.values(todos).filter((todo) => !todo.deleted && !todo.done);
+  // REVERT
+  return Object.values(todos); //.filter((todo) => !todo.deleted && !todo.done);
 });
