@@ -23,10 +23,6 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
     }
   };
 
-  const handleSetInputRef = (ref: TextInput) => {
-    inputRef.current = ref;
-  };
-
   return (
     <TodoContext.Provider value={{ inputRef, editingTodoId, setEditingTodoId: handleSetEditingTodoId }}>
       {children}

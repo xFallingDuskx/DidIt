@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { join } from '../../utils';
-import { addTodo, editTodo, todos$ } from '../../utils/SupaLegend';
+import { addTodo, editTodo, todos$ } from '../../supalegend';
 import Input from '../form/Input';
 
 export default function TodoInput() {
