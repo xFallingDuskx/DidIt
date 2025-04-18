@@ -1,9 +1,9 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { Tables } from '../../utils/database.types';
 import join from '../../utils/join';
-import { toggleDone } from '../../utils/SupaLegend';
+import { deleteTodo, toggleDone } from '../../utils/SupaLegend';
 
 interface TodoItemProps {
   todo: Tables<'todos'>;
@@ -19,6 +19,22 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
   const handleEditPress = () => {
     setEditingTodoId(todo.id);
   };
+  const handleDeletePress = () => {
+    // FUTURE: create cloud function to delete todos
+    Alert.alert('Delete Todo', 'Are you sure you want to delete this todo?', [
+      {
+        text: 'Nevermind',
+        // onPress: () => Alert
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => {
+          deleteTodo(todo.id);
+        },
+      },
+    ]);
+  };
 
   return (
     <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-xl')}>
@@ -30,7 +46,11 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <Text onPress={handleEditPress} className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}>
+      <Text
+        onPress={handleEditPress}
+        onLongPress={handleDeletePress}
+        className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}
+      >
         {todo.text}
       </Text>
     </View>

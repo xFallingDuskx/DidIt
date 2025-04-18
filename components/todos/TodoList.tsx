@@ -7,16 +7,17 @@ import TodoItem from './TodoItem';
 
 const TodoList = observer(() => {
   // Get the todos from the state and subscribe to updates
-  const todos = todos$.get();
+  const todos = todos$.get() || {};
+  const filteredTodos = Object.values(todos).filter((todo) => !todo.deleted);
   const { width, height } = Dimensions.get('window');
 
   const renderItem = ({ item: todo, index }: { item: Tables<'todos'>; index: number }) => (
-    <TodoItem todo={todo} isLastItem={index === Object.keys(todos).length - 1} />
+    <TodoItem todo={todo} isLastItem={index === filteredTodos.length - 1} />
   );
-  if (todos)
+  if (todos) {
     return (
       <FlashList
-        data={Object.values(todos)}
+        data={filteredTodos}
         renderItem={renderItem}
         estimatedItemSize={Object.keys(todos).length}
         estimatedListSize={{
@@ -27,6 +28,7 @@ const TodoList = observer(() => {
         className='bg-surface-tab rounded-xl '
       />
     );
+  }
 
   return <Text>No todos available</Text>;
 });

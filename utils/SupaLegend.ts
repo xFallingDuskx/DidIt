@@ -63,6 +63,11 @@ export function editTodo(id: string, text: string) {
   todos$[id].updated_at.set(new Date().toISOString());
 }
 
+export function deleteTodo(id: string) {
+  todos$[id].deleted.set(true);
+  todos$[id].updated_at.set(new Date().toISOString());
+}
+
 export function toggleDone(id: string) {
   todos$[id].done.set((prev) => !prev);
   todos$[id].updated_at.set(new Date().toISOString());
