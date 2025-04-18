@@ -1,5 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Pressable, Text, View } from 'react-native';
+import { useTodoTab } from '../../contexts/TodoContext';
 import { Tables } from '../../utils/database.types';
 import join from '../../utils/join';
 import { toggleDone } from '../../utils/SupaLegend';
@@ -10,13 +11,18 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
-  const handlePress = () => {
+  const { setEditingTodoId } = useTodoTab();
+
+  const handleStatusPress = () => {
     toggleDone(todo.id);
+  };
+  const handleEditPress = () => {
+    setEditingTodoId(todo.id);
   };
 
   return (
     <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-xl')}>
-      <Pressable onPress={handlePress}>
+      <Pressable onPress={handleStatusPress}>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
           size={20}
@@ -24,7 +30,9 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <Text className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}>{todo.text}</Text>
+      <Text onPress={handleEditPress} className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}>
+        {todo.text}
+      </Text>
     </View>
   );
 }

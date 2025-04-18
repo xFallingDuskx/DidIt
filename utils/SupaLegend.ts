@@ -58,6 +58,12 @@ export async function addTodo(text: string) {
   });
 }
 
+export function editTodo(id: string, text: string) {
+  todos$[id].text.set(text);
+  todos$[id].updated_at.set(new Date().toISOString());
+}
+
 export function toggleDone(id: string) {
   todos$[id].done.set((prev) => !prev);
+  todos$[id].updated_at.set(new Date().toISOString());
 }
