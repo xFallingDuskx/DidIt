@@ -6,7 +6,7 @@ import { join } from '../../utils';
 import { addTodo, editTodo, todos$ } from '../../utils/SupaLegend';
 import Input from '../form/Input';
 
-export default function NewTodo() {
+export default function TodoInput() {
   const { inputRef, editingTodoId, setEditingTodoId } = useTodoTab();
   const [text, setText] = useState('');
   const [inFocus, setInFocus] = useState(false);

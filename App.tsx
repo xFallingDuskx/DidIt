@@ -14,7 +14,7 @@ const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
 const DONE_ICON = String.fromCodePoint(0x2705);
 
 // The text input component to add a new todo.
-const NewTodo = () => {
+const TodoInput = () => {
   const [text, setText] = useState('');
   const handleSubmitEditing = ({ nativeEvent: { text } }) => {
     setText('');
@@ -84,7 +84,7 @@ const App = observer(() => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <Text style={styles.heading}>Did It - PPP</Text>
-        <NewTodo />
+        <TodoInput />
         <Todos todos$={_todos$} />
         <ClearTodos />
         <SignOutButton />

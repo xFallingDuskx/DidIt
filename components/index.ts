@@ -17,7 +17,7 @@ export { default as PasswordInput } from './form/PasswordInput';
 export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
 
 // Todos
-export { default as NewTodo } from './todos/NewTodo';
+export { default as TodoInput } from './todos/TodoInput';
 export { default as TodoItem } from './todos/TodoItem';
 export { default as TodoList } from './todos/TodoList';
 
