@@ -1,4 +1,4 @@
-import { observable } from '@legendapp/state';
+import { computed, observable } from '@legendapp/state';
 import { supabase } from '../../supabase/index';
 import { customSynced } from '../config';
 
@@ -19,3 +19,8 @@ export const todos$ = observable(
     },
   })
 );
+
+export const activeTodos$ = computed(() => {
+  const todos = todos$.get() || {};
+  return Object.values(todos).filter((todo) => !todo.deleted && !todo.done);
+});
