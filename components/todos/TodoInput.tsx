@@ -44,7 +44,7 @@ export default function TodoInput() {
 
   return (
     <View
-      className={join('flex-row gap-1 items-center w-screen px-4 pt-4 mb-4', inFocus ? 'bg-surface' : 'bg-surface-tab')}
+      className={join('flex-row gap-1 items-center w-screen px-4 pt-3 mb-3', inFocus ? 'bg-surface' : 'bg-surface-tab')}
     >
       <Input
         ref={inputRef}
@@ -53,7 +53,7 @@ export default function TodoInput() {
         onSubmitEditing={handleSubmitEditing}
         setInFocus={setInFocus}
         placeholder='What do you want to do next?'
-        className={join('input-rounded flex-1 mb-0 h-16', inFocus && 'border-accent')}
+        className={join('input-rounded flex-1 mb-0 h-12 !py-0', inFocus && 'border-accent')}
       />
       {editingTodoId && (
         <Pressable className='bg-accent rounded-full py-2 px-3' onPress={handleCancelEditing}>
