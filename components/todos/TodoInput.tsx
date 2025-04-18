@@ -44,7 +44,7 @@ export default function TodoInput() {
 
   return (
     <View
-      className={join('flex-row gap-1 items-center w-screen px-4 pt-3 mb-3', inFocus ? 'bg-surface' : 'bg-surface-tab')}
+      className={join('flex-row gap-1 items-center w-screen px-4 pt-3 pb-3', inFocus ? 'bg-surface' : 'bg-surface-tab')}
     >
       <Input
         ref={inputRef}
