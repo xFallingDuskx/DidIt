@@ -65,6 +65,7 @@ export const SessionProvider = ({ children, isLoading, setIsLoading }: SessionPr
       if (!session || !session.user?.id) {
         clearState();
         setSession(session);
+        setIsLoading(false);
         return;
       }
 
