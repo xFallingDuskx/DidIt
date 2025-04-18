@@ -7,6 +7,8 @@ import { supabase } from './supabase';
 import { todos$ as _todos$, addTodo, toggleDone } from './utils/SupaLegend';
 import { Tables } from './utils/database.types';
 
+// TASK: delete this file
+
 // Emojis to decorate each todo.
 const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
 const DONE_ICON = String.fromCodePoint(0x2705);

@@ -15,7 +15,7 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
   };
 
   return (
-    <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-lg')}>
+    <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-xl')}>
       <Pressable onPress={handlePress}>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
