@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         surface: '#ffffff',
+        'surface-tab': '#f1f5f9', // slate-100
         accent: '#1877f2',
         input: '#f1f5f9', // slate-100
         success: '#16a34a', // green-500

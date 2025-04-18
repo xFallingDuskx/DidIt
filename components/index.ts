@@ -18,6 +18,10 @@ export { default as PasswordInput } from './form/PasswordInput';
 // Onboarding
 export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
 
+// Todos
+export { default as TodoItem } from './todos/TodoItem';
+export { default as TodoList } from './todos/TodoList';
+
 // Util
 export { default as ScreenView } from './util/ScreenView';
 export { default as TabView } from './util/TabView';
