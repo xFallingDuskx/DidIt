@@ -10,6 +10,9 @@ interface TodoTabContextType {
   setOpenPicker: (isOpen: TodoInputActionItemType | null) => void;
   dueDate: Date | null;
   setDueDate: (date: Date | null) => void;
+  dueTime: Date | null;
+  setDueTime: (date: Date | null) => void;
+  resetInput: () => void;
 }
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
@@ -19,6 +22,12 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [openPicker, setOpenPicker] = useState(null);
   const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [dueTime, setDueTime] = useState<Date | null>(null);
+
+  const resetInput = () => {
+    setDueDate(null);
+    setDueTime(null);
+  }
 
   const handleSetEditingTodoId = (id: string | null) => {
     setEditingTodoId(id);
@@ -42,6 +51,9 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         setOpenPicker,
         dueDate,
         setDueDate,
+        dueTime,
+        setDueTime,
+        resetInput,
       }}
     >
       {children}

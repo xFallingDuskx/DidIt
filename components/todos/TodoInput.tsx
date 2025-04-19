@@ -8,7 +8,7 @@ import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, editingTodoId, setEditingTodoId, openPicker } = useTodoTab();
+  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput } = useTodoTab();
   const [text, setText] = useState('');
   const [inFocus, setInFocus] = useState(false);
 
@@ -27,6 +27,24 @@ export default function TodoInput() {
     setEditingTodoId(null);
     setText('');
   };
+
+  // Reset input if focus is lost for 3 seconds
+  useEffect(() => {
+    let timeout;
+    if (!inFocus && !openPicker) {
+      timeout = setTimeout(() => {
+        if (!inFocus) {
+          resetInput()
+        }
+      }, 3000);
+    }
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [inFocus, openPicker]);
 
   useEffect(() => {
     if (editingTodoId) {

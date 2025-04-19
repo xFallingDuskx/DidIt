@@ -15,11 +15,9 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
   const [date, setDate] = useState(value || new Date());
 
   const handleChange = (event: DateTimePickerEvent, selectedDate: Date) => {
-    console.log('selectedDate', selectedDate); // REMOVE
     setDate(selectedDate);
 
     if (Platform.OS === 'android') {
-      console.log('event.type', event.type); // REMOVE
       if (event.type === 'set') {
         // confirm
         onChange(event, selectedDate);

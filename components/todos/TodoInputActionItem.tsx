@@ -1,4 +1,5 @@
 import { FontAwesome6 } from '@expo/vector-icons';
+import moment from 'moment';
 import { Platform, Pressable, Text } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { join } from '../../utils';
@@ -22,14 +23,15 @@ const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
 };
 
 export default function TodoInputActionItem({ type, value }: TodoInputActionItemProps) {
-  const { inputRef, openPicker, setOpenPicker, dueDate, setDueDate } = useTodoTab();
+  const { inputRef, openPicker, setOpenPicker, dueDate, setDueDate, dueTime, setDueTime } = useTodoTab();
 
-  const handleChange = (event, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate;
-    console.log('currentDate', currentDate); // REMOVE
-
+  const handleChange = (__event, newValue: Date | undefined) => {
     if (type === 'dueDate') {
-      setDueDate(currentDate);
+      setDueDate(newValue);
+    }
+
+    if (type === 'dueTime') {
+      setDueTime(newValue);
     }
 
     setOpenPicker(null); // Close the picker
@@ -57,7 +59,7 @@ export default function TodoInputActionItem({ type, value }: TodoInputActionItem
       <DateTimePicker
         isOpen={openPicker === type}
         mode={type === 'dueDate' ? 'date' : 'time'}
-        value={dueDate}
+        value={type === 'dueDate' ? dueDate : dueTime}
         onChange={handleChange}
       />
     </>
