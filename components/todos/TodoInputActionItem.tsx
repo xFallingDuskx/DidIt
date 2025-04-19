@@ -25,7 +25,7 @@ const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
 export default function TodoInputActionItem({ type, value }: TodoInputActionItemProps) {
   const { inputRef, openPicker, setOpenPicker, dueDate, setDueDate, dueTime, setDueTime } = useTodoTab();
 
-  const handleChange = (__event, newValue: Date | undefined) => {
+  const handleChange = (__event, newValue: Date | null) => {
     if (type === 'dueDate') {
       setDueDate(newValue);
     }
