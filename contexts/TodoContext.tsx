@@ -1,6 +1,8 @@
+import moment from 'moment';
 import { createContext, ReactNode, useContext, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 import { TodoInputActionItemType } from '../components/todos/TodoInputActionItem';
+import { todos$ } from '../supalegend';
 
 interface TodoTabContextType {
   editingTodoId: string | null;
@@ -27,13 +29,20 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const resetInput = () => {
     setDueDate(null);
     setDueTime(null);
-  }
+  };
 
   const handleSetEditingTodoId = (id: string | null) => {
     setEditingTodoId(id);
-    // TASK: set time of editing todo
+    const todo = todos$.get()[id];
     if (id) {
       inputRef.current?.focus();
+
+      if (todo.due_date) {
+        setDueDate(moment(todo.due_date).toDate());
+      }
+      if (todo.due_time) {
+        setDueTime(moment.utc(todo.due_time, 'HH:mm').local().toDate());
+      }
     } else {
       // TASK; ensure date is cleared when editing is finished
       inputRef.current?.blur();

@@ -35,7 +35,7 @@ export default function TodoInput() {
     setText('');
   };
 
-  // Reset input if focus is lost for 3 seconds
+  // Reset input if focus is lost for 2 seconds
   useEffect(() => {
     let timeout;
     if (!inFocus && !openPicker) {
@@ -43,7 +43,7 @@ export default function TodoInput() {
         if (!inFocus) {
           resetInput();
         }
-      }, 3000);
+      }, 2000);
     }
 
     return () => {
