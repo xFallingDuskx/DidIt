@@ -2,5 +2,6 @@
 export { user$ } from './observerables/user';
 
 // Todos
-export { addTodo, deleteTodo, editTodo, toggleDone } from './actions/todos';
-export { todos$, activeTodos$ } from './observerables/todos';
+export { addTodo, deleteTodo, EditableTodo, editTodo, toggleDone } from './actions/todos';
+export { todos$ } from './observerables/todos';
+

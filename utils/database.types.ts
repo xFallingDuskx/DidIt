@@ -40,6 +40,8 @@ export type Database = {
           created_at: string | null
           deleted: boolean | null
           done: boolean | null
+          due_date: string | null
+          due_time: string | null
           id: string
           text: string | null
           updated_at: string | null
@@ -50,6 +52,8 @@ export type Database = {
           created_at?: string | null
           deleted?: boolean | null
           done?: boolean | null
+          due_date?: string | null
+          due_time?: string | null
           id?: string
           text?: string | null
           updated_at?: string | null
@@ -60,6 +64,8 @@ export type Database = {
           created_at?: string | null
           deleted?: boolean | null
           done?: boolean | null
+          due_date?: string | null
+          due_time?: string | null
           id?: string
           text?: string | null
           updated_at?: string | null

@@ -1,22 +1,23 @@
-import { observer } from '@legendapp/state/react';
+import { useSelector } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
 import { Dimensions, Text } from 'react-native';
-import { activeTodos$ } from '../../supalegend';
+import { todos$ } from '../../supalegend';
 import { Todo } from '../../utils';
 import TodoItem from './TodoItem';
 
-const TodoList = observer(() => {
-  // Get the activeTodos from the state and subscribe to updates
-  const activeTodos = Object.values(activeTodos$.get() || {});
-  const { width, height } = Dimensions.get('window');
+export default function TodoList() {
+  const allTodos = useSelector(todos$) || {};
+  const todos = Object.values(allTodos).filter((todo) => !todo.deleted);
 
   const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
-    <TodoItem todo={todo} isLastItem={index === activeTodos.length - 1} />
+    <TodoItem todo={todo} isLastItem={index === todos.length - 1} />
   );
-  if (activeTodos) {
+
+  const { width, height } = Dimensions.get('window');
+  if (todos && todos.length > 0) {
     return (
       <FlashList
-        data={activeTodos}
+        data={todos}
         renderItem={renderItem}
         estimatedItemSize={40}
         estimatedListSize={{
@@ -30,6 +31,4 @@ const TodoList = observer(() => {
   }
 
   return <Text>No activeTodos available</Text>;
-});
-
-export default TodoList;
+}

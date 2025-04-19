@@ -6,7 +6,7 @@ export const todos$ = observable(
   customSynced({
     supabase,
     collection: 'todos',
-    select: (from) => from.select('id,user_id,counter,text,done,created_at,updated_at,deleted'),
+    select: (from) => from.select('id,user_id,counter,text,done,created_at,updated_at,due_date,due_time,deleted'),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
     // Persist data and pending changes locally
@@ -19,8 +19,3 @@ export const todos$ = observable(
     },
   })
 );
-
-export const activeTodos$ = computed(() => {
-  const todos = todos$.get() || {};
-  return Object.values(todos).filter((todo) => !todo.deleted && !todo.done);
-});
