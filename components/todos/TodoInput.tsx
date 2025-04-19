@@ -1,26 +1,33 @@
 import { FontAwesome6 } from '@expo/vector-icons';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
-import { addTodo, editTodo, todos$ } from '../../supalegend';
+import { addTodo, EditableTodo, editTodo, todos$ } from '../../supalegend';
 import { join } from '../../utils';
 import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput } = useTodoTab();
+  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput, dueDate, dueTime } = useTodoTab();
   const [text, setText] = useState('');
   const [inFocus, setInFocus] = useState(false);
 
   const handleSubmitEditing = ({ nativeEvent: { text } }) => {
     setText('');
+    resetInput();
+    const todoFields: EditableTodo = {
+      text,
+      due_date: dueDate ? moment.utc(dueDate).format('YYYY-MM-DD') : null,
+      due_time: dueTime ? moment.utc(dueTime).format('HH:mm') : null,
+    };
     if (editingTodoId) {
-      editTodo(editingTodoId, text);
+      editTodo(editingTodoId, todoFields);
       setEditingTodoId(null);
       return;
     }
 
-    addTodo(text);
+    addTodo(todoFields);
   };
 
   const handleCancelEditing = () => {
@@ -34,7 +41,7 @@ export default function TodoInput() {
     if (!inFocus && !openPicker) {
       timeout = setTimeout(() => {
         if (!inFocus) {
-          resetInput()
+          resetInput();
         }
       }, 3000);
     }

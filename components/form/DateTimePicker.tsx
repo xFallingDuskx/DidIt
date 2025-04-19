@@ -8,7 +8,7 @@ interface DateTimePickerProps {
   isOpen: boolean;
   mode: 'date' | 'time';
   value: Date | null;
-  onChange: (event: DateTimePickerEvent, selectedDate: Date | undefined) => void;
+  onChange: (event: DateTimePickerEvent, selectedDate: Date | null) => void;
 }
 
 export default function DateTimePicker({ isOpen, value, onChange, ...props }: DateTimePickerProps) {
@@ -24,7 +24,7 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
       }
       if (event.type === 'dismissed') {
         // clear
-        onChange(event, undefined);
+        onChange(event, null);
       }
     }
   };
@@ -34,7 +34,7 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
   };
 
   const handleClear = () => {
-    onChange(null, undefined);
+    onChange(null, null);
   };
 
   const handleConfirm = () => {

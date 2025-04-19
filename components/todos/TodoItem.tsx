@@ -1,4 +1,5 @@
 import { FontAwesome6 } from '@expo/vector-icons';
+import moment from 'moment';
 import { Alert, Pressable, Text, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
@@ -46,13 +47,23 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <Text
-        onPress={handleEditPress}
-        onLongPress={handleDeletePress}
-        className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}
-      >
-        {todo.text}
-      </Text>
+      <View className='flex'>
+        <Text
+          onPress={handleEditPress}
+          onLongPress={handleDeletePress}
+          className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}
+        >
+          {todo.text}
+        </Text>
+        {todo.due_date && (
+          <View className='flex-row items-center gap-1'>
+            <Text className='font-body text-sm text-gray-500'>{moment(todo.due_date).format('MMM D, YYYY')}</Text>
+            {todo.due_time && (
+              <Text className='font-body text-sm text-gray-500'>{'@'} {moment(todo.due_time, 'HH:mm').format('h:mm A')}</Text>
+            )}
+          </View>
+        )}
+      </View>
     </View>
   );
 }
