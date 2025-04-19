@@ -44,7 +44,6 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         setDueTime(moment.utc(todo.due_time, 'HH:mm').local().toDate());
       }
     } else {
-      // TASK; ensure date is cleared when editing is finished
       inputRef.current?.blur();
       Keyboard.dismiss();
     }

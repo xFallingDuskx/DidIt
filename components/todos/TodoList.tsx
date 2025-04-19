@@ -13,6 +13,7 @@ const TodoList = observer(() => {
   const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
     <TodoItem todo={todo} isLastItem={index === activeTodos.length - 1} />
   );
+  
   if (activeTodos) {
     return (
       <FlashList
