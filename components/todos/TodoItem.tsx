@@ -59,7 +59,9 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           <View className='flex-row items-center gap-1'>
             <Text className='font-body text-sm text-gray-500'>{moment(todo.due_date).format('MMM D, YYYY')}</Text>
             {todo.due_time && (
-              <Text className='font-body text-sm text-gray-500'>{'@'} {moment.utc(todo.due_time, 'HH:mm').local().format('h:mm A')}</Text>
+              <Text className='font-body text-sm text-gray-500'>
+                {'@'} {moment.utc(todo.due_time, 'HH:mm').local().format('h:mm A')}
+              </Text>
             )}
           </View>
         )}

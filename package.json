@@ -50,6 +50,7 @@
     "ios": "expo run:ios",
     "iphone": "expo run:ios --device 00008101-001650461151001E",
     "web": "expo start --web",
-    "supa/types": "supabase gen types typescript --local > utils/database.types.ts"
+    "supa/types": "supabase gen types typescript --local > utils/database.types.ts",
+    "supa/migrate": "supabase migration up && supabase db push && npm run supa/types"
   }
 }
