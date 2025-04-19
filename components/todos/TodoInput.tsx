@@ -1,6 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { KeyboardAvoidingView, Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { addTodo, editTodo, todos$ } from '../../supalegend';
 import { join } from '../../utils';
@@ -8,7 +8,7 @@ import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, editingTodoId, setEditingTodoId } = useTodoTab();
+  const { inputRef, editingTodoId, setEditingTodoId, openPicker } = useTodoTab();
   const [text, setText] = useState('');
   const [inFocus, setInFocus] = useState(false);
 
@@ -44,8 +44,8 @@ export default function TodoInput() {
   }, [editingTodoId]);
 
   return (
-    <View className={join('flex w-screen')}>
-      {inFocus && <TodoInputActionBar />}
+    <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
+      {(inFocus || openPicker) && <TodoInputActionBar />}
       <View
         className={join(
           'flex-row gap-1 items-center w-full pt-3 px-4 pb-3',
@@ -67,6 +67,6 @@ export default function TodoInput() {
           </Pressable>
         )}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
