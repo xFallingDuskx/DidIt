@@ -72,12 +72,10 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
         {
           label: 'Clear',
           onPress: handleClear,
-          closeModal: true,
         },
         {
           label: 'Confirm',
           onPress: handleConfirm,
-          closeModal: true,
         },
       ]}
     >

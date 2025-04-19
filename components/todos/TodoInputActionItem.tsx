@@ -7,19 +7,30 @@ import DateTimePicker from '../form/DateTimePicker';
 export type TodoInputActionItemType = 'dueDate' | 'dueTime';
 interface TodoInputActionItemProps {
   type: TodoInputActionItemType;
+  value?: string;
 }
 
-const TypeMap: Record<TodoInputActionItemType, { icon: string; label: string }> = {
-  dueDate: { icon: 'calendar-plus', label: 'Due Date' },
+interface TodoInputActionItemInfo {
+  icon: string;
+  label: string;
+  iconForValue?: string;
+}
+
+const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
+  dueDate: { icon: 'calendar-plus', label: 'Due Date', iconForValue: 'calendar' },
   dueTime: { icon: 'clock', label: 'Due Time' },
 };
 
-export default function TodoInputActionItem({ type }: TodoInputActionItemProps) {
-  const { inputRef, openPicker, setOpenPicker } = useTodoTab();
+export default function TodoInputActionItem({ type, value }: TodoInputActionItemProps) {
+  const { inputRef, openPicker, setOpenPicker, dueDate, setDueDate } = useTodoTab();
 
   const handleChange = (event, selectedDate: Date | undefined) => {
     const currentDate = selectedDate;
     console.log('currentDate', currentDate); // REMOVE
+
+    if (type === 'dueDate') {
+      setDueDate(currentDate);
+    }
 
     setOpenPicker(null); // Close the picker
     inputRef.current?.focus(); // Focus back on the input
@@ -36,13 +47,17 @@ export default function TodoInputActionItem({ type }: TodoInputActionItemProps) 
           Platform.OS === 'ios' && 'shadow'
         )}
       >
-        <FontAwesome6 name={TypeMap[type].icon} size={16} color='black' />
-        <Text className='font-body-light'>{TypeMap[type].label}</Text>
+        <FontAwesome6
+          name={value && TypeMap[type].iconForValue ? TypeMap[type].iconForValue : TypeMap[type].icon}
+          size={16}
+          color='black'
+        />
+        <Text className='font-body-light'>{value || TypeMap[type].label}</Text>
       </Pressable>
       <DateTimePicker
         isOpen={openPicker === type}
         mode={type === 'dueDate' ? 'date' : 'time'}
-        value={new Date()}
+        value={dueDate}
         onChange={handleChange}
       />
     </>

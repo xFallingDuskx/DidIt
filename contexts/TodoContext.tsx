@@ -8,6 +8,8 @@ interface TodoTabContextType {
   inputRef: React.RefObject<TextInput>;
   openPicker: TodoInputActionItemType | null;
   setOpenPicker: (isOpen: TodoInputActionItemType | null) => void;
+  dueDate: Date | null;
+  setDueDate: (date: Date | null) => void;
 }
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
@@ -16,12 +18,15 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const inputRef = useRef<TextInput>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [openPicker, setOpenPicker] = useState(null);
+  const [dueDate, setDueDate] = useState<Date | null>(null);
 
   const handleSetEditingTodoId = (id: string | null) => {
     setEditingTodoId(id);
+    // TASK: set time of editing todo
     if (id) {
       inputRef.current?.focus();
     } else {
+      // TASK; ensure date is cleared when editing is finished
       inputRef.current?.blur();
       Keyboard.dismiss();
     }
@@ -29,7 +34,15 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
 
   return (
     <TodoContext.Provider
-      value={{ inputRef, editingTodoId, setEditingTodoId: handleSetEditingTodoId, openPicker, setOpenPicker }}
+      value={{
+        inputRef,
+        editingTodoId,
+        setEditingTodoId: handleSetEditingTodoId,
+        openPicker,
+        setOpenPicker,
+        dueDate,
+        setDueDate,
+      }}
     >
       {children}
     </TodoContext.Provider>
