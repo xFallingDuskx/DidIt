@@ -46,8 +46,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "prebuild/ios": "expo prebuild --no-install --platform ios",
-    "prebuild/a": "expo prebuild --no-install --platform android",
+    "prebuild/i": "expo prebuild --platform ios",
+    "prebuild/a": "expo prebuild --platform android",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "iphone": "expo run:ios --device 00008101-001650461151001E",

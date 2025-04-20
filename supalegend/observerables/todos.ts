@@ -1,4 +1,4 @@
-import { computed, observable } from '@legendapp/state';
+import { observable } from '@legendapp/state';
 import { supabase } from '../../supabase/index';
 import { customSynced } from '../config';
 
