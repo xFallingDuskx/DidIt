@@ -1,12 +1,13 @@
 import moment from 'moment';
 import { View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
+import { isInCurrentYear } from '../../utils';
 import DateTimePicker from '../form/DateTimePicker';
 import TodoInputActionItem from './TodoInputActionItem';
-import { isInCurrentYear } from '../../utils';
 
 export default function TodoInputActionBar() {
-  const { dueDate, dueTime, openPicker, setDueDate, setDueTime, setOpenPicker, inputRef } = useTodoTab();
+  const { dueDate, dueTime, openPicker, setDueDate, setDueTime, setOpenPicker, inputRef, showDetails, setShowDetails } =
+    useTodoTab();
 
   const handleDueChange = (__event, newValue: Date | null) => {
     if (openPicker === 'dueDate') {
@@ -24,6 +25,7 @@ export default function TodoInputActionBar() {
   return (
     <>
       <View className='flex-row items-center gap-2 pt-4 px-4 pb-2 overflow-x-auto'>
+        {!showDetails && <TodoInputActionItem type='details' onPress={() => setShowDetails(true)} />}
         <TodoInputActionItem
           type='dueDate'
           onPress={() => setOpenPicker('dueDate')}

@@ -9,7 +9,8 @@ import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput, dueDate, dueTime } = useTodoTab();
+  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput, dueDate, dueTime, showDetails } =
+    useTodoTab();
   const [text, setText] = useState('');
   const [inFocus, setInFocus] = useState(false);
 
@@ -71,26 +72,24 @@ export default function TodoInput() {
   return (
     <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
       {(inFocus || openPicker) && <TodoInputActionBar />}
-      <View
-        className={join(
-          'flex-row gap-1 items-center w-full pt-3 px-4 pb-3',
-          inFocus ? 'bg-surface' : 'bg-surface-tab mt-2'
-        )}
-      >
-        <Input
-          ref={inputRef}
-          value={text}
-          onChangeText={(text) => setText(text)}
-          onSubmitEditing={handleSubmitEditing}
-          setInFocus={setInFocus}
-          placeholder='What do you want to do next?'
-          className={join('input-rounded flex-1 mb-0 h-12 !py-0', inFocus && 'border-accent')}
-        />
-        {editingTodoId && (
-          <Pressable className='bg-accent rounded-full py-2 px-3' onPress={handleCancelEditing}>
-            <FontAwesome6 name='xmark' size={20} color='#fff' />
-          </Pressable>
-        )}
+      <View className={join('flex w-full pt-3 px-4 pb-3', inFocus ? 'bg-surface' : 'bg-surface-tab mt-2')}>
+        <View className={join('flex-row gap-1 items-center w-full')}>
+          <Input
+            ref={inputRef}
+            value={text}
+            onChangeText={(text) => setText(text)}
+            onSubmitEditing={handleSubmitEditing}
+            setInFocus={setInFocus}
+            placeholder='What do you want to do next?'
+            className={join('input-rounded flex-1 !mb-0 h-12 !py-0', inFocus && 'border-accent')}
+          />
+          {editingTodoId && (
+            <Pressable className='bg-accent rounded-full py-2 px-3' onPress={handleCancelEditing}>
+              <FontAwesome6 name='xmark' size={20} color='#fff' />
+            </Pressable>
+          )}
+        </View>
+        {showDetails && <Input placeholder='Add details...' setInFocus={setInFocus} className='px-4' />}
       </View>
     </KeyboardAvoidingView>
   );

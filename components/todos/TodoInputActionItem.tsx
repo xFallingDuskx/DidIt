@@ -2,7 +2,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { Platform, Pressable, Text } from 'react-native';
 import { join } from '../../utils';
 
-export type TodoInputActionItemType = 'dueDate' | 'dueTime';
+export type TodoInputActionItemType = 'dueDate' | 'dueTime' | 'details';
 interface TodoInputActionItemProps {
   type: TodoInputActionItemType;
   onPress: () => void;
@@ -18,6 +18,7 @@ interface TodoInputActionItemInfo {
 const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
   dueDate: { icon: 'calendar-plus', label: 'Date', iconForValue: 'calendar' },
   dueTime: { icon: 'clock', label: 'Time' },
+  details: { icon: 'd', label: 'Details' },
 };
 
 export default function TodoInputActionItem({ type, value, onPress }: TodoInputActionItemProps) {
