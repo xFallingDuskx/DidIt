@@ -1,6 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import moment from 'moment';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
 import { isInCurrentYear, isTodoPastDue, Todo } from '../../utils';
@@ -9,10 +9,12 @@ import T from '../util/T';
 
 interface TodoItemProps {
   todo: Todo;
+  isFirstItem?: boolean;
   isLastItem: boolean;
+  isForSection?: boolean;
 }
 
-export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
+export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection }: TodoItemProps) {
   const { setEditingTodoId } = useTodoTab();
 
   const handleStatusPress = () => {
@@ -39,7 +41,15 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
   };
 
   return (
-    <View key={todo.id} className={join('flex-row gap-2 p-4 pl-2 bg-surface', isLastItem && 'rounded-b-xl')}>
+    <View
+      key={todo.id}
+      className={join(
+        'flex-row gap-2 p-4 pl-2 bg-surface',
+        isLastItem && 'rounded-b-xl',
+        isFirstItem && 'rounded-t-xl',
+        isForSection && 'mb-5'
+      )}
+    >
       <Pressable onPress={handleStatusPress} className='pl-2'>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
