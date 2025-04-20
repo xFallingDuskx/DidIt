@@ -51,7 +51,7 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
         <Text
           onPress={handleEditPress}
           onLongPress={handleDeletePress}
-          className={join('flex-1 text-lg font-body-medium', todo.done && 'line-through')}
+          className={join('flex-1 pr-4 text-lg font-body-medium', todo.done && 'line-through')}
         >
           {todo.text}
         </Text>
@@ -59,7 +59,7 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           <Text
             onPress={handleEditPress}
             onLongPress={handleDeletePress}
-            className={join('font-body text-sm text-gray-500', todo.done && 'line-through')}
+            className={join('flex-1 pr-4 font-body text-sm text-gray-500', todo.done && 'line-through')}
           >
             {todo.details}
           </Text>
