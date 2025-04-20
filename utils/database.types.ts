@@ -39,6 +39,7 @@ export type Database = {
           counter: number
           created_at: string | null
           deleted: boolean | null
+          details: string | null
           done: boolean | null
           due_date: string | null
           due_time: string | null
@@ -51,6 +52,7 @@ export type Database = {
           counter?: number
           created_at?: string | null
           deleted?: boolean | null
+          details?: string | null
           done?: boolean | null
           due_date?: string | null
           due_time?: string | null
@@ -63,6 +65,7 @@ export type Database = {
           counter?: number
           created_at?: string | null
           deleted?: boolean | null
+          details?: string | null
           done?: boolean | null
           due_date?: string | null
           due_time?: string | null

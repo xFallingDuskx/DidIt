@@ -5,3 +5,6 @@ export { default as join } from './join';
 // Types
 type Todo = Tables<'todos'>;
 export type { Todo };
+
+// Date & Time
+export { isInCurrentYear } from './datetime';

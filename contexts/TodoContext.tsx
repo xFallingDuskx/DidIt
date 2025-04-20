@@ -1,8 +1,6 @@
-import moment from 'moment';
 import { createContext, ReactNode, useContext, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 import { TodoInputActionItemType } from '../components/todos/TodoInputActionItem';
-import { todos$ } from '../supalegend';
 
 interface TodoTabContextType {
   editingTodoId: string | null;
@@ -14,6 +12,8 @@ interface TodoTabContextType {
   setDueDate: (date: Date | null) => void;
   dueTime: Date | null;
   setDueTime: (date: Date | null) => void;
+  showDetails: boolean;
+  setShowDetails: (show: boolean) => void;
   resetInput: () => void;
 }
 
@@ -25,24 +25,18 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [openPicker, setOpenPicker] = useState(null);
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   const resetInput = () => {
     setDueDate(null);
     setDueTime(null);
+    setShowDetails(false);
   };
 
   const handleSetEditingTodoId = (id: string | null) => {
     setEditingTodoId(id);
-    const todo = todos$.get()[id];
     if (id) {
       inputRef.current?.focus();
-
-      if (todo.due_date) {
-        setDueDate(moment(todo.due_date).toDate());
-      }
-      if (todo.due_time) {
-        setDueTime(moment.utc(todo.due_time, 'HH:mm').local().toDate());
-      }
     } else {
       inputRef.current?.blur();
       Keyboard.dismiss();
@@ -61,6 +55,8 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         setDueDate,
         dueTime,
         setDueTime,
+        showDetails,
+        setShowDetails,
         resetInput,
       }}
     >

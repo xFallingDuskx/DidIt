@@ -1,4 +1,4 @@
-import { computed, observable } from '@legendapp/state';
+import { observable } from '@legendapp/state';
 import { supabase } from '../../supabase/index';
 import { customSynced } from '../config';
 
@@ -6,7 +6,8 @@ export const todos$ = observable(
   customSynced({
     supabase,
     collection: 'todos',
-    select: (from) => from.select('id,user_id,counter,text,done,created_at,updated_at,due_date,due_time,deleted'),
+    select: (from) =>
+      from.select('id,user_id,counter,text,details,done,created_at,updated_at,due_date,due_time,deleted'),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
     // Persist data and pending changes locally

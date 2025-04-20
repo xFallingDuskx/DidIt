@@ -1,13 +1,11 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import moment from 'moment';
 import { Platform, Pressable, Text } from 'react-native';
-import { useTodoTab } from '../../contexts/TodoContext';
 import { join } from '../../utils';
-import DateTimePicker from '../form/DateTimePicker';
 
-export type TodoInputActionItemType = 'dueDate' | 'dueTime';
+export type TodoInputActionItemType = 'dueDate' | 'dueTime' | 'details';
 interface TodoInputActionItemProps {
   type: TodoInputActionItemType;
+  onPress: () => void;
   value?: string;
 }
 
@@ -18,50 +16,26 @@ interface TodoInputActionItemInfo {
 }
 
 const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
-  dueDate: { icon: 'calendar-plus', label: 'Due Date', iconForValue: 'calendar' },
-  dueTime: { icon: 'clock', label: 'Due Time' },
+  dueDate: { icon: 'calendar-plus', label: 'Date', iconForValue: 'calendar' },
+  dueTime: { icon: 'clock', label: 'Time' },
+  details: { icon: 'd', label: 'Details' },
 };
 
-export default function TodoInputActionItem({ type, value }: TodoInputActionItemProps) {
-  const { inputRef, openPicker, setOpenPicker, dueDate, setDueDate, dueTime, setDueTime } = useTodoTab();
-
-  const handleChange = (__event, newValue: Date | null) => {
-    if (type === 'dueDate') {
-      setDueDate(newValue);
-    }
-
-    if (type === 'dueTime') {
-      setDueTime(newValue);
-    }
-
-    setOpenPicker(null); // Close the picker
-    inputRef.current?.focus(); // Focus back on the input
-  };
-
+export default function TodoInputActionItem({ type, value, onPress }: TodoInputActionItemProps) {
   return (
-    <>
-      <Pressable
-        onPress={() => {
-          setOpenPicker(type);
-        }}
-        className={join(
-          'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full',
-          Platform.OS === 'ios' && 'shadow'
-        )}
-      >
-        <FontAwesome6
-          name={value && TypeMap[type].iconForValue ? TypeMap[type].iconForValue : TypeMap[type].icon}
-          size={16}
-          color='black'
-        />
-        <Text className='font-body-light'>{value || TypeMap[type].label}</Text>
-      </Pressable>
-      <DateTimePicker
-        isOpen={openPicker === type}
-        mode={type === 'dueDate' ? 'date' : 'time'}
-        value={type === 'dueDate' ? dueDate : dueTime}
-        onChange={handleChange}
+    <Pressable
+      onPress={onPress}
+      className={join(
+        'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full',
+        Platform.OS === 'ios' && 'shadow'
+      )}
+    >
+      <FontAwesome6
+        name={value && TypeMap[type].iconForValue ? TypeMap[type].iconForValue : TypeMap[type].icon}
+        size={16}
+        color='black'
       />
-    </>
+      <Text className='font-body-medium'>{value || TypeMap[type].label}</Text>
+    </Pressable>
   );
 }

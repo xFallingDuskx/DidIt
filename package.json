@@ -46,13 +46,14 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "prebuild/ios": "expo prebuild --no-install --platform ios",
-    "prebuild/a": "expo prebuild --no-install --platform android",
+    "prebuild/i": "expo prebuild --platform ios",
+    "prebuild/a": "expo prebuild --platform android",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "iphone": "expo run:ios --device 00008101-001650461151001E",
     "web": "expo start --web",
     "supa/types": "supabase gen types typescript --local > utils/database.types.ts",
-    "supa/migrate": "supabase migration up && supabase db push && npm run supa/types"
+    "supa/migrate": "supabase migration up && npm run supa/types",
+    "supa/push": "supabase db push"
   }
 }
