@@ -14,7 +14,7 @@ interface TodoItemProps {
   isForSection?: boolean;
 }
 
-export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection }: TodoItemProps) {
+export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection = false }: TodoItemProps) {
   const { setEditingTodoId } = useTodoTab();
 
   const handleStatusPress = () => {
@@ -78,14 +78,17 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection }
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
-            <T className={join('text-sm', isTodoPastDue(todo) ? 'text-danger' : 'text-muted')}>
-              {isInCurrentYear(todo.due_date)
-                ? moment(todo.due_date).format('ddd MMM D')
-                : moment(todo.due_date).format('MMM D, YYYY')}
-            </T>
+            {!isForSection && (
+              <T className={join('text-sm', isTodoPastDue(todo) ? 'text-danger' : 'text-muted')}>
+                {isInCurrentYear(todo.due_date)
+                  ? moment(todo.due_date).format('ddd MMM D')
+                  : moment(todo.due_date).format('MMM D, YYYY')}
+              </T>
+            )}
             {todo.due_time && (
               <T className={join('text-sm', isTodoPastDue(todo) ? 'text-danger' : 'text-muted')}>
-                {moment.utc(todo.due_time, 'HH:mm').local().format('@ h:mma')}
+                {!isForSection ? '@ ' : ''}
+                {moment.utc(todo.due_time, 'HH:mm').local().format('h:mma')}
               </T>
             )}
           </View>
