@@ -24,4 +24,4 @@ export { default as TodoList } from './todos/TodoList';
 // Util
 export { default as ScreenView } from './util/ScreenView';
 export { default as TabView } from './util/TabView';
-
+export { default as T } from './util/T';
