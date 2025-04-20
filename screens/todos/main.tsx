@@ -1,14 +1,14 @@
-import { TabView, TodoInput, TodoList } from '../../components';
-import { T } from '../../components';
+import { T, TabView, TodoInput, TodoList, TodoSelect } from '../../components';
 import { TodoTabProvider } from '../../contexts/TodoContext';
 
 export default function Screen() {
   return (
     <TodoTabProvider>
-      <TabView className='relative items-center !pb-0 justify-start'>
-        <T font='header' weight='semibold' className='text-2xl my-4'>
+      <TabView className='relative items-center !pb-0 justify-start pt-4'>
+        <T font='header' weight='semibold' className='text-2xl mb-1'>
           Todos
         </T>
+        <TodoSelect />
         <TodoList />
         <TodoInput />
       </TabView>
