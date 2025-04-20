@@ -33,8 +33,8 @@ export default function TodoInputActionBar() {
             !dueDate
               ? undefined
               : isInCurrentYear(dueDate)
-              ? moment(dueDate).format('ddd MMM DD')
-              : moment(dueDate).format('MMM Do, YYYY')
+              ? moment(dueDate).format('ddd MMM D')
+              : moment(dueDate).format('MMM D, YYYY')
           }
         />
         {dueDate && (

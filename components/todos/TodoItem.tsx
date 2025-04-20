@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Alert, Pressable, Text, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
-import { Todo } from '../../utils';
+import { isInCurrentYear, Todo } from '../../utils';
 import join from '../../utils/join';
 
 interface TodoItemProps {
@@ -66,10 +66,14 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
-            <Text className='font-body text-sm text-gray-500'>{moment(todo.due_date).format('MMM D, YYYY')}</Text>
+            <Text className='font-body text-sm text-gray-500'>
+              {isInCurrentYear(todo.due_date)
+                ? moment(todo.due_date).format('ddd MMM D')
+                : moment(todo.due_date).format('MMM D, YYYY')}
+            </Text>
             {todo.due_time && (
               <Text className='font-body text-sm text-gray-500'>
-                {'@'} {moment.utc(todo.due_time, 'HH:mm').local().format('h:mm A')}
+                {moment.utc(todo.due_time, 'HH:mm').local().format('@ h:mma')}
               </Text>
             )}
           </View>
