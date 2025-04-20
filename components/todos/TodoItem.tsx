@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Alert, Pressable, Text, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
-import { isInCurrentYear, Todo } from '../../utils';
+import { isInCurrentYear, isTodoPastDue, Todo } from '../../utils';
 import join from '../../utils/join';
 import T from '../util/T';
 
@@ -39,8 +39,8 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
   };
 
   return (
-    <View key={todo.id} className={join('flex-row gap-2 p-4 bg-surface', isLastItem && 'rounded-b-xl')}>
-      <Pressable onPress={handleStatusPress}>
+    <View key={todo.id} className={join('flex-row gap-2 p-4 pl-2 bg-surface', isLastItem && 'rounded-b-xl')}>
+      <Pressable onPress={handleStatusPress} className='pl-2'>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
           size={20}
@@ -61,20 +61,20 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
           <T
             onPress={handleEditPress}
             onLongPress={handleDeletePress}
-            className={join('flex-1 pr-4 text-sm text-gray-500', todo.done && 'line-through')}
+            className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}
           >
             {todo.details}
           </T>
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
-            <T className='text-sm text-gray-500'>
+            <T className={join('text-sm', isTodoPastDue(todo) ? 'text-danger' : 'text-muted')}>
               {isInCurrentYear(todo.due_date)
                 ? moment(todo.due_date).format('ddd MMM D')
                 : moment(todo.due_date).format('MMM D, YYYY')}
             </T>
             {todo.due_time && (
-              <T className='text-sm text-gray-500'>
+              <T className={join('text-sm', isTodoPastDue(todo) ? 'text-danger' : 'text-muted')}>
                 {moment.utc(todo.due_time, 'HH:mm').local().format('@ h:mma')}
               </T>
             )}

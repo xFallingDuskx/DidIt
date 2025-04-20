@@ -11,6 +11,7 @@ module.exports = {
         input: '#f1f5f9', // slate-100
         success: '#16a34a', // green-500
         muted: '#64748b', // slate-500
+        danger: '#ef4444', // red-500
       },
       fontFamily: {
         // Brand Fonts - Montserrat
