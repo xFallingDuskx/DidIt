@@ -9,8 +9,19 @@ import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput, dueDate, dueTime, showDetails } =
-    useTodoTab();
+  const {
+    inputRef,
+    editingTodoId,
+    setEditingTodoId,
+    openPicker,
+    resetInput,
+    dueDate,
+    setDueDate,
+    setDueTime,
+    dueTime,
+    showDetails,
+    setShowDetails,
+  } = useTodoTab();
   const [text, setText] = useState('');
   const [details, setDetails] = useState('');
   const [inFocus, setInFocus] = useState(false);
@@ -65,11 +76,20 @@ export default function TodoInput() {
 
   useEffect(() => {
     if (editingTodoId) {
-      // Fetch the todo from the database and set it to the text state
-      // This is a placeholder, replace with actual fetch logic
-      const text = todos$.get()[editingTodoId]?.text;
-      if (text) {
-        setText(text);
+      const todo = todos$.get()[editingTodoId];
+      if (!todo) return;
+
+      setText(todo.text);
+
+      if (todo.details) {
+        setShowDetails(true);
+        setDetails(todo.details);
+      }
+      if (todo.due_date) {
+        setDueDate(moment(todo.due_date).toDate());
+      }
+      if (todo.due_time) {
+        setDueTime(moment.utc(todo.due_time, 'HH:mm').local().toDate());
       }
     }
 
