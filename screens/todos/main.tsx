@@ -1,4 +1,4 @@
-import { T, TabView, TodoInput, TodoList, TodoSelect } from '../../components';
+import { T, TabView, TodoInput, TodoDisplay, TodoSelect } from '../../components';
 import { TodoTabProvider } from '../../contexts/TodoContext';
 
 export default function Screen() {
@@ -9,7 +9,7 @@ export default function Screen() {
           Todos
         </T>
         <TodoSelect />
-        <TodoList />
+        <TodoDisplay />
         <TodoInput />
       </TabView>
     </TodoTabProvider>

@@ -1,5 +1,5 @@
 import { useSelector } from '@legendapp/state/react';
-import moment from 'moment';
+import { isTodoPastDue, Todo } from '../../utils';
 import { todos$ } from '../observerables/todos';
 
 export default function useTodos() {
@@ -10,15 +10,15 @@ export default function useTodos() {
 
   // For 'all' view, sort by created_at
   const incompleteTodosAll = incompleteTodos.sort((a, b) => {
-    return a.created_at.localeCompare(b.created_at);
+    return (a.created_at ?? '').localeCompare(b.created_at ?? '');
   });
   const completedTodosAll = completedTodos.sort((a, b) => {
-    return a.created_at.localeCompare(b.created_at);
+    return (a.created_at ?? '').localeCompare(b.created_at ?? '');
   });
   const todosAll = [...incompleteTodosAll, ...completedTodosAll];
 
   // For 'by date' view, sort by date
-  const todosByDate = todosAll.reduce((acc, todo) => {
+  const todosByDate: Record<string, Todo[]> = todosAll.reduce((acc, todo) => {
     const date = todo.due_date;
     if (!date) {
       return acc;
@@ -35,11 +35,9 @@ export default function useTodos() {
   const todosUnplanned = todosAll.filter((todo) => !todo.due_date);
 
   // For 'past due' view, filter todos with past due date
-  const todosPastDue = incompleteTodos
-    .filter((todo) => todo.due_date && moment(todo.due_date).isBefore(moment(), 'day'))
-    .sort((a, b) => {
-      return a.due_date.localeCompare(b.due_date);
-    });
+  const todosPastDue = incompleteTodos.filter(isTodoPastDue).sort((a, b) => {
+    return a.due_date.localeCompare(b.due_date);
+  });
 
   return { todos: activeTodos, todosAll, todosByDate, todosUnplanned, todosPastDue };
 }

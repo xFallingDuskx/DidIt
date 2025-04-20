@@ -1,35 +1,56 @@
-import { useSelector } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
 import { Dimensions } from 'react-native';
-import { todos$ } from '../../supalegend';
+import { useTodoTab } from '../../contexts/TodoContext';
 import { Todo } from '../../utils';
-import T from '../util/T';
 import TodoItem from './TodoItem';
+import TodoViewPlaceholder from './TodoViewPlaceholder';
 
-export default function TodoList() {
-  const allTodos = useSelector(todos$) || {};
-  const todos = Object.values(allTodos).filter((todo) => !todo.deleted);
+interface TodoListProps {
+  todosAll: Todo[];
+  todosByDate: Record<string, Todo[]>;
+  todosUnplanned: Todo[];
+  todosPastDue: Todo[];
+}
+
+export default function TodoList({ todosAll, todosUnplanned, todosPastDue }: TodoListProps) {
+  const { tabView } = useTodoTab();
+
+  let chosenTodos: Todo[] = [];
+  switch (tabView) {
+    case 'all':
+      chosenTodos = todosAll;
+      break;
+    case 'by date':
+      // TASK: show todos by date
+      chosenTodos = todosAll;
+      break;
+    case 'unplanned':
+      chosenTodos = todosUnplanned;
+      break;
+    case 'past due':
+      chosenTodos = todosPastDue;
+      break;
+    default:
+      break;
+  }
 
   const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
-    <TodoItem todo={todo} isLastItem={index === todos.length - 1} />
+    <TodoItem todo={todo} isLastItem={index === chosenTodos.length - 1} />
   );
 
   const { width, height } = Dimensions.get('window');
-  if (todos && todos.length > 0) {
-    return (
-      <FlashList
-        data={todos}
-        renderItem={renderItem}
-        estimatedItemSize={40}
-        estimatedListSize={{
-          height: height,
-          width: width,
-        }}
-        showsVerticalScrollIndicator={false}
-        className='bg-surface-tab rounded-xl '
-      />
-    );
-  }
-
-  return <T>No activeTodos available</T>;
+  return (
+    <FlashList
+      data={chosenTodos}
+      renderItem={renderItem}
+      estimatedItemSize={40}
+      estimatedListSize={{
+        height: height,
+        width: width,
+      }}
+      showsVerticalScrollIndicator={false}
+      className='bg-surface-tab rounded-xl'
+      ListEmptyComponent={<TodoViewPlaceholder />}
+    />
+  );
 }
