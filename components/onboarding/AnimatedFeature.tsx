@@ -1,5 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { Animated, Text } from 'react-native';
+import { Animated } from 'react-native';
+import T from '../util/T';
 
 interface AnimatedFeatureProps {
   translateValue: Animated.Value;
@@ -11,7 +12,9 @@ export default function AnimatedFeature({ translateValue, iconName, featureText 
   return (
     <Animated.View className='flex-row items-center gap-3' style={{ transform: [{ translateX: translateValue }] }}>
       <FontAwesome6 name={iconName} size={24} />
-      <Text className='text-4xl font-header'>{featureText}</Text>
+      <T font='header' className='text-4xl'>
+        {featureText}
+      </T>
     </Animated.View>
   );
 }

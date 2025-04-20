@@ -5,6 +5,7 @@ import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
 import { isInCurrentYear, Todo } from '../../utils';
 import join from '../../utils/join';
+import T from '../util/T';
 
 interface TodoItemProps {
   todo: Todo;
@@ -48,33 +49,34 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
         />
       </Pressable>
       <View className='flex'>
-        <Text
+        <T
+          weight='medium'
           onPress={handleEditPress}
           onLongPress={handleDeletePress}
-          className={join('flex-1 pr-4 text-lg font-body-medium', todo.done && 'line-through')}
+          className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}
         >
           {todo.text}
-        </Text>
+        </T>
         {todo.details && (
-          <Text
+          <T
             onPress={handleEditPress}
             onLongPress={handleDeletePress}
-            className={join('flex-1 pr-4 font-body text-sm text-gray-500', todo.done && 'line-through')}
+            className={join('flex-1 pr-4 text-sm text-gray-500', todo.done && 'line-through')}
           >
             {todo.details}
-          </Text>
+          </T>
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
-            <Text className='font-body text-sm text-gray-500'>
+            <T className='text-sm text-gray-500'>
               {isInCurrentYear(todo.due_date)
                 ? moment(todo.due_date).format('ddd MMM D')
                 : moment(todo.due_date).format('MMM D, YYYY')}
-            </Text>
+            </T>
             {todo.due_time && (
-              <Text className='font-body text-sm text-gray-500'>
+              <T className='text-sm text-gray-500'>
                 {moment.utc(todo.due_time, 'HH:mm').local().format('@ h:mma')}
-              </Text>
+              </T>
             )}
           </View>
         )}

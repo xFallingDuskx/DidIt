@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { join } from '../../utils';
+import T from '../util/T';
 
 interface PasswordCriteriaProps {
   password: string;
@@ -20,10 +21,7 @@ export default function PasswordCriteria({ password, expanded, setCriteriaMet }:
     []
   );
 
-  const allCriteriaMet = useMemo(
-    () => criteria.every((criterion) => criterion.test(password)),
-    [criteria, password]
-  );
+  const allCriteriaMet = useMemo(() => criteria.every((criterion) => criterion.test(password)), [criteria, password]);
   useEffect(() => {
     setCriteriaMet(allCriteriaMet);
   }, [allCriteriaMet, setCriteriaMet]);
@@ -31,19 +29,16 @@ export default function PasswordCriteria({ password, expanded, setCriteriaMet }:
   return (
     <View className='mb-4'>
       {!expanded && (
-        <Text className={join('font-body', allCriteriaMet ? 'text-success' : 'text-muted')}>
+        <T className={join(allCriteriaMet ? 'text-success' : 'text-muted')}>
           {allCriteriaMet ? 'Password meets criteria' : 'Password does not meet criteria'}
-        </Text>
+        </T>
       )}
       {expanded && (
         <View>
           {criteria.map((criterion, index) => (
-            <Text
-              key={index}
-              className={join('font-body', criterion.test(password) ? 'text-success' : 'text-muted')}
-            >
+            <T key={index} className={join(criterion.test(password) ? 'text-success' : 'text-muted')}>
               {criterion.test(password) ? '✓' : '✗'} {criterion.label}
-            </Text>
+            </T>
           ))}
         </View>
       )}

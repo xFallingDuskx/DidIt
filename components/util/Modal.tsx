@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Modal as RNModal, Text, View } from 'react-native';
+import { Pressable, Modal as RNModal, View } from 'react-native';
+import T from './T';
 
 type ModalAction = {
   label: string;
@@ -20,7 +21,11 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
     <RNModal animationType='slide' transparent={true} visible={isOpen} onRequestClose={onClose}>
       <View className='flex-1 justify-center items-center bg-black/50'>
         <View className='w-4/5 bg-surface rounded-lg p-4'>
-          {title && <Text className='text-xl font-bold text-center mb-4 font-header capitalize'>{title}</Text>}
+          {title && (
+            <T font='header' weight='bold' className='text-xl text-center mb-4 capitalize'>
+              {title}
+            </T>
+          )}
           <View className='mb-4'>{children}</View>
           {actions.length > 0 && (
             <View className='flex-row justify-end'>
@@ -35,7 +40,7 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
                     }
                   }}
                 >
-                  <Text className='font-body text-lg'>{action.label}</Text>
+                  <T className='text-lg'>{action.label}</T>
                 </Pressable>
               ))}
             </View>

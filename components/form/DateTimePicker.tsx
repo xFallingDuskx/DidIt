@@ -1,8 +1,9 @@
 import RNDateTimePicker, { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import Modal from '../util/Modal';
+import T from '../util/T';
 
 interface DateTimePickerProps {
   isOpen: boolean;
@@ -79,7 +80,7 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
     >
       <View className='flex items-center gap-1'>
         <RNDateTimePicker {...props} value={date} onChange={handleChange} />
-        {props.mode === 'date' && <Text className='font-body'>{moment(date).format('dddd, MMMM D, YYYY')}</Text>}
+        {props.mode === 'date' && <T>{moment(date).format('dddd, MMMM D, YYYY')}</T>}
         {/* {props.mode === 'time' && <Text className='font-body'>{momenttz.tz.guess().replace('_', ' ')}</Text>} */}
       </View>
     </Modal>
