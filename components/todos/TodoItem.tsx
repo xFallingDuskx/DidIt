@@ -55,6 +55,15 @@ export default function TodoItem({ todo, isLastItem }: TodoItemProps) {
         >
           {todo.text}
         </Text>
+        {todo.details && (
+          <Text
+            onPress={handleEditPress}
+            onLongPress={handleDeletePress}
+            className={join('font-body text-sm text-gray-500', todo.done && 'line-through')}
+          >
+            {todo.details}
+          </Text>
+        )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
             <Text className='font-body text-sm text-gray-500'>{moment(todo.due_date).format('MMM D, YYYY')}</Text>

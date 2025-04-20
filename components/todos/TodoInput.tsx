@@ -12,13 +12,21 @@ export default function TodoInput() {
   const { inputRef, editingTodoId, setEditingTodoId, openPicker, resetInput, dueDate, dueTime, showDetails } =
     useTodoTab();
   const [text, setText] = useState('');
+  const [details, setDetails] = useState('');
   const [inFocus, setInFocus] = useState(false);
+  const showAllOptions = inFocus || openPicker;
 
-  const handleSubmitEditing = ({ nativeEvent: { text } }) => {
+  const handleReset = () => {
     setText('');
+    setDetails('');
     resetInput();
+  };
+
+  const handleSubmitEditing = () => {
+    handleReset();
     const todoFields: EditableTodo = {
-      text,
+      text: text,
+      details: details === '' ? null : details,
       due_date: dueDate ? moment.utc(dueDate).format('YYYY-MM-DD') : null,
       due_time: dueTime ? moment.utc(dueTime).format('HH:mm') : null,
     };
@@ -33,7 +41,7 @@ export default function TodoInput() {
 
   const handleCancelEditing = () => {
     setEditingTodoId(null);
-    setText('');
+    handleReset();
   };
 
   // Reset input if focus is lost for 2 seconds
@@ -43,6 +51,7 @@ export default function TodoInput() {
       timeout = setTimeout(() => {
         if (!inFocus) {
           resetInput();
+          setDetails('');
         }
       }, 2000);
     }
@@ -71,7 +80,7 @@ export default function TodoInput() {
 
   return (
     <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
-      {(inFocus || openPicker) && <TodoInputActionBar />}
+      {showAllOptions && <TodoInputActionBar />}
       <View className={join('flex w-full pt-3 px-4 pb-3', inFocus ? 'bg-surface' : 'bg-surface-tab mt-2')}>
         <View className={join('flex-row gap-1 items-center w-full')}>
           <Input
@@ -89,7 +98,19 @@ export default function TodoInput() {
             </Pressable>
           )}
         </View>
-        {showDetails && <Input placeholder='Add details...' setInFocus={setInFocus} className='px-4' />}
+        {showAllOptions && showDetails && (
+          <Input
+            value={details}
+            onChangeText={(text) => setDetails(text)}
+            onSubmitEditing={handleSubmitEditing}
+            placeholder='Add details...'
+            setInFocus={setInFocus}
+            multiline={true}
+            numberOfLines={4}
+            submitBehavior='submit'
+            className='px-4'
+          />
+        )}
       </View>
     </KeyboardAvoidingView>
   );

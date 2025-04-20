@@ -1,5 +1,6 @@
 import { forwardRef, useEffect } from 'react';
 import { Keyboard, TextInput } from 'react-native';
+import { join } from '../../utils';
 
 interface InputProps extends React.ComponentProps<typeof TextInput> {
   className?: string;
@@ -30,7 +31,7 @@ const Input = forwardRef<TextInput, InputProps>(
       <TextInput
         ref={ref}
         {...props}
-        className={className}
+        className={join('font-body', className)}
         onFocus={() => setInFocus?.(true)}
         onBlur={() => setInFocus?.(false)}
       />
