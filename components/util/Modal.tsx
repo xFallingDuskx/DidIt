@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Modal as RNModal, Text, View } from 'react-native';
+import { Pressable, Modal as RNModal, View } from 'react-native';
 import T from './T';
 
 type ModalAction = {
@@ -22,7 +22,7 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
       <View className='flex-1 justify-center items-center bg-black/50'>
         <View className='w-4/5 bg-surface rounded-lg p-4'>
           {title && (
-            <T weight='bold' className='text-xl text-center mb-4 capitalize'>
+            <T font='header' weight='bold' className='text-xl text-center mb-4 capitalize'>
               {title}
             </T>
           )}

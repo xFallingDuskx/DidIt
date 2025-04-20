@@ -1,6 +1,6 @@
 import { Pressable } from 'react-native';
 import { join } from '../../utils';
-import { T } from '../../components';
+import T from '../util/T';
 
 interface PrimaryButtonProps {
   text: string;
