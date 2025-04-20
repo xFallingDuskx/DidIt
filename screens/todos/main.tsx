@@ -1,4 +1,5 @@
-import { T, TabView, TodoInput, TodoList } from '../../components';
+import { TabView, TodoInput, TodoList } from '../../components';
+import { T } from '../../components';
 import { TodoTabProvider } from '../../contexts/TodoContext';
 
 export default function Screen() {

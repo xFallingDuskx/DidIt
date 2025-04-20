@@ -1,5 +1,6 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 import { join } from '../../utils';
+import T from '../util/T';
 
 interface SecondaryButtonProps {
   text: string;
@@ -15,7 +16,9 @@ export default function SecondaryButton({ text, onPress, disabled = false, class
       onPress={onPress}
       disabled={disabled}
     >
-      <Text className={`text-accent text-center text-lg font-body-medium ${disabled ? 'opacity-50' : ''}`}>{text}</Text>
+      <T weight='medium' className={join('text-accent text-center text-lg', disabled && 'opacity-50')}>
+        {text}
+      </T>
     </Pressable>
   );
 }

@@ -1,6 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { Platform, Pressable, Text } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import { join } from '../../utils';
+import T from '../util/T';
 
 export type TodoInputActionItemType = 'dueDate' | 'dueTime' | 'details';
 interface TodoInputActionItemProps {
@@ -35,7 +36,7 @@ export default function TodoInputActionItem({ type, value, onPress }: TodoInputA
         size={16}
         color='black'
       />
-      <Text className='font-body-medium'>{value || TypeMap[type].label}</Text>
+      <T weight='medium'>{value || TypeMap[type].label}</T>
     </Pressable>
   );
 }

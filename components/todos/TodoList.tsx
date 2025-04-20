@@ -1,8 +1,9 @@
 import { useSelector } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
-import { Dimensions, Text } from 'react-native';
+import { Dimensions } from 'react-native';
 import { todos$ } from '../../supalegend';
 import { Todo } from '../../utils';
+import T from '../util/T';
 import TodoItem from './TodoItem';
 
 export default function TodoList() {
@@ -30,5 +31,5 @@ export default function TodoList() {
     );
   }
 
-  return <Text>No activeTodos available</Text>;
+  return <T>No activeTodos available</T>;
 }

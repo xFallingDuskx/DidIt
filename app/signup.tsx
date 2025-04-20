@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Platform, Text, TextInput } from 'react-native';
-import { AuthScreenContainer, PasswordInput } from '../components';
+import { AuthScreenContainer, PasswordInput, T } from '../components';
 import PasswordCriteria from '../components/auth/PasswordCriteria';
 import { supabase } from '../supabase';
 import { join } from '../utils';
@@ -87,9 +87,9 @@ export default function Screen() {
         className={join('w-3/4', criteriaMet && '!mb-1')}
       />
       {criteriaMet && (
-        <Text className={join('mb-4 font-body', passwordsMatch ? 'text-success' : 'text-muted')}>
+        <T className={join('mb-4', passwordsMatch ? 'text-success' : 'text-muted')}>
           {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
-        </Text>
+        </T>
       )}
     </AuthScreenContainer>
   );

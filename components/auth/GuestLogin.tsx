@@ -1,4 +1,5 @@
-import { Alert, Text } from 'react-native';
+import { Alert } from 'react-native';
+import T from '../util/T';
 
 // FUTURE: GuestLogin
 export default function GuestLogin() {
@@ -7,8 +8,8 @@ export default function GuestLogin() {
   };
 
   return (
-    <Text role='button' className='my-4 font-body-light' onPress={handlePress}>
+    <T weight='light' className='my-4' role='button' onPress={handlePress}>
       Or continue without an account
-    </Text>
+    </T>
   );
 }
