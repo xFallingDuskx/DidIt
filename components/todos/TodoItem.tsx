@@ -47,7 +47,7 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
         'flex-row gap-2 p-4 pl-2 bg-surface',
         isLastItem && 'rounded-b-xl',
         isFirstItem && 'rounded-t-xl',
-        isForSection && 'mb-5'
+        isForSection && isLastItem && 'mb-5'
       )}
     >
       <Pressable onPress={handleStatusPress} className='pl-2'>
