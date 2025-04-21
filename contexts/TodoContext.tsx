@@ -2,6 +2,8 @@ import { createContext, ReactNode, useContext, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 import { TodoInputActionItemType } from '../components/todos/TodoInputActionItem';
 
+export type TodoTabView = 'all' | 'by date' | 'unplanned' | 'past due';
+
 interface TodoTabContextType {
   editingTodoId: string | null;
   setEditingTodoId: (id: string | null) => void;
@@ -15,6 +17,8 @@ interface TodoTabContextType {
   showDetails: boolean;
   setShowDetails: (show: boolean) => void;
   resetInput: () => void;
+  tabView: TodoTabView;
+  setTabView: (view: TodoTabView) => void;
 }
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
@@ -26,6 +30,7 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [tabView, setTabView] = useState<TodoTabView>('all');
 
   const resetInput = () => {
     setDueDate(null);
@@ -57,6 +62,8 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         setDueTime,
         showDetails,
         setShowDetails,
+        tabView,
+        setTabView,
         resetInput,
       }}
     >

@@ -1,10 +1,14 @@
 import { Tables } from './database.types';
+export { default as capitalize } from './capitalize';
 export { default as generateId } from './generateId';
 export { default as join } from './join';
+export type { Todo };
 
 // Types
 type Todo = Tables<'todos'>;
-export type { Todo };
 
 // Date & Time
-export { isInCurrentYear } from './datetime';
+export { isInCurrentYear, dateWithTime, isPastDate } from './datetime';
+
+// Todos
+export { isTodoPastDue } from './todoUtils';

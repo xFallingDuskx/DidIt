@@ -19,7 +19,8 @@ export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
 // Todos
 export { default as TodoInput } from './todos/TodoInput';
 export { default as TodoItem } from './todos/TodoItem';
-export { default as TodoList } from './todos/TodoList';
+export { default as TodoDisplay } from './todos/TodoDisplay';
+export { default as TodoSelect } from './todos/TodoSelect';
 
 // Util
 export { default as ScreenView } from './util/ScreenView';
