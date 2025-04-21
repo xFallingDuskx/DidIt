@@ -5,6 +5,7 @@ import { todos$ } from '../observerables/todos';
 export default function useTodos() {
   const _todos = useSelector(todos$) || {};
   const activeTodos = Object.values(_todos).filter((todo) => !todo.deleted);
+
   const incompleteTodos = activeTodos.filter((todo) => !todo.done);
   const completedTodos = activeTodos.filter((todo) => todo.done);
 
@@ -30,6 +31,14 @@ export default function useTodos() {
     acc[date].push(todo);
     return acc;
   }, {});
+  const sortedDates = Object.keys(todosByDate).sort((a, b) => {
+    return a.localeCompare(b);
+  });
+
+  const sortedTodosByDate = sortedDates.reduce((acc, date) => {
+    acc[date] = todosByDate[date];
+    return acc;
+  }, {});
 
   // For 'unplanned' view, filter todos without due date
   const todosUnplanned = todosAll.filter((todo) => !todo.due_date);
@@ -39,5 +48,5 @@ export default function useTodos() {
     return a.due_date.localeCompare(b.due_date);
   });
 
-  return { todos: activeTodos, todosAll, todosByDate, todosUnplanned, todosPastDue };
+  return { todos: activeTodos, todosAll, todosByDate: sortedTodosByDate, todosUnplanned, todosPastDue };
 }
