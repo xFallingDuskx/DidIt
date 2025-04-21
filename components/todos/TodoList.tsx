@@ -82,7 +82,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
           height: height,
           width: width,
         }}
-        estimatedItemSize={dataForList.length}
+        estimatedItemSize={50}
         contentContainerStyle={{
           paddingTop: 10,
         }}
