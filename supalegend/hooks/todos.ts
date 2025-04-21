@@ -2,6 +2,7 @@ import { useSelector } from '@legendapp/state/react';
 import { isTodoPastDue, Todo } from '../../utils';
 import { todos$ } from '../observerables/todos';
 
+// PERFORMANCE: this does multiple passes over the todos array, which is not ideal.
 export default function useTodos() {
   const _todos = useSelector(todos$) || {};
   const activeTodos = Object.values(_todos).filter((todo) => !todo.deleted);
