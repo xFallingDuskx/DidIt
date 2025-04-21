@@ -81,7 +81,7 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
             {!isForSection && (
               <T className={join('text-sm', isTodoPastDue(todo) && !todo.done ? 'text-danger' : 'text-muted')}>
                 {isInCurrentYear(todo.due_date)
-                  ? moment(todo.due_date).format('ddd MMM D')
+                  ? moment(todo.due_date).format('ddd, MMM D')
                   : moment(todo.due_date).format('MMM D, YYYY')}
               </T>
             )}
