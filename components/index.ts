@@ -17,12 +17,13 @@ export { default as PasswordInput } from './form/PasswordInput';
 export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
 
 // Todos
+export { default as TodoDisplay } from './todos/TodoDisplay';
 export { default as TodoInput } from './todos/TodoInput';
 export { default as TodoItem } from './todos/TodoItem';
-export { default as TodoDisplay } from './todos/TodoDisplay';
+export { default as TodoSearch } from './todos/TodoSearch';
 export { default as TodoSelect } from './todos/TodoSelect';
 
 // Util
 export { default as ScreenView } from './util/ScreenView';
-export { default as TabView } from './util/TabView';
 export { default as T } from './util/T';
+export { default as TabView } from './util/TabView';

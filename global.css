@@ -8,6 +8,6 @@
   }
 
   .input-rounded {
-    @apply h-fit px-4 mb-4 bg-surface rounded-full font-body-medium text-lg border border-muted placeholder:text-gray-500
+    @apply h-12 px-4 py-0 mb-4 bg-surface rounded-full font-body-medium text-lg border border-muted placeholder:text-gray-500
   }
 }

@@ -19,6 +19,8 @@ interface TodoTabContextType {
   resetInput: () => void;
   tabView: TodoTabView;
   setTabView: (view: TodoTabView) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
 }
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
@@ -31,6 +33,7 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [dueTime, setDueTime] = useState<Date | null>(null);
   const [showDetails, setShowDetails] = useState(false);
   const [tabView, setTabView] = useState<TodoTabView>('all');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const resetInput = () => {
     setDueDate(null);
@@ -65,6 +68,8 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         tabView,
         setTabView,
         resetInput,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}
