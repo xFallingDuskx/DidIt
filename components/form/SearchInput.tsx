@@ -3,7 +3,7 @@ import { Pressable, TextInput, View } from 'react-native';
 import { join } from '../../utils';
 import Input from './Input';
 
-interface PasswordInputProps extends React.ComponentProps<typeof TextInput> {
+interface SearchInputProps extends React.ComponentProps<typeof TextInput> {
   query: string;
   setQuery?: (query: string) => void;
   inputClassName?: string;
@@ -20,7 +20,7 @@ export default function SearchInput({
   inFocus = false,
   setInFocus,
   ...textInputProps
-}: PasswordInputProps) {
+}: SearchInputProps) {
   return (
     <View className={join('flex-row items-center bg-surface rounded-full overflow-hidden mb-4 h-12', className)}>
       <Input
