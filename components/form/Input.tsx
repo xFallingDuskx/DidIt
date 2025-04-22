@@ -4,16 +4,14 @@ import { join } from '../../utils';
 
 interface InputProps extends React.ComponentProps<typeof TextInput> {
   className?: string;
+  inFocus?: boolean;
   setInFocus?: (inFocus: boolean) => void;
   dismissKeyboard?: boolean;
 }
 
 const Input = forwardRef<TextInput, InputProps>(
-  ({ className = '', setInFocus, dismissKeyboard = true, ...props }, ref) => {
+  ({ className = '', inFocus, setInFocus, dismissKeyboard = true, ...props }, ref) => {
     useEffect(() => {
-      const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-        setInFocus?.(true);
-      });
       const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
         setInFocus?.(false);
         if (dismissKeyboard) {
@@ -22,10 +20,9 @@ const Input = forwardRef<TextInput, InputProps>(
       });
 
       return () => {
-        keyboardDidShowListener.remove();
         keyboardDidHideListener.remove();
       };
-    }, []);
+    }, [inFocus, setInFocus, dismissKeyboard]);
 
     return (
       <TextInput

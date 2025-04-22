@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { useTodoTab } from '../../contexts/TodoContext';
-import Input from '../form/Input';
 import { join } from '../../utils';
+import Input from '../form/Input';
 
 export default function TodoSearch() {
-  const { tabView, searchTerm, setSearchTerm } = useTodoTab();
-  const [inFocus, setInFocus] = useState(false);
+  const { tabView, searchTerm, setSearchTerm, searchBarInFocus, setSearchBarInFocus } = useTodoTab();
 
   if (tabView !== 'all') {
     return <></>;
@@ -13,12 +11,13 @@ export default function TodoSearch() {
 
   return (
     <Input
+      key='todo-search'
       value={searchTerm}
       onChangeText={(text) => setSearchTerm(text)}
-      setInFocus={setInFocus}
+      setInFocus={setSearchBarInFocus}
       placeholder='Search todos'
       enterKeyHint='search'
-      className={join('input-rounded w-full mx-2', inFocus ? 'border-accent' : 'border-transparent')}
+      className={join('input-rounded w-full mx-2', searchBarInFocus ? 'border-accent' : 'border-transparent')}
     />
   );
 }

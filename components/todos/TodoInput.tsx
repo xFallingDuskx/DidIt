@@ -21,6 +21,7 @@ export default function TodoInput() {
     dueTime,
     showDetails,
     setShowDetails,
+    searchBarInFocus,
   } = useTodoTab();
   const [text, setText] = useState('');
   const [details, setDetails] = useState('');
@@ -97,6 +98,10 @@ export default function TodoInput() {
       setText('');
     }
   }, [editingTodoId]);
+
+  if (searchBarInFocus) {
+    return <></>;
+  }
 
   return (
     <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
