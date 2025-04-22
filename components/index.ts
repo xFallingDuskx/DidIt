@@ -12,6 +12,7 @@ export { default as SecondaryButton } from './buttons/SecondaryButton';
 // Form
 export { default as Input } from './form/Input';
 export { default as PasswordInput } from './form/PasswordInput';
+export { default as SearchInput } from './form/SearchInput';
 
 // Onboarding
 export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
