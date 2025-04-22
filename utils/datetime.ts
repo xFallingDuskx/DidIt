@@ -1,5 +1,6 @@
 import moment from 'moment';
 import momenttz from 'moment-timezone';
+import { useEffect, useState } from 'react';
 
 export function isInCurrentYear(date: Date | string) {
   const givenYear = moment(date).year();
@@ -17,4 +18,18 @@ export function isPastDate(date: Date) {
   const now = moment();
   const givenDate = moment(date);
   return givenDate.isBefore(now);
+}
+
+export function useCurrentDate() {
+  const [formattedDate, setFormattedDate] = useState(moment().format('YYYY-MM-DD'));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFormattedDate(moment().format('YYYY-MM-DD'));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return { formattedDate };
 }
