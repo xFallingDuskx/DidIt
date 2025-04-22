@@ -22,7 +22,7 @@ export { default as TodoDisplay } from './todos/TodoDisplay';
 export { default as TodoInput } from './todos/TodoInput';
 export { default as TodoItem } from './todos/TodoItem';
 export { default as TodoSearch } from './todos/TodoSearch';
-export { default as TodoSelect } from './todos/TodoSelect';
+export { default as TodoViewToggle } from './todos/TodoViewToggle';
 
 // Util
 export { default as ScreenView } from './util/ScreenView';
