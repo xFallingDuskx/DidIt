@@ -1,5 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import moment from 'moment';
+import { useCallback, useMemo } from 'react';
 import { Dimensions } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { isInCurrentYear, Todo } from '../../utils';
@@ -15,22 +16,40 @@ interface TodoListProps {
 }
 
 export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosPastDue }: TodoListProps) {
-  const { tabView } = useTodoTab();
+  const { tabView, searchTerm } = useTodoTab();
 
-  let chosenTodos: Todo[] = [];
-  switch (tabView) {
-    case 'all':
-      chosenTodos = todosAll;
-      break;
-    case 'unplanned':
-      chosenTodos = todosUnplanned;
-      break;
-    case 'past due':
-      chosenTodos = todosPastDue;
-      break;
-    default:
-      break;
-  }
+  const filterTodos = useCallback(
+    (todos: Todo[]) => {
+      if (searchTerm === '') {
+        return todos;
+      }
+
+      return todos.filter((todo) => {
+        const searchTermLower = searchTerm.toLowerCase();
+        if (todo.text.toLowerCase().includes(searchTermLower)) {
+          return true;
+        }
+        if (todo.details && todo.details.toLowerCase().includes(searchTermLower)) {
+          return true;
+        }
+        return false;
+      });
+    },
+    [searchTerm]
+  );
+
+  const chosenTodos = useMemo(() => {
+    switch (tabView) {
+      case 'all':
+        return filterTodos(todosAll);
+      case 'unplanned':
+        return todosUnplanned;
+      case 'past due':
+        return todosPastDue;
+      default:
+        return [];
+    }
+  }, [tabView, todosAll, todosUnplanned, todosPastDue, filterTodos]);
 
   const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
     <TodoItem todo={todo} isLastItem={index === chosenTodos.length - 1} />
@@ -49,7 +68,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
       firstTodoIdByDate[date] = todos[0].id;
       lastTodoIdByDate[date] = todos[todos.length - 1].id;
     }
-    
+
     return (
       <FlashList
         data={dataForList}
