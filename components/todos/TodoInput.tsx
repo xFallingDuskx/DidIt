@@ -21,6 +21,7 @@ export default function TodoInput() {
     dueTime,
     showDetails,
     setShowDetails,
+    searchBarInFocus,
   } = useTodoTab();
   const [text, setText] = useState('');
   const [details, setDetails] = useState('');
@@ -98,6 +99,10 @@ export default function TodoInput() {
     }
   }, [editingTodoId]);
 
+  if (searchBarInFocus) {
+    return <></>;
+  }
+
   return (
     <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
       {showAllOptions && <TodoInputActionBar />}
@@ -110,7 +115,7 @@ export default function TodoInput() {
             onSubmitEditing={handleSubmitEditing}
             setInFocus={setInFocus}
             placeholder='What do you want to do next?'
-            className={join('input-rounded flex-1 !mb-0 h-12 !py-0', inFocus && 'border-accent')}
+            className={join('input-rounded flex-1 !mb-0', inFocus && 'border-accent')}
           />
           {editingTodoId && (
             <Pressable className='bg-accent rounded-full py-2 px-3' onPress={handleCancelEditing}>
