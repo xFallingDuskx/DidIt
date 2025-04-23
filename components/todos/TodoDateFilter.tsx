@@ -65,7 +65,7 @@ export default function TodoDateFilter() {
 
   return (
     <View>
-      <View className='mt-3 mb-1 flex-row justify-center gap-2'>
+      <View className='mt-5 mb-3 flex-row justify-center gap-2'>
         <DateDisplay date={byDateRange?.start || currentDate} />
         {byDateRange?.start !== byDateRange?.end && (
           <>
@@ -95,7 +95,7 @@ function DateDisplay({ date }: { date: string }) {
   const monthYear = moment(date).format('MMMM YYYY');
   return (
     <View className='flex items-center'>
-      <T font='header' weight='bold' className='text-4xl'>
+      <T font='header' weight='bold' className='text-5xl'>
         {ordinalDate}
       </T>
       <T font='header' className='text-xs text-gray-400'>
