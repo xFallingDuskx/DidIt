@@ -64,15 +64,43 @@ export default function TodoDateFilter() {
   }
 
   return (
-    <View className='flex-row gap-2'>
-      {dateOptions.map(({ label, onPress, selected }) => (
-        <Pressable key={label} className={join('py-2 px-3 flex-row gap-1')} onPress={onPress}>
-          {selected && <FontAwesome6 name='calendar' color='#1877f2' />}
-          <T weight={selected ? 'bold' : 'medium'} className={join('text-sm', selected && 'text-accent')}>
-            {label}
-          </T>
-        </Pressable>
-      ))}
+    <View>
+      <View className='mt-3 mb-1 flex-row justify-center gap-2'>
+        <DateDisplay date={byDateRange?.start || currentDate} />
+        {byDateRange?.start !== byDateRange?.end && (
+          <>
+            <T font='header' weight='bold' className='text-4xl'>
+              -
+            </T>
+            <DateDisplay date={byDateRange?.end || currentDate} />
+          </>
+        )}
+      </View>
+      <View className='flex-row gap-3'>
+        {dateOptions.map(({ label, onPress, selected }) => (
+          <Pressable key={label} className={join('py-2 px-2 flex-row gap-1')} onPress={onPress}>
+            {selected && <FontAwesome6 name='calendar' color='#1877f2' />}
+            <T weight={selected ? 'bold' : 'medium'} className={join('text-sm', selected && 'text-accent')}>
+              {label}
+            </T>
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function DateDisplay({ date }: { date: string }) {
+  const ordinalDate = moment(date).format('Do');
+  const monthYear = moment(date).format('MMMM YYYY');
+  return (
+    <View className='flex items-center'>
+      <T font='header' weight='bold' className='text-4xl'>
+        {ordinalDate}
+      </T>
+      <T font='header' className='text-xs text-gray-400'>
+        {monthYear}
+      </T>
     </View>
   );
 }
