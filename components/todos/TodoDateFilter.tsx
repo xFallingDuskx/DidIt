@@ -100,7 +100,7 @@ function DateDisplay({ date }: { date: string }) {
       <T font='header' weight='bold' className='text-5xl'>
         {ordinalDate}
       </T>
-      <T font='header' className='text-xs text-gray-400'>
+      <T font='header' className='text-gray-400 -translate-y-1'>
         {monthYear}
       </T>
     </View>

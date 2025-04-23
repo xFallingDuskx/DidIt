@@ -70,7 +70,7 @@ export default function TodoDateRangeSelect() {
         />
       </Modal>
       <Pressable onPress={() => setIsModalOpen(true)} className='absolute right-0'>
-        <Octicons name='calendar' size={20} color='#1877f2' />
+        <Octicons name='calendar' size={18} color='#1877f2' />
       </Pressable>
     </>
   );
