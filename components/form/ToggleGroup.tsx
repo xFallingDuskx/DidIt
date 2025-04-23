@@ -33,8 +33,7 @@ export default function ToggleGroup({
             optionWidth === 'even' ? 'flex-1' : 'w-fit',
             selectedValue === option.value && 'bg-accent',
             index === 0 && 'rounded-l-lg',
-            index === options.length - 1 && 'rounded-r-lg',
-            index > 0 && index < options.length - 1 && 'border-y-lg'
+            index === options.length - 1 && 'rounded-r-lg'
           )}
         >
           <T className={join('text-center', selectedValue === option.value && 'text-white')}>{option.label}</T>
