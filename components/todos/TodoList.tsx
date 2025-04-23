@@ -102,7 +102,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
             // Rendering header
             return (
               <T font='header' className='text-xl pb-1'>
-                {isInCurrentYear(item) ? moment(item).format('ddd, MMM D') : moment(item).format('MMM D, YYYY')}
+                {isInCurrentYear(item) ? moment(item).format('dddd, MMM Do') : moment(item).format('MMM D, YYYY')}
               </T>
             );
           } else {
