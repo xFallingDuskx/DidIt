@@ -19,7 +19,7 @@ interface ModalProps {
 export default function Modal({ isOpen, onClose, title, children, actions = [] }: ModalProps) {
   return (
     <RNModal animationType='slide' transparent={true} visible={isOpen} onRequestClose={onClose}>
-      <View className='flex-1 justify-center items-center bg-black/50'>
+      <Pressable className='flex-1 justify-center items-center bg-black/50' onPress={onClose}>
         <View className='w-4/5 bg-surface rounded-lg p-4'>
           {title && (
             <T font='header' weight='bold' className='text-xl text-center mb-4 capitalize'>
@@ -46,7 +46,7 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
             </View>
           )}
         </View>
-      </View>
+      </Pressable>
     </RNModal>
   );
 }

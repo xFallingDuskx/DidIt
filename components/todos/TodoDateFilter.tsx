@@ -5,6 +5,7 @@ import { Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { join, useCurrentDate } from '../../utils';
 import T from '../util/T';
+import TodoDateRangeSelect from './TodoDateRangeSelect';
 
 export default function TodoDateFilter() {
   const { tabView, byDateRange, setByDateRange } = useTodoTab();
@@ -64,7 +65,8 @@ export default function TodoDateFilter() {
   }
 
   return (
-    <View>
+    <View className='relative'>
+      <TodoDateRangeSelect />
       <View className='mt-5 mb-3 flex-row justify-center gap-2'>
         <DateDisplay date={byDateRange?.start || currentDate} />
         {byDateRange?.start !== byDateRange?.end && (
