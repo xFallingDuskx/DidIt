@@ -14,6 +14,7 @@ export { default as DateTimePickerUI } from './form/DateTimePickerUI';
 export { default as Input } from './form/Input';
 export { default as PasswordInput } from './form/PasswordInput';
 export { default as SearchInput } from './form/SearchInput';
+export { default as ToggleGroup } from './form/ToggleGroup';
 
 // Onboarding
 export { default as AnimatedFeature } from './onboarding/AnimatedFeature';
