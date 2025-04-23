@@ -16,9 +16,9 @@ interface TodoListProps {
 }
 
 export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosPastDue }: TodoListProps) {
-  const { tabView, searchTerm } = useTodoTab();
+  const { tabView, searchTerm, byDateRange } = useTodoTab();
 
-  const filterTodos = useCallback(
+  const queryTodos = useCallback(
     (todos: Todo[]) => {
       if (searchTerm === '') {
         return todos;
@@ -38,10 +38,34 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
     [searchTerm]
   );
 
+  const filterTodosByDateRange = useCallback(
+    (todos: Record<string, Todo[]>) => {
+      if (!byDateRange) {
+        return todos;
+      }
+
+      const filteredTodos: Record<string, Todo[]> = {};
+
+      for (const date in todos) {
+        const todoDate = moment(date);
+        const startDate = moment(byDateRange.start);
+        const endDate = moment(byDateRange.end);
+
+        // '[]' includes the start and end dates
+        if (todoDate.isBetween(startDate, endDate, undefined, '[]')) {
+          filteredTodos[date] = todos[date];
+        }
+      }
+
+      return filteredTodos;
+    },
+    [byDateRange]
+  );
+
   const chosenTodos = useMemo(() => {
     switch (tabView) {
       case 'all':
-        return filterTodos(todosAll);
+        return queryTodos(todosAll);
       case 'unplanned':
         return todosUnplanned;
       case 'past due':
@@ -49,7 +73,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
       default:
         return [];
     }
-  }, [tabView, todosAll, todosUnplanned, todosPastDue, filterTodos]);
+  }, [tabView, todosAll, todosUnplanned, todosPastDue, queryTodos]);
 
   const renderItem = ({ item: todo, index }: { item: Todo; index: number }) => (
     <TodoItem todo={todo} isLastItem={index === chosenTodos.length - 1} />
@@ -58,12 +82,13 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
   const { width, height } = Dimensions.get('window');
 
   if (tabView === 'by date') {
+    const todosByDateFiltered = filterTodosByDateRange(todosByDate);
     let dataForList: (Todo | string)[] = [];
     let firstTodoIdByDate: Record<string, string> = {};
     let lastTodoIdByDate: Record<string, string> = {};
-    for (const date in todosByDate) {
+    for (const date in todosByDateFiltered) {
       dataForList.push(date);
-      const todos = todosByDate[date];
+      const todos = todosByDateFiltered[date];
       dataForList.push(...todos);
       firstTodoIdByDate[date] = todos[0].id;
       lastTodoIdByDate[date] = todos[todos.length - 1].id;
@@ -77,7 +102,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
             // Rendering header
             return (
               <T font='header' className='text-xl pb-1'>
-                {isInCurrentYear(item) ? moment(item).format('ddd, MMM D') : moment(item).format('MMM D, YYYY')}
+                {isInCurrentYear(item) ? moment(item).format('dddd, MMM Do') : moment(item).format('MMM D, YYYY')}
               </T>
             );
           } else {

@@ -3,6 +3,13 @@ import { Keyboard, TextInput } from 'react-native';
 import { TodoInputActionItemType } from '../components/todos/TodoInputActionItem';
 
 export type TodoTabView = 'all' | 'by date' | 'unplanned' | 'past due';
+export type TodoByDateOptions = 'today' | 'next 3 days' | 'this week' | 'next week';
+
+// in the format YYYY-MM-DD
+export interface DateRange {
+  start: string;
+  end: string;
+}
 
 interface TodoTabContextType {
   editingTodoId: string | null;
@@ -23,6 +30,8 @@ interface TodoTabContextType {
   setSearchTerm: (term: string) => void;
   searchBarInFocus: boolean;
   setSearchBarInFocus: (inFocus: boolean) => void;
+  byDateRange: DateRange | null;
+  setByDateRange: (range: DateRange | null) => void;
 }
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
@@ -34,9 +43,10 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [tabView, setTabView] = useState<TodoTabView>('all');
+  const [tabView, setTabView] = useState<TodoTabView>('by date');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchBarInFocus, setSearchBarInFocus] = useState(false);
+  const [byDateRange, setByDateRange] = useState<DateRange | null>(null);
 
   const resetInput = () => {
     setDueDate(null);
@@ -75,6 +85,8 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
         setSearchTerm,
         searchBarInFocus,
         setSearchBarInFocus,
+        byDateRange,
+        setByDateRange,
       }}
     >
       {children}
