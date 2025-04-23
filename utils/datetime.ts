@@ -31,5 +31,5 @@ export function useCurrentDate() {
     return () => clearInterval(interval);
   }, []);
 
-  return { formattedDate };
+  return { currentDate: formattedDate };
 }

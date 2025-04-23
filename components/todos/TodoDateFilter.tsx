@@ -1,6 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import moment from 'moment';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { join, useCurrentDate } from '../../utils';
@@ -8,20 +8,20 @@ import T from '../util/T';
 
 export default function TodoDateFilter() {
   const { tabView, byDateRange, setByDateRange } = useTodoTab();
-  const { formattedDate } = useCurrentDate();
+  const { currentDate } = useCurrentDate();
 
   const dateOptions = useMemo(
     () => [
       {
         label: 'Today',
-        selected: byDateRange?.start === formattedDate && byDateRange?.end === formattedDate,
-        onPress: () => setByDateRange({ start: formattedDate, end: formattedDate }),
+        selected: byDateRange?.start === currentDate && byDateRange?.end === currentDate,
+        onPress: () => setByDateRange({ start: currentDate, end: currentDate }),
       },
       {
         label: 'Next 3 Days',
         selected:
-          byDateRange?.start === formattedDate && byDateRange?.end === moment().add(3, 'days').format('YYYY-MM-DD'),
-        onPress: () => setByDateRange({ start: formattedDate, end: moment().add(3, 'days').format('YYYY-MM-DD') }),
+          byDateRange?.start === currentDate && byDateRange?.end === moment().add(3, 'days').format('YYYY-MM-DD'),
+        onPress: () => setByDateRange({ start: currentDate, end: moment().add(3, 'days').format('YYYY-MM-DD') }),
       },
       {
         label: 'This Week',
@@ -46,8 +46,18 @@ export default function TodoDateFilter() {
           }),
       },
     ],
-    [byDateRange, formattedDate]
+    [byDateRange, currentDate]
   );
+
+  // Set default date range to today if not set
+  useEffect(() => {
+    if (!byDateRange?.start && !byDateRange?.end) {
+      setByDateRange({
+        start: currentDate,
+        end: currentDate,
+      });
+    }
+  }, [byDateRange, currentDate]);
 
   if (tabView !== 'by date') {
     return <></>;
