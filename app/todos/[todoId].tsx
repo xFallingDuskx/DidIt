@@ -3,19 +3,20 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, TextInput, View } from 'react-native';
 import { ScreenView, T } from '../../components';
-import { deleteTodo, EditableTodo, editTodo, todos$ } from '../../supalegend';
+import { deleteTodo, EditableTodo, editTodo, todos$, useTodos } from '../../supalegend';
+import moment from 'moment';
 
 export default function TodosDetailedView() {
   const router = useRouter();
   const { todoId } = useLocalSearchParams();
-  const todos = todos$.get();
+  const { todoMap } = useTodos();
   const todo = useMemo(() => {
     if (typeof todoId !== 'string') {
       return null;
     }
-    const todoItem = todos[todoId];
+    const todoItem = todoMap[todoId];
     return todoItem;
-  }, [todoId, todos]);
+  }, [todoId, todoMap]);
   const [todoChanges, setTodoChanges] = useState<EditableTodo>({});
 
   const handleEdit = (updates: EditableTodo) => {
@@ -29,7 +30,13 @@ export default function TodosDetailedView() {
     }
   };
 
+  const handleGoBack = () => {
+    handleSave();
+    router.back();
+  };
+
   const handleDelete = () => {
+    // TASK: use modal
     Alert.alert('Confirm Delete', 'Are you sure you want to delete this todo?', [
       { text: 'Cancel', style: 'cancel' },
       {
@@ -46,7 +53,7 @@ export default function TodosDetailedView() {
   if (!todo) {
     return (
       <ScreenView className='py-2 px-4'>
-        <Pressable onPress={() => router.back()} className='p-2'>
+        <Pressable onPress={handleGoBack} className='p-2'>
           <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
         </Pressable>
         <View className='flex-1 items-center justify-center'>
@@ -59,14 +66,14 @@ export default function TodosDetailedView() {
   }
 
   return (
-    <ScreenView className='py-2 px-4'>
+    <ScreenView className='py-2 px-4 relative'>
       <View className='flex-row justify-between mb-4'>
-        <Pressable onPress={() => router.back()} className='p-2'>
+        <Pressable onPress={handleGoBack} className='p-2'>
           <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
         </Pressable>
 
         <Pressable onPress={handleDelete}>
-          <FontAwesome6 name='trash' size={20} color='#64748b' className='p-2' />
+          <FontAwesome6 name='trash' size={18} color='#64748b' className='p-2' />
         </Pressable>
       </View>
 
@@ -89,6 +96,11 @@ export default function TodosDetailedView() {
           multiline={true}
           className='px-2 py-1 font-body border-b border-transparent focus:border-accent overflow-hidden'
         />
+      </View>
+
+      <View className='absolute bottom-5 left-5'>
+        <T className='text-muted'>Updated {moment(todo?.updated_at).calendar()}</T>
+        <T className='text-muted'>Created {moment(todo?.created_at).calendar()}</T>
       </View>
     </ScreenView>
   );

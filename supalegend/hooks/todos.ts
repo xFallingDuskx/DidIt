@@ -49,5 +49,12 @@ export default function useTodos() {
     return a.due_date.localeCompare(b.due_date);
   });
 
-  return { todos: activeTodos, todosAll, todosByDate: sortedTodosByDate, todosUnplanned, todosPastDue };
+  return {
+    todos: activeTodos,
+    todosAll,
+    todosByDate: sortedTodosByDate,
+    todosUnplanned,
+    todosPastDue,
+    todoMap: _todos,
+  };
 }
