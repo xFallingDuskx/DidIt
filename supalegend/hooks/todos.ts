@@ -12,10 +12,10 @@ export default function useTodos() {
 
   // For 'all' view, sort by created_at
   const incompleteTodosAll = incompleteTodos.sort((a, b) => {
-    return (a.created_at ?? '').localeCompare(b.created_at ?? '');
+    return -(a.created_at ?? '').localeCompare(b.created_at ?? '');
   });
   const completedTodosAll = completedTodos.sort((a, b) => {
-    return (a.created_at ?? '').localeCompare(b.created_at ?? '');
+    return -(a.created_at ?? '').localeCompare(b.created_at ?? '');
   });
   const todosAll = [...incompleteTodosAll, ...completedTodosAll];
 
