@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import moment from 'moment';
 import { Alert, Pressable, View } from 'react-native';
-import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
 import { isInCurrentYear, isTodoPastDue, Todo } from '../../utils';
 import join from '../../utils/join';
@@ -15,14 +15,16 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection = false }: TodoItemProps) {
-  const { setEditingTodoId } = useTodoTab();
+  const router = useRouter();
 
   const handleStatusPress = () => {
     toggleDone(todo.id);
   };
+
   const handleEditPress = () => {
-    setEditingTodoId(todo.id);
+    router.navigate({ pathname: '/todos/[todoId]', params: { todoId: todo.id } });
   };
+
   const handleDeletePress = () => {
     // FUTURE: create cloud function to delete todos
     Alert.alert('Delete Todo', 'Are you sure you want to delete this todo?', [

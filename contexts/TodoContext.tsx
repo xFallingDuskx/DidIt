@@ -54,6 +54,7 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
     setShowDetails(false);
   };
 
+  // TASK: remove edit logic
   const handleSetEditingTodoId = (id: string | null) => {
     setEditingTodoId(id);
     if (id) {
