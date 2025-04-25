@@ -65,7 +65,13 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
           {todo.text}
         </T>
         {todo.details && (
-          <T className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}>{todo.details}</T>
+          <T
+            ellipsizeMode='tail'
+            numberOfLines={3}
+            className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}
+          >
+            {todo.details}
+          </T>
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
