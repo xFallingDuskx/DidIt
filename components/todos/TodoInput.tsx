@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Pressable, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
 import { addTodo, EditableTodo, editTodo, todos$ } from '../../supalegend';
 import { join } from '../../utils';
@@ -48,7 +48,9 @@ export default function TodoInput() {
       return;
     }
 
-    addTodo(todoFields);
+    if (todoFields.text?.length > 0) {
+      addTodo(todoFields);
+    }
   };
 
   const handleCancelEditing = () => {
@@ -103,8 +105,10 @@ export default function TodoInput() {
     return <></>;
   }
 
+  const ParentView = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
   return (
-    <KeyboardAvoidingView behavior='padding' className={join('flex w-screen')}>
+    <ParentView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className={join('flex w-screen')}>
       {showAllOptions && <TodoInputActionBar />}
       <View className={join('flex w-full pt-3 px-4 pb-3', inFocus ? 'bg-surface' : 'bg-surface-tab mt-2')}>
         <View className={join('flex-row gap-1 items-center w-full')}>
@@ -137,6 +141,6 @@ export default function TodoInput() {
           />
         )}
       </View>
-    </KeyboardAvoidingView>
+    </ParentView>
   );
 }
