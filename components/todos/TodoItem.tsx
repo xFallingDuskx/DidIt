@@ -46,13 +46,13 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
     <View
       key={todo.id}
       className={join(
-        'flex-row gap-2 p-4 pl-2 bg-surface',
+        'flex-row gap-1 p-4 pl-2 bg-surface',
         isLastItem && 'rounded-b-xl',
         isFirstItem && 'rounded-t-xl',
         isForSection && isLastItem && 'mb-5'
       )}
     >
-      <Pressable onPress={handleStatusPress} className='pl-2'>
+      <Pressable onPress={handleStatusPress} className='pl-2 pr-1'>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
           size={20}
@@ -60,23 +60,12 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <View className='flex'>
-        <T
-          weight='medium'
-          onPress={handleEditPress}
-          onLongPress={handleDeletePress}
-          className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}
-        >
+      <Pressable className='flex-1 flex' onPress={handleEditPress} onLongPress={handleDeletePress}>
+        <T weight='medium' className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}>
           {todo.text}
         </T>
         {todo.details && (
-          <T
-            onPress={handleEditPress}
-            onLongPress={handleDeletePress}
-            className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}
-          >
-            {todo.details}
-          </T>
+          <T className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}>{todo.details}</T>
         )}
         {todo.due_date && (
           <View className='flex-row items-center gap-1'>
@@ -95,7 +84,7 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
             )}
           </View>
         )}
-      </View>
+      </Pressable>
     </View>
   );
 }
