@@ -1,28 +1,14 @@
-import { FontAwesome6 } from '@expo/vector-icons';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useTodoTab } from '../../contexts/TodoContext';
-import { addTodo, EditableTodo, editTodo, todos$ } from '../../supalegend';
+import { addTodo, EditableTodo } from '../../supalegend';
 import { join } from '../../utils';
 import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const {
-    inputRef,
-    editingTodoId,
-    setEditingTodoId,
-    openPicker,
-    resetInput,
-    dueDate,
-    setDueDate,
-    setDueTime,
-    dueTime,
-    showDetails,
-    setShowDetails,
-    searchBarInFocus,
-  } = useTodoTab();
+  const { inputRef, openPicker, resetInput, dueDate, dueTime, showDetails, searchBarInFocus } = useTodoTab();
   const [text, setText] = useState('');
   const [details, setDetails] = useState('');
   const [inFocus, setInFocus] = useState(false);
@@ -42,20 +28,10 @@ export default function TodoInput() {
       due_date: dueDate ? moment.utc(dueDate).format('YYYY-MM-DD') : null,
       due_time: dueTime ? moment.utc(dueTime).format('HH:mm') : null,
     };
-    if (editingTodoId) {
-      editTodo(editingTodoId, todoFields);
-      setEditingTodoId(null);
-      return;
-    }
 
     if (todoFields.text?.length > 0) {
       addTodo(todoFields);
     }
-  };
-
-  const handleCancelEditing = () => {
-    setEditingTodoId(null);
-    handleReset();
   };
 
   // Reset input if focus is lost for 2 seconds
@@ -77,30 +53,6 @@ export default function TodoInput() {
     };
   }, [inFocus, openPicker]);
 
-  useEffect(() => {
-    if (editingTodoId) {
-      const todo = todos$.get()[editingTodoId];
-      if (!todo) return;
-
-      setText(todo.text);
-
-      if (todo.details) {
-        setShowDetails(true);
-        setDetails(todo.details);
-      }
-      if (todo.due_date) {
-        setDueDate(moment(todo.due_date).toDate());
-      }
-      if (todo.due_time) {
-        setDueTime(moment.utc(todo.due_time, 'HH:mm').local().toDate());
-      }
-    }
-
-    if (!editingTodoId) {
-      setText('');
-    }
-  }, [editingTodoId]);
-
   if (searchBarInFocus) {
     return <></>;
   }
@@ -121,11 +73,6 @@ export default function TodoInput() {
             placeholder='What do you want to do next?'
             className={join('input-rounded flex-1 !mb-0', inFocus && 'border-accent')}
           />
-          {editingTodoId && (
-            <Pressable className='bg-accent rounded-full py-2 px-3' onPress={handleCancelEditing}>
-              <FontAwesome6 name='xmark' size={20} color='#fff' />
-            </Pressable>
-          )}
         </View>
         {showAllOptions && showDetails && (
           <Input
