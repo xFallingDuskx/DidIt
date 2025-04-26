@@ -1,22 +1,34 @@
 import React from 'react';
 import { GestureResponderEvent, Pressable, Modal as RNModal, View } from 'react-native';
+import { join } from '../../utils';
 import T from './T';
 
 type ModalAction = {
   label: string;
   onPress: () => void;
   closeModal?: boolean;
+  labelClassName?: string;
 };
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  message?: string;
   children?: React.ReactNode;
   actions?: ModalAction[];
+  animationType?: 'slide' | 'fade' | 'none';
 }
 
-export default function Modal({ isOpen, onClose, title, children, actions = [] }: ModalProps) {
+export default function Modal({
+  isOpen,
+  onClose,
+  title,
+  message,
+  children,
+  actions = [],
+  animationType = 'slide',
+}: ModalProps) {
   const handleContainerPress = (event: GestureResponderEvent) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -24,7 +36,7 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
   };
 
   return (
-    <RNModal animationType='slide' transparent={true} visible={isOpen} onRequestClose={onClose}>
+    <RNModal animationType={animationType} transparent={true} visible={isOpen} onRequestClose={onClose}>
       <Pressable
         id='modal-container'
         className='flex-1 justify-center items-center bg-black/50'
@@ -36,7 +48,8 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
               {title}
             </T>
           )}
-          <View className='mb-4'>{children}</View>
+          {message && <T className='mb-4 text-center'>{message}</T>}
+          {children && <View className='mb-4'>{children}</View>}
           {actions.length > 0 && (
             <View className='flex-row justify-end'>
               {actions?.map((action, index) => (
@@ -50,7 +63,7 @@ export default function Modal({ isOpen, onClose, title, children, actions = [] }
                     }
                   }}
                 >
-                  <T className='text-lg'>{action.label}</T>
+                  <T className={join('text-lg', action.labelClassName)}>{action.label}</T>
                 </Pressable>
               ))}
             </View>

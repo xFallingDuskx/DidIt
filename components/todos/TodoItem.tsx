@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import moment from 'moment';
 import { Alert, Pressable, View } from 'react-native';
-import { useTodoTab } from '../../contexts/TodoContext';
 import { deleteTodo, toggleDone } from '../../supalegend';
 import { isInCurrentYear, isTodoPastDue, Todo } from '../../utils';
 import join from '../../utils/join';
@@ -15,14 +15,16 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection = false }: TodoItemProps) {
-  const { setEditingTodoId } = useTodoTab();
+  const router = useRouter();
 
   const handleStatusPress = () => {
     toggleDone(todo.id);
   };
+
   const handleEditPress = () => {
-    setEditingTodoId(todo.id);
+    router.navigate({ pathname: '/todos/[todoId]', params: { todoId: todo.id } });
   };
+
   const handleDeletePress = () => {
     // FUTURE: create cloud function to delete todos
     Alert.alert('Delete Todo', 'Are you sure you want to delete this todo?', [
@@ -44,13 +46,13 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
     <View
       key={todo.id}
       className={join(
-        'flex-row gap-2 p-4 pl-2 bg-surface',
+        'flex-row gap-1 p-4 pl-2 bg-surface',
         isLastItem && 'rounded-b-xl',
         isFirstItem && 'rounded-t-xl',
         isForSection && isLastItem && 'mb-5'
       )}
     >
-      <Pressable onPress={handleStatusPress} className='pl-2'>
+      <Pressable onPress={handleStatusPress} className='pl-2 pr-1'>
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
           size={20}
@@ -58,19 +60,14 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <View className='flex'>
-        <T
-          weight='medium'
-          onPress={handleEditPress}
-          onLongPress={handleDeletePress}
-          className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}
-        >
+      <Pressable className='flex-1 flex' onPress={handleEditPress} onLongPress={handleDeletePress}>
+        <T weight='medium' className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}>
           {todo.text}
         </T>
         {todo.details && (
           <T
-            onPress={handleEditPress}
-            onLongPress={handleDeletePress}
+            ellipsizeMode='tail'
+            numberOfLines={3}
             className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}
           >
             {todo.details}
@@ -93,7 +90,7 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
             )}
           </View>
         )}
-      </View>
+      </Pressable>
     </View>
   );
 }
