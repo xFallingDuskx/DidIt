@@ -28,7 +28,7 @@ const Input = forwardRef<TextInput, InputProps>(
       <TextInput
         ref={ref}
         {...props}
-        className={join('font-body', className)}
+        className={join('font-body placeholder:text-muted', className)}
         onFocus={() => setInFocus?.(true)}
         onBlur={() => setInFocus?.(false)}
       />

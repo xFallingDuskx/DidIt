@@ -1,16 +1,17 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
-import { Alert, Pressable, TextInput, View } from 'react-native';
-import { ScreenView, T } from '../../components';
-import { deleteTodo, EditableTodo, editTodo, todos$, useTodos } from '../../supalegend';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import moment from 'moment';
-import TodoInputActionItem from '../../components/todos/TodoInputActionItem';
+import { useEffect, useMemo, useState } from 'react';
+import { Alert, Pressable, View } from 'react-native';
+import { Input, ScreenView, T } from '../../components';
 import DateTimePicker from '../../components/form/DateTimePicker';
+import TodoInputActionItem from '../../components/todos/TodoInputActionItem';
+import { deleteTodo, EditableTodo, editTodo, useTodos } from '../../supalegend';
 import { isInCurrentYear } from '../../utils';
 
 export default function TodosDetailedView() {
   const router = useRouter();
+  const navigation = useNavigation();
   const { todoId } = useLocalSearchParams();
   const { todoMap } = useTodos();
   const todo = useMemo(() => {
@@ -22,6 +23,16 @@ export default function TodosDetailedView() {
   }, [todoId, todoMap]);
   const [todoChanges, setTodoChanges] = useState<EditableTodo>({});
   const [openPicker, setOpenPicker] = useState<'dueDate' | 'dueTime' | null>(null);
+
+  // Save before navigating back — meant to address swipes to go back
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (__: any) => {
+      console.log('called'); // REMOVE
+      handleSave();
+    });
+
+    return unsubscribe;
+  }, [navigation, todoChanges]);
 
   const handleEdit = (updates: EditableTodo) => {
     setTodoChanges({ ...todoChanges, ...updates });
@@ -95,7 +106,7 @@ export default function TodosDetailedView() {
         </View>
 
         <View className='mb-4'>
-          <TextInput
+          <Input
             value={todoChanges.text ?? todo.text}
             onChangeText={(text) => handleEdit({ text })}
             placeholder='Title'
@@ -135,7 +146,7 @@ export default function TodosDetailedView() {
           )}
         </View>
         <View className='mb-4'>
-          <TextInput
+          <Input
             value={todoChanges.details ?? todo.details}
             onChangeText={(text) => handleEdit({ details: text })}
             placeholder='Details'

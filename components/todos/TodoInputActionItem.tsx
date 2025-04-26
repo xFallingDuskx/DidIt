@@ -27,8 +27,7 @@ export default function TodoInputActionItem({ type, value, onPress }: TodoInputA
     <Pressable
       onPress={onPress}
       className={join(
-        'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full',
-        Platform.OS === 'ios' && 'shadow'
+        'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full'
       )}
     >
       <FontAwesome6
