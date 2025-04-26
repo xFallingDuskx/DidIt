@@ -2,7 +2,7 @@ import { generateId, Todo } from '../../utils';
 import { todos$ } from '../observerables/todos';
 import { user$ } from '../observerables/user';
 
-export type EditableTodo = Partial<Pick<Todo, 'text' | 'details' | 'due_date' | 'due_time'>>;
+export type EditableTodo = Partial<Pick<Todo, 'text' | 'details' | 'due_date' | 'due_time' | 'use_local_time'>>;
 
 export async function addTodo(fields: EditableTodo) {
   const id = generateId();

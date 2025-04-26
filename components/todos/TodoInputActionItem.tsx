@@ -1,5 +1,5 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { Platform, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { join } from '../../utils';
 import T from '../util/T';
 
@@ -26,9 +26,7 @@ export default function TodoInputActionItem({ type, value, onPress }: TodoInputA
   return (
     <Pressable
       onPress={onPress}
-      className={join(
-        'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full'
-      )}
+      className={join('flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full flex-1')}
     >
       <FontAwesome6
         name={value && TypeMap[type].iconForValue ? TypeMap[type].iconForValue : TypeMap[type].icon}
