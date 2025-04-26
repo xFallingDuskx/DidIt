@@ -16,6 +16,7 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
   const [date, setDate] = useState(value || new Date());
 
   const handleChange = (event: DateTimePickerEvent, selectedDate: Date) => {
+    const currentDate = date;
     setDate(selectedDate);
 
     if (Platform.OS === 'android') {
@@ -23,15 +24,19 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
         // confirm
         onChange(event, selectedDate);
       }
-      if (event.type === 'dismissed') {
+      if (event.type === 'neutralButtonPressed') {
         // clear
         onChange(event, null);
+      }
+      if (event.type === 'dismissed') {
+        // close
+        onChange(event, isNaN(value.valueOf()) ? null : currentDate);
       }
     }
   };
 
   const handleClose = () => {
-    onChange(null, value);
+    onChange(null, date);
   };
 
   const handleClear = () => {
@@ -52,8 +57,11 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
           positiveButton: {
             label: 'Confirm',
           },
-          negativeButton: {
+          neutralButton: {
             label: 'Clear',
+          },
+          negativeButton: {
+            label: '',
           },
         });
       } else {
