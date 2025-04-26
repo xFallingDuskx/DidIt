@@ -22,12 +22,12 @@ export default function TodosDetailedView() {
     return todoItem;
   }, [todoId, todoMap]);
   const [todoChanges, setTodoChanges] = useState<EditableTodo>({});
+  const editingTodo = useMemo(() => ({ ...todo, ...todoChanges }), [todo, todoChanges]);
   const [openPicker, setOpenPicker] = useState<'dueDate' | 'dueTime' | null>(null);
 
   // Save before navigating back — meant to address swipes to go back
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (__: any) => {
-      console.log('called'); // REMOVE
       handleSave();
     });
 
@@ -94,8 +94,8 @@ export default function TodosDetailedView() {
 
   return (
     <>
-      <ScreenView className='py-2 px-4 relative'>
-        <View className='flex-row justify-between mb-4'>
+      <ScreenView className='py-2 relative'>
+        <View className='px-4 flex-row justify-between mb-4'>
           <Pressable onPress={handleGoBack} className='p-2'>
             <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
           </Pressable>
@@ -105,9 +105,9 @@ export default function TodosDetailedView() {
           </Pressable>
         </View>
 
-        <View className='mb-4'>
+        <View className='px-4 mb-4'>
           <Input
-            value={todoChanges.text ?? todo.text}
+            value={editingTodo.text}
             onChangeText={(text) => handleEdit({ text })}
             placeholder='Title'
             onBlur={handleSave}
@@ -115,39 +115,36 @@ export default function TodosDetailedView() {
             className='px-2 py-1 font-header-medium text-3xl border-b-2 border-transparent focus:border-accent'
           />
         </View>
-        <View className='px-2 flex-row items-center mb-4'>
-          <T weight='semibold' className='text-muted text-lg mr-1'>
+
+        <View className='px-6 py-2 flex-row gap-2 items-center mb-4 bg-surface-tab'>
+          <T weight='semibold' className='mr-0.5'>
             Due:
           </T>
           <TodoInputActionItem
             type='dueDate'
             onPress={() => setOpenPicker('dueDate')}
             value={
-              !(todoChanges.due_date || todo.due_date)
+              !editingTodo.due_date
                 ? undefined
-                : isInCurrentYear(todoChanges.due_date || todo.due_date)
-                ? moment(todoChanges.due_date || todo.due_date).format('ddd MMM D')
-                : moment(todoChanges.due_date || todo.due_date).format('MMM D, YYYY')
+                : isInCurrentYear(editingTodo.due_date)
+                ? moment(editingTodo.due_date).format('ddd MMM D')
+                : moment(editingTodo.due_date).format('MMM D, YYYY')
             }
           />
-          {(todoChanges.due_time || todo.due_time) && (
+          {editingTodo.due_date && (
             <TodoInputActionItem
               type='dueTime'
               onPress={() => setOpenPicker('dueTime')}
               value={
-                todoChanges.due_time || todo.due_time
-                  ? moment
-                      .utc(todoChanges.due_time ?? todo.due_time, 'HH:mm')
-                      .local()
-                      .format('h:mm A')
-                  : undefined
+                editingTodo.due_time ? moment.utc(editingTodo.due_time, 'HH:mm').local().format('h:mm A') : undefined
               }
             />
           )}
         </View>
-        <View className='mb-4'>
+
+        <View className='px-4 mb-4'>
           <Input
-            value={todoChanges.details ?? todo.details}
+            value={editingTodo.details}
             onChangeText={(text) => handleEdit({ details: text })}
             placeholder='Details'
             onBlur={handleSave}
@@ -156,23 +153,22 @@ export default function TodosDetailedView() {
           />
         </View>
 
-        <View className='absolute bottom-5 left-5'>
-          <T className='text-muted'>Updated {moment(todo?.updated_at).calendar()}</T>
-          <T className='text-muted'>Created {moment(todo?.created_at).calendar()}</T>
-        </View>
+        {todo && (
+          <View className='absolute bottom-5 left-5'>
+            <T className='text-muted text-sm'>Updated {moment(todo.updated_at).calendar()}</T>
+            <T className='text-muted text-sm'>Created {moment(todo.created_at).calendar()}</T>
+          </View>
+        )}
       </ScreenView>
 
-      {(openPicker === 'dueDate' || openPicker === 'dueTime') && (
+      {openPicker && (
         <DateTimePicker
           isOpen={true}
           mode={openPicker === 'dueDate' ? 'date' : 'time'}
           value={
             openPicker === 'dueDate'
-              ? moment(todoChanges.due_date || todo.due_date).toDate()
-              : moment
-                  .utc(todoChanges.due_time || todo.due_time, 'HH:mm')
-                  .local()
-                  .toDate()
+              ? moment(editingTodo.due_date).toDate()
+              : moment.utc(editingTodo.due_time, 'HH:mm').local().toDate()
           }
           onChange={handleDueChange}
         />
