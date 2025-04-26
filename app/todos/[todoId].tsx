@@ -2,8 +2,8 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import moment from 'moment';
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, View } from 'react-native';
-import { Input, ScreenView, T } from '../../components';
+import { Pressable, View } from 'react-native';
+import { Input, Modal, ScreenView, T } from '../../components';
 import DateTimePicker from '../../components/form/DateTimePicker';
 import TodoInputActionItem from '../../components/todos/TodoInputActionItem';
 import { deleteTodo, EditableTodo, editTodo, useTodos } from '../../supalegend';
@@ -24,6 +24,7 @@ export default function TodosDetailedView() {
   const [todoChanges, setTodoChanges] = useState<EditableTodo>({});
   const editingTodo = useMemo(() => ({ ...todo, ...todoChanges }), [todo, todoChanges]);
   const [openPicker, setOpenPicker] = useState<'dueDate' | 'dueTime' | null>(null);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
 
   // Save before navigating back — meant to address swipes to go back
   useEffect(() => {
@@ -51,18 +52,8 @@ export default function TodosDetailedView() {
   };
 
   const handleDelete = () => {
-    // TASK: use modal
-    Alert.alert('Confirm Delete', 'Are you sure you want to delete this todo?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: () => {
-          router.back();
-          deleteTodo(todo.id);
-        },
-      },
-    ]);
+    router.back();
+    deleteTodo(todo.id);
   };
 
   const handleDueChange = (__event, newValue: Date | null) => {
@@ -100,7 +91,7 @@ export default function TodosDetailedView() {
             <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
           </Pressable>
 
-          <Pressable onPress={handleDelete}>
+          <Pressable onPress={() => setConfirmationVisible(true)} className='p-2'>
             <FontAwesome6 name='trash' size={18} color='#64748b' className='p-2' />
           </Pressable>
         </View>
@@ -161,18 +152,27 @@ export default function TodosDetailedView() {
         )}
       </ScreenView>
 
-      {openPicker && (
-        <DateTimePicker
-          isOpen={true}
-          mode={openPicker === 'dueDate' ? 'date' : 'time'}
-          value={
-            openPicker === 'dueDate'
-              ? moment(editingTodo.due_date).toDate()
-              : moment.utc(editingTodo.due_time, 'HH:mm').local().toDate()
-          }
-          onChange={handleDueChange}
-        />
-      )}
+      <DateTimePicker
+        isOpen={openPicker !== null}
+        mode={openPicker === 'dueDate' ? 'date' : 'time'}
+        value={
+          openPicker === 'dueDate'
+            ? moment(editingTodo.due_date).toDate()
+            : moment.utc(editingTodo.due_time, 'HH:mm').local().toDate()
+        }
+        onChange={handleDueChange}
+      />
+      <Modal
+        animationType='fade'
+        isOpen={confirmationVisible}
+        onClose={() => setConfirmationVisible(false)}
+        title='Confirm Delete'
+        message='Are you sure you want to delete this todo? This action cannot be undone.'
+        actions={[
+          { label: 'Cancel', onPress: () => setConfirmationVisible(false) },
+          { label: 'Delete', onPress: handleDelete, closeModal: true, labelClassName: 'text-danger' },
+        ]}
+      />
     </>
   );
 }

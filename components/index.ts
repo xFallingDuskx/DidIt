@@ -30,3 +30,4 @@ export { default as TodoViewToggle } from './todos/TodoViewToggle';
 export { default as ScreenView } from './util/ScreenView';
 export { default as T } from './util/T';
 export { default as TabView } from './util/TabView';
+export { default as Modal } from './util/Modal';
