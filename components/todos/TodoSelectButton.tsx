@@ -14,11 +14,11 @@ export default function TodoSelectButton({ view }: { view: TodoTabView }) {
       className={join(
         'py-2 px-3 mr-2 w-fit rounded-full border',
         tabView === view && 'bg-accent border-accent',
-        tabView !== view && 'border-muted'
+        tabView !== view && 'border-muted',
       )}
       onPress={handlePress}
     >
-      <T weight='medium' className={join(tabView === view && 'text-surface')}>
+      <T weight="medium" className={join(tabView === view && 'text-surface')}>
         {capitalize(view)}
       </T>
     </Pressable>

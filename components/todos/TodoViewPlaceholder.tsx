@@ -23,7 +23,7 @@ export default function TodoViewPlaceholder() {
   }
 
   return (
-    <T weight='medium' className='text-center'>
+    <T weight="medium" className="text-center">
       {message}
     </T>
   );

@@ -1,6 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
-import { Image, KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  View,
+} from 'react-native';
 import PrimaryButton from '../buttons/PrimaryButton';
 import ScreenView from '../util/ScreenView';
 import T from '../util/T';
@@ -46,11 +52,17 @@ export default function AuthScreenContainer({
   };
 
   return (
-    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
-      <ScreenView className='items-center'>
-        <View className='w-full justify-start items-center flex-1'>
-          <Image source={require('../../assets/logo-blue-transparent.png')} className='w-full h-48 mt-20 mb-4' />
-          <T font='header' weight='bold' className='text-3xl mb-4'>
+    <KeyboardAvoidingView
+      behavior="position"
+      keyboardVerticalOffset={keyboardVerticalOffset}
+    >
+      <ScreenView className="items-center">
+        <View className="w-full justify-start items-center flex-1">
+          <Image
+            source={require('../../assets/logo-blue-transparent.png')}
+            className="w-full h-48 mt-20 mb-4"
+          />
+          <T font="header" weight="bold" className="text-3xl mb-4">
             {type === 'signup' ? 'Sign Up' : 'Log In'}
           </T>
           {children}
@@ -58,11 +70,13 @@ export default function AuthScreenContainer({
             text={type === 'signup' ? 'Sign Up' : 'Log In'}
             onPress={handleClick}
             disabled={disableCtaButton}
-            className='mt-2'
+            className="mt-2"
           />
           <Pressable onPress={handleSwitch}>
-            <T className='text-accent'>
-              {type === 'signup' ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}
+            <T className="text-accent">
+              {type === 'signup'
+                ? 'Already have an account? Log In'
+                : "Don't have an account? Sign Up"}
             </T>
           </Pressable>
         </View>

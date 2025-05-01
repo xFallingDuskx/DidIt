@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import moment from 'moment';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Input, Modal, ScreenView, T } from '../../components';
 import DateTimePicker from '../../components/form/DateTimePicker';
@@ -22,9 +22,21 @@ export default function TodosDetailedView() {
     return todoItem;
   }, [todoId, todoMap]);
   const [todoChanges, setTodoChanges] = useState<EditableTodo>({});
-  const editingTodo = useMemo(() => ({ ...todo, ...todoChanges }), [todo, todoChanges]);
-  const [openPicker, setOpenPicker] = useState<'dueDate' | 'dueTime' | null>(null);
+  const editingTodo = useMemo(
+    () => ({ ...todo, ...todoChanges }),
+    [todo, todoChanges],
+  );
+  const [openPicker, setOpenPicker] = useState<'dueDate' | 'dueTime' | null>(
+    null,
+  );
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+
+  const handleSave = useCallback(() => {
+    if (Object.keys(todoChanges).length > 0) {
+      editTodo(todo.id, todoChanges);
+      setTodoChanges({});
+    }
+  }, [todo.id, todoChanges]);
 
   // Save before navigating back — meant to address swipes to go back
   useEffect(() => {
@@ -33,17 +45,10 @@ export default function TodosDetailedView() {
     });
 
     return unsubscribe;
-  }, [navigation, todoChanges]);
+  }, [navigation, todoChanges, handleSave]);
 
   const handleEdit = (updates: EditableTodo) => {
     setTodoChanges({ ...todoChanges, ...updates });
-  };
-
-  const handleSave = () => {
-    if (Object.keys(todoChanges).length > 0) {
-      editTodo(todo.id, todoChanges);
-      setTodoChanges({});
-    }
   };
 
   const handleGoBack = () => {
@@ -58,11 +63,15 @@ export default function TodosDetailedView() {
 
   const handleDueChange = (__event, newValue: Date | null) => {
     if (openPicker === 'dueDate') {
-      handleEdit({ due_date: newValue ? moment.utc(newValue).format('YYYY-MM-DD') : null });
+      handleEdit({
+        due_date: newValue ? moment.utc(newValue).format('YYYY-MM-DD') : null,
+      });
     }
 
     if (openPicker === 'dueTime') {
-      handleEdit({ due_time: newValue ? moment.utc(newValue).format('HH:mm') : null });
+      handleEdit({
+        due_time: newValue ? moment.utc(newValue).format('HH:mm') : null,
+      });
     }
 
     setOpenPicker(null); // Close the picker
@@ -75,12 +84,12 @@ export default function TodosDetailedView() {
   // NEXT: better composition — use context ?
   if (!todo) {
     return (
-      <ScreenView className='py-2 px-4'>
-        <Pressable onPress={handleGoBack} className='p-2'>
-          <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
+      <ScreenView className="py-2 px-4">
+        <Pressable onPress={handleGoBack} className="p-2">
+          <FontAwesome6 name="chevron-left" size={20} color="#64748b" />
         </Pressable>
-        <View className='flex-1 items-center justify-center'>
-          <T weight='bold' className='text-xl text-center'>
+        <View className="flex-1 items-center justify-center">
+          <T weight="bold" className="text-xl text-center">
             Todo not found
           </T>
         </View>
@@ -90,57 +99,73 @@ export default function TodosDetailedView() {
 
   return (
     <>
-      <ScreenView className='py-2 relative'>
-        <View className='px-4 flex-row justify-between mb-4'>
-          <Pressable onPress={handleGoBack} className='p-2'>
-            <FontAwesome6 name='chevron-left' size={20} color='#64748b' />
+      <ScreenView className="py-2 relative">
+        <View className="px-4 flex-row justify-between mb-4">
+          <Pressable onPress={handleGoBack} className="p-2">
+            <FontAwesome6 name="chevron-left" size={20} color="#64748b" />
           </Pressable>
 
-          <Pressable onPress={() => setConfirmationVisible(true)} className='p-2'>
-            <FontAwesome6 name='trash' size={18} color='#64748b' className='p-2' />
+          <Pressable
+            onPress={() => setConfirmationVisible(true)}
+            className="p-2"
+          >
+            <FontAwesome6
+              name="trash"
+              size={18}
+              color="#64748b"
+              className="p-2"
+            />
           </Pressable>
         </View>
 
-        <View className='px-4 mb-4'>
+        <View className="px-4 mb-4">
           <Input
             value={editingTodo.text}
             onChangeText={(text) => handleEdit({ text })}
-            placeholder='Title'
+            placeholder="Title"
             onBlur={handleSave}
             multiline={true}
-            className='px-2 py-1 font-header-medium text-3xl border-b-2 border-transparent focus:border-accent'
+            className="px-2 py-1 font-header-medium text-3xl border-b-2 border-transparent focus:border-accent"
           />
         </View>
 
         <View
           className={join(
             'px-6 pt-2.5 mb-4 bg-surface-tab flex-row gap-1.5',
-            !(editingTodo.due_date && editingTodo.due_time) && 'pb-2.5'
+            !(editingTodo.due_date && editingTodo.due_time) && 'pb-2.5',
           )}
         >
-          <T weight='semibold' className='mr-0.5'>
+          <T weight="semibold" className="mr-0.5">
             Due:
           </T>
-          <View className='flex-1 flex items-center'>
-            <View className={join('flex-row gap-2', !editingTodo.due_date && 'w-1/2 mr-auto')}>
+          <View className="flex-1 flex items-center">
+            <View
+              className={join(
+                'flex-row gap-2',
+                !editingTodo.due_date && 'w-1/2 mr-auto',
+              )}
+            >
               <TodoInputActionItem
-                type='dueDate'
+                type="dueDate"
                 onPress={() => setOpenPicker('dueDate')}
                 value={
                   !editingTodo.due_date
                     ? undefined
                     : isInCurrentYear(editingTodo.due_date)
-                    ? moment(editingTodo.due_date).format('ddd MMM D')
-                    : moment(editingTodo.due_date).format('MMM D, YYYY')
+                      ? moment(editingTodo.due_date).format('ddd MMM D')
+                      : moment(editingTodo.due_date).format('MMM D, YYYY')
                 }
               />
               {editingTodo.due_date && (
                 <TodoInputActionItem
-                  type='dueTime'
+                  type="dueTime"
                   onPress={() => setOpenPicker('dueTime')}
                   value={
                     editingTodo.due_time
-                      ? moment.utc(editingTodo.due_time, 'HH:mm').local().format('h:mm A')
+                      ? moment
+                          .utc(editingTodo.due_time, 'HH:mm')
+                          .local()
+                          .format('h:mm A')
                       : undefined
                   }
                 />
@@ -148,14 +173,17 @@ export default function TodosDetailedView() {
             </View>
 
             {editingTodo.due_date && editingTodo.due_time && (
-              <View className='flex-row items-center justify-end mt-1'>
-                <T className='text-sm'>
+              <View className="flex-row items-center justify-end mt-1">
+                <T className="text-sm">
                   {editingTodo.use_local_time
                     ? 'Time will adjust in different timezones'
                     : 'Time will use same time, regardless of timezone.'}
                 </T>
-                <Pressable onPress={handleReminderTimeUseChange} className='p-1'>
-                  <T weight='medium' className='text-accent text-sm'>
+                <Pressable
+                  onPress={handleReminderTimeUseChange}
+                  className="p-1"
+                >
+                  <T weight="medium" className="text-accent text-sm">
                     Change
                   </T>
                 </Pressable>
@@ -164,21 +192,25 @@ export default function TodosDetailedView() {
           </View>
         </View>
 
-        <View className='px-4 mb-4'>
+        <View className="px-4 mb-4">
           <Input
             value={editingTodo.details}
             onChangeText={(text) => handleEdit({ details: text })}
-            placeholder='Details'
+            placeholder="Details"
             onBlur={handleSave}
             multiline={true}
-            className='px-2 py-1 font-body border-b border-transparent focus:border-accent overflow-hidden'
+            className="px-2 py-1 font-body border-b border-transparent focus:border-accent overflow-hidden"
           />
         </View>
 
         {todo && (
-          <View className='absolute bottom-5 left-5'>
-            <T className='text-muted text-sm'>Updated {moment(todo.updated_at).calendar()}</T>
-            <T className='text-muted text-sm'>Created {moment(todo.created_at).calendar()}</T>
+          <View className="absolute bottom-5 left-5">
+            <T className="text-muted text-sm">
+              Updated {moment(todo.updated_at).calendar()}
+            </T>
+            <T className="text-muted text-sm">
+              Created {moment(todo.created_at).calendar()}
+            </T>
           </View>
         )}
       </ScreenView>
@@ -194,14 +226,19 @@ export default function TodosDetailedView() {
         onChange={handleDueChange}
       />
       <Modal
-        animationType='fade'
+        animationType="fade"
         isOpen={confirmationVisible}
         onClose={() => setConfirmationVisible(false)}
-        title='Confirm Delete'
-        message='Are you sure you want to delete this todo? This action cannot be undone.'
+        title="Confirm Delete"
+        message="Are you sure you want to delete this todo? This action cannot be undone."
         actions={[
           { label: 'Cancel', onPress: () => setConfirmationVisible(false) },
-          { label: 'Delete', onPress: handleDelete, closeModal: true, labelClassName: 'text-danger' },
+          {
+            label: 'Delete',
+            onPress: handleDelete,
+            closeModal: true,
+            labelClassName: 'text-danger',
+          },
         ]}
       />
     </>

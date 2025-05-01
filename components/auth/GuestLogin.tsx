@@ -8,7 +8,7 @@ export default function GuestLogin() {
   };
 
   return (
-    <T weight='light' className='my-4' role='button' onPress={handlePress}>
+    <T weight="light" className="my-4" role="button" onPress={handlePress}>
       Or continue without an account
     </T>
   );

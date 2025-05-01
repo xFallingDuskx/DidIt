@@ -1,5 +1,10 @@
 import React from 'react';
-import { GestureResponderEvent, Pressable, Modal as RNModal, View } from 'react-native';
+import {
+  GestureResponderEvent,
+  Pressable,
+  Modal as RNModal,
+  View,
+} from 'react-native';
 import { join } from '../../utils';
 import T from './T';
 
@@ -36,26 +41,35 @@ export default function Modal({
   };
 
   return (
-    <RNModal animationType={animationType} transparent={true} visible={isOpen} onRequestClose={onClose}>
+    <RNModal
+      animationType={animationType}
+      transparent={true}
+      visible={isOpen}
+      onRequestClose={onClose}
+    >
       <Pressable
-        id='modal-container'
-        className='flex-1 justify-center items-center bg-black/50'
+        id="modal-container"
+        className="flex-1 justify-center items-center bg-black/50"
         onPress={handleContainerPress}
       >
-        <View className='w-4/5 bg-surface rounded-lg p-4'>
+        <View className="w-4/5 bg-surface rounded-lg p-4">
           {title && (
-            <T font='header' weight='bold' className='text-xl text-center mb-4 capitalize'>
+            <T
+              font="header"
+              weight="bold"
+              className="text-xl text-center mb-4 capitalize"
+            >
               {title}
             </T>
           )}
-          {message && <T className='mb-4 text-center'>{message}</T>}
-          {children && <View className='mb-4'>{children}</View>}
+          {message && <T className="mb-4 text-center">{message}</T>}
+          {children && <View className="mb-4">{children}</View>}
           {actions.length > 0 && (
-            <View className='flex-row justify-end'>
+            <View className="flex-row justify-end">
               {actions?.map((action, index) => (
                 <Pressable
                   key={index}
-                  className='py-2 px-4'
+                  className="py-2 px-4"
                   onPress={() => {
                     action.onPress();
                     if (action.closeModal) {
@@ -63,7 +77,9 @@ export default function Modal({
                     }
                   }}
                 >
-                  <T className={join('text-lg', action.labelClassName)}>{action.label}</T>
+                  <T className={join('text-lg', action.labelClassName)}>
+                    {action.label}
+                  </T>
                 </Pressable>
               ))}
             </View>

@@ -15,7 +15,7 @@ export default function TabLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    return <Redirect href='/onboarding' />;
+    return <Redirect href="/onboarding" />;
   }
 
   // This layout can be deferred because it's not the root layout.
@@ -29,7 +29,9 @@ export default function TabLayout() {
           fontFamily: 'BodyRegular',
           fontWeight: 300,
         },
-        tabBarButton: (props) => <Pressable {...props} android_ripple={{ color: 'transparent' }} />,
+        tabBarButton: (props) => (
+          <Pressable {...props} android_ripple={{ color: 'transparent' }} />
+        ),
         tabBarStyle: {
           paddingVertical: 10,
           ...(Platform.OS === 'android' ? { height: 60 } : {}),
@@ -37,24 +39,30 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name="index"
         options={{
           title: 'ToDos',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='check-circle' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 size={20} name="check-circle" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
-        name='lists'
+        name="lists"
         options={{
           title: 'Lists',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='list-alt' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 size={20} name="list-alt" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
-        name='routines'
+        name="routines"
         options={{
           title: 'Routines',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name='clock' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 size={20} name="clock" color={color} />
+          ),
         }}
       />
     </Tabs>

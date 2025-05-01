@@ -22,18 +22,28 @@ const TypeMap: Record<TodoInputActionItemType, TodoInputActionItemInfo> = {
   details: { icon: 'd', label: 'Details' },
 };
 
-export default function TodoInputActionItem({ type, value, onPress }: TodoInputActionItemProps) {
+export default function TodoInputActionItem({
+  type,
+  value,
+  onPress,
+}: TodoInputActionItemProps) {
   return (
     <Pressable
       onPress={onPress}
-      className={join('flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full flex-1')}
+      className={join(
+        'flex-row gap-1 items-center justify-center px-3 py-2 bg-white rounded-full flex-1',
+      )}
     >
       <FontAwesome6
-        name={value && TypeMap[type].iconForValue ? TypeMap[type].iconForValue : TypeMap[type].icon}
+        name={
+          value && TypeMap[type].iconForValue
+            ? TypeMap[type].iconForValue
+            : TypeMap[type].icon
+        }
         size={16}
-        color='black'
+        color="black"
       />
-      <T weight='medium'>{value || TypeMap[type].label}</T>
+      <T weight="medium">{value || TypeMap[type].label}</T>
     </Pressable>
   );
 }

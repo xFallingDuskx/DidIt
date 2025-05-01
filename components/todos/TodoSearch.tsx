@@ -2,7 +2,8 @@ import { useTodoTab } from '../../contexts/TodoContext';
 import SearchInput from '../form/SearchInput';
 
 export default function TodoSearch() {
-  const { tabView, searchTerm, setSearchTerm, searchBarInFocus, setSearchBarInFocus } = useTodoTab();
+  const { tabView, searchTerm, setSearchTerm, setSearchBarInFocus } =
+    useTodoTab();
 
   if (tabView !== 'all') {
     return <></>;
@@ -13,8 +14,8 @@ export default function TodoSearch() {
       query={searchTerm}
       setQuery={(text) => setSearchTerm(text)}
       setInFocus={setSearchBarInFocus}
-      placeholder='Search todos'
-      className='mx-6 w-full'
+      placeholder="Search todos"
+      className="mx-6 w-full"
     />
   );
 }

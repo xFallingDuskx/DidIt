@@ -1,9 +1,20 @@
-import { createContext, ReactNode, useContext, useRef, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import { TextInput } from 'react-native';
 import { TodoInputActionItemType } from '../components/todos/TodoInputActionItem';
 
 export type TodoTabView = 'all' | 'by date' | 'unplanned' | 'past due';
-export type TodoByDateOptions = 'today' | 'next 3 days' | 'this week' | 'next week';
+export type TodoByDateOptions =
+  | 'today'
+  | 'next 3 days'
+  | 'this week'
+  | 'next week';
 
 // in the format YYYY-MM-DD
 export interface DateRange {
@@ -34,7 +45,11 @@ interface TodoTabContextType {
 
 const TodoContext = createContext<TodoTabContextType | undefined>(undefined);
 
-export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNode => {
+export const TodoTabProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}): ReactNode => {
   const inputRef = useRef<TextInput>(null);
   const [openPicker, setOpenPicker] = useState(null);
   const [dueDate, setDueDate] = useState<Date | null>(null);
@@ -45,11 +60,11 @@ export const TodoTabProvider = ({ children }: { children: ReactNode }): ReactNod
   const [searchBarInFocus, setSearchBarInFocus] = useState(false);
   const [byDateRange, setByDateRange] = useState<DateRange | null>(null);
 
-  const resetInput = () => {
+  const resetInput = useCallback(() => {
     setDueDate(null);
     setDueTime(null);
     setShowDetails(false);
-  };
+  }, []);
 
   return (
     <TodoContext.Provider

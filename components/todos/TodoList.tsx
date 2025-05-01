@@ -15,7 +15,12 @@ interface TodoListProps {
   todosPastDue: Todo[];
 }
 
-export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosPastDue }: TodoListProps) {
+export default function TodoList({
+  todosAll,
+  todosByDate,
+  todosUnplanned,
+  todosPastDue,
+}: TodoListProps) {
   const { tabView, searchTerm, byDateRange } = useTodoTab();
 
   const queryTodos = useCallback(
@@ -29,13 +34,16 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
         if (todo.text.toLowerCase().includes(searchTermLower)) {
           return true;
         }
-        if (todo.details && todo.details.toLowerCase().includes(searchTermLower)) {
+        if (
+          todo.details &&
+          todo.details.toLowerCase().includes(searchTermLower)
+        ) {
           return true;
         }
         return false;
       });
     },
-    [searchTerm]
+    [searchTerm],
   );
 
   const filterTodosByDateRange = useCallback(
@@ -59,7 +67,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
 
       return filteredTodos;
     },
-    [byDateRange]
+    [byDateRange],
   );
 
   const chosenTodos = useMemo(() => {
@@ -101,8 +109,10 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
           if (typeof item === 'string') {
             // Rendering header
             return (
-              <T font='header' className='text-xl pb-1'>
-                {isInCurrentYear(item) ? moment(item).format('dddd, MMM Do') : moment(item).format('MMM D, YYYY')}
+              <T font="header" className="text-xl pb-1">
+                {isInCurrentYear(item)
+                  ? moment(item).format('dddd, MMM Do')
+                  : moment(item).format('MMM D, YYYY')}
               </T>
             );
           } else {
@@ -145,7 +155,7 @@ export default function TodoList({ todosAll, todosByDate, todosUnplanned, todosP
         width: width,
       }}
       showsVerticalScrollIndicator={false}
-      className='bg-surface-tab rounded-xl'
+      className="bg-surface-tab rounded-xl"
       ListEmptyComponent={<TodoViewPlaceholder />}
     />
   );

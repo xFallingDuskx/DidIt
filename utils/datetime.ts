@@ -10,7 +10,9 @@ export function isInCurrentYear(date: Date | string) {
 
 export function dateWithTime(dateStr: string, timeStr: string): Date {
   const userTimezone = momenttz.tz.guess();
-  const combinedDateTime = momenttz.utc(`${dateStr} ${timeStr}`, 'YYYY-MM-DD HH:mm').tz(userTimezone);
+  const combinedDateTime = momenttz
+    .utc(`${dateStr} ${timeStr}`, 'YYYY-MM-DD HH:mm')
+    .tz(userTimezone);
   return combinedDateTime.toDate();
 }
 
@@ -21,7 +23,9 @@ export function isPastDate(date: Date) {
 }
 
 export function useCurrentDate() {
-  const [formattedDate, setFormattedDate] = useState(moment().format('YYYY-MM-DD'));
+  const [formattedDate, setFormattedDate] = useState(
+    moment().format('YYYY-MM-DD'),
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {

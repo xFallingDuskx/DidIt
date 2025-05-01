@@ -38,7 +38,12 @@
     "@babel/core": "^7.19.3",
     "@types/react": "~18.3.12",
     "@types/uuid": "^10.0.0",
-    "typescript": "~5.3.3"
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "prettier": "^3.5.3",
+    "typescript": "~5.3.3",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "~8.0.1"
   },
   "name": "did-it",
   "version": "1.0.0",
@@ -54,6 +59,8 @@
     "web": "expo start --web",
     "supa/types": "supabase gen types typescript --local > utils/database.types.ts",
     "supa/migrate": "supabase migration up && npm run supa/types",
-    "supa/push": "supabase db push"
+    "supa/push": "supabase db push",
+    "lint": "eslint .",
+    "lint/fix": "eslint . --fix"
   }
 }

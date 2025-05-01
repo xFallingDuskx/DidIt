@@ -15,19 +15,27 @@ export default function TodoDateFilter() {
     () => [
       {
         label: 'Today',
-        selected: byDateRange?.start === currentDate && byDateRange?.end === currentDate,
+        selected:
+          byDateRange?.start === currentDate &&
+          byDateRange?.end === currentDate,
         onPress: () => setByDateRange({ start: currentDate, end: currentDate }),
       },
       {
         label: 'Next 3 Days',
         selected:
-          byDateRange?.start === currentDate && byDateRange?.end === moment().add(3, 'days').format('YYYY-MM-DD'),
-        onPress: () => setByDateRange({ start: currentDate, end: moment().add(3, 'days').format('YYYY-MM-DD') }),
+          byDateRange?.start === currentDate &&
+          byDateRange?.end === moment().add(3, 'days').format('YYYY-MM-DD'),
+        onPress: () =>
+          setByDateRange({
+            start: currentDate,
+            end: moment().add(3, 'days').format('YYYY-MM-DD'),
+          }),
       },
       {
         label: 'This Week',
         selected:
-          byDateRange?.start === moment().startOf('week').format('YYYY-MM-DD') &&
+          byDateRange?.start ===
+            moment().startOf('week').format('YYYY-MM-DD') &&
           byDateRange?.end === moment().endOf('week').format('YYYY-MM-DD'),
         onPress: () =>
           setByDateRange({
@@ -38,8 +46,10 @@ export default function TodoDateFilter() {
       {
         label: 'Next Week',
         selected:
-          byDateRange?.start === moment().add(1, 'week').startOf('week').format('YYYY-MM-DD') &&
-          byDateRange?.end === moment().add(1, 'week').endOf('week').format('YYYY-MM-DD'),
+          byDateRange?.start ===
+            moment().add(1, 'week').startOf('week').format('YYYY-MM-DD') &&
+          byDateRange?.end ===
+            moment().add(1, 'week').endOf('week').format('YYYY-MM-DD'),
         onPress: () =>
           setByDateRange({
             start: moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'),
@@ -47,7 +57,7 @@ export default function TodoDateFilter() {
           }),
       },
     ],
-    [byDateRange, currentDate]
+    [byDateRange, currentDate, setByDateRange],
   );
 
   // Set default date range to today if not set
@@ -58,31 +68,38 @@ export default function TodoDateFilter() {
         end: currentDate,
       });
     }
-  }, [byDateRange, currentDate]);
+  }, [byDateRange, currentDate, setByDateRange]);
 
   if (tabView !== 'by date') {
     return <></>;
   }
 
   return (
-    <View className='relative'>
+    <View className="relative">
       <TodoDateRangeSelect />
-      <View className='mt-5 mb-3 flex-row justify-center gap-2'>
+      <View className="mt-5 mb-3 flex-row justify-center gap-2">
         <DateDisplay date={byDateRange?.start || currentDate} />
         {byDateRange?.start !== byDateRange?.end && (
           <>
-            <T font='header' weight='bold' className='text-4xl'>
+            <T font="header" weight="bold" className="text-4xl">
               -
             </T>
             <DateDisplay date={byDateRange?.end || currentDate} />
           </>
         )}
       </View>
-      <View className='flex-row gap-3'>
+      <View className="flex-row gap-3">
         {dateOptions.map(({ label, onPress, selected }) => (
-          <Pressable key={label} className={join('py-2 px-2 flex-row gap-1')} onPress={onPress}>
-            {selected && <FontAwesome6 name='calendar' color='#1877f2' />}
-            <T weight={selected ? 'bold' : 'medium'} className={join('text-sm', selected && 'text-accent')}>
+          <Pressable
+            key={label}
+            className={join('py-2 px-2 flex-row gap-1')}
+            onPress={onPress}
+          >
+            {selected && <FontAwesome6 name="calendar" color="#1877f2" />}
+            <T
+              weight={selected ? 'bold' : 'medium'}
+              className={join('text-sm', selected && 'text-accent')}
+            >
               {label}
             </T>
           </Pressable>
@@ -96,11 +113,11 @@ function DateDisplay({ date }: { date: string }) {
   const ordinalDate = moment(date).format('Do');
   const monthYear = moment(date).format('MMMM YYYY');
   return (
-    <View className='flex items-center'>
-      <T font='header' weight='bold' className='text-5xl'>
+    <View className="flex items-center">
+      <T font="header" weight="bold" className="text-5xl">
         {ordinalDate}
       </T>
-      <T font='header' className='text-gray-400 -translate-y-1'>
+      <T font="header" className="text-gray-400 -translate-y-1">
         {monthYear}
       </T>
     </View>
