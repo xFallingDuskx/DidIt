@@ -12,8 +12,12 @@ export {
   dateWithTime,
   isInCurrentYear,
   isPastDate,
+  timezoneDateEquivalent,
   useCurrentDate,
 } from './datetime';
+
+// Util
+export { default as timeoutAsyncFunction } from './timeoutAsyncFunction';
 
 // Todos
 export { isTodoPastDue } from './todoUtils';

@@ -8,12 +8,49 @@ export function isInCurrentYear(date: Date | string) {
   return givenYear === currentYear;
 }
 
-export function dateWithTime(dateStr: string, timeStr: string): Date {
-  const userTimezone = momenttz.tz.guess();
+export function dateWithTime(
+  dateStr: string,
+  timeStr: string,
+  timezone?: string,
+): Date {
+  const userTimezone = timezone || momenttz.tz.guess(true);
   const combinedDateTime = momenttz
     .utc(`${dateStr} ${timeStr}`, 'YYYY-MM-DD HH:mm')
     .tz(userTimezone);
   return combinedDateTime.toDate();
+}
+
+/**
+ * Adjusts a given date to a target timezone while keeping the same local time as in the original timezone.
+ *
+ * @param utcDate - The original date object (assumed to be in UTC).
+ * @param fromTimezone - The timezone of the original date.
+ * @param toTimezone - The target timezone to which the date should be adjusted.
+ * @returns A string in ISO 8601 format representing the adjusted date and time.
+ *
+ * @example
+ * Example:
+ * timezoneDateEquivalent(
+ *   new Date('2025-03-20T12:00:00Z'),
+ *   'America/New_York',
+ *   'America/Chicago',
+ * );
+ * // Returns {"date": 2025-03-20T13:00:00.000Z, "timeWithOffset": "2025-03-20T08:00:00-05:00"} (when outside of Daylight Saving Time)
+ * // because the original time in New York is 8am (2025-03-20T08:00:00-04:00)
+ */
+export function timezoneDateEquivalent(
+  utcDate: Date,
+  fromTimezone: string,
+  toTimezone: string,
+) {
+  const fromMoment = momenttz.tz(utcDate, fromTimezone);
+  const toMoment = momenttz.tz(
+    fromMoment.format('YYYY-MM-DDTHH:mm:ss'),
+    toTimezone,
+  );
+  const timeWithOffset = toMoment.format();
+  const date = new Date(timeWithOffset);
+  return { date, timeWithOffset };
 }
 
 export function isPastDate(date: Date) {
