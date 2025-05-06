@@ -43,9 +43,11 @@ export type Database = {
           done: boolean | null
           due_date: string | null
           due_time: string | null
+          due_timezone: string
           id: string
           text: string | null
           updated_at: string | null
+          use_local_time: boolean
           user_id: string
         }
         Insert: {
@@ -56,9 +58,11 @@ export type Database = {
           done?: boolean | null
           due_date?: string | null
           due_time?: string | null
+          due_timezone: string
           id?: string
           text?: string | null
           updated_at?: string | null
+          use_local_time?: boolean
           user_id: string
         }
         Update: {
@@ -69,9 +73,11 @@ export type Database = {
           done?: boolean | null
           due_date?: string | null
           due_time?: string | null
+          due_timezone?: string
           id?: string
           text?: string | null
           updated_at?: string | null
+          use_local_time?: boolean
           user_id?: string
         }
         Relationships: []

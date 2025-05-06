@@ -7,7 +7,7 @@ import { Input, Modal, ScreenView, T } from '../../components';
 import DateTimePicker from '../../components/form/DateTimePicker';
 import TodoInputActionItem from '../../components/todos/TodoInputActionItem';
 import { deleteTodo, EditableTodo, editTodo, useTodos } from '../../supalegend';
-import { isInCurrentYear } from '../../utils';
+import { isInCurrentYear, join } from '../../utils';
 
 export default function TodosDetailedView() {
   const router = useRouter();
@@ -68,6 +68,11 @@ export default function TodosDetailedView() {
     setOpenPicker(null); // Close the picker
   };
 
+  const handleReminderTimeUseChange = () => {
+    handleEdit({ use_local_time: !editingTodo.use_local_time });
+  };
+
+  // NEXT: better composition — use context ?
   if (!todo) {
     return (
       <ScreenView className='py-2 px-4'>
@@ -107,30 +112,56 @@ export default function TodosDetailedView() {
           />
         </View>
 
-        <View className='px-6 py-2 flex-row gap-2 items-center mb-4 bg-surface-tab'>
+        <View
+          className={join(
+            'px-6 pt-2.5 mb-4 bg-surface-tab flex-row gap-1.5',
+            !(editingTodo.due_date && editingTodo.due_time) && 'pb-2.5'
+          )}
+        >
           <T weight='semibold' className='mr-0.5'>
             Due:
           </T>
-          <TodoInputActionItem
-            type='dueDate'
-            onPress={() => setOpenPicker('dueDate')}
-            value={
-              !editingTodo.due_date
-                ? undefined
-                : isInCurrentYear(editingTodo.due_date)
-                ? moment(editingTodo.due_date).format('ddd MMM D')
-                : moment(editingTodo.due_date).format('MMM D, YYYY')
-            }
-          />
-          {editingTodo.due_date && (
-            <TodoInputActionItem
-              type='dueTime'
-              onPress={() => setOpenPicker('dueTime')}
-              value={
-                editingTodo.due_time ? moment.utc(editingTodo.due_time, 'HH:mm').local().format('h:mm A') : undefined
-              }
-            />
-          )}
+          <View className='flex-1 flex items-center'>
+            <View className={join('flex-row gap-2', !editingTodo.due_date && 'w-1/2 mr-auto')}>
+              <TodoInputActionItem
+                type='dueDate'
+                onPress={() => setOpenPicker('dueDate')}
+                value={
+                  !editingTodo.due_date
+                    ? undefined
+                    : isInCurrentYear(editingTodo.due_date)
+                    ? moment(editingTodo.due_date).format('ddd MMM D')
+                    : moment(editingTodo.due_date).format('MMM D, YYYY')
+                }
+              />
+              {editingTodo.due_date && (
+                <TodoInputActionItem
+                  type='dueTime'
+                  onPress={() => setOpenPicker('dueTime')}
+                  value={
+                    editingTodo.due_time
+                      ? moment.utc(editingTodo.due_time, 'HH:mm').local().format('h:mm A')
+                      : undefined
+                  }
+                />
+              )}
+            </View>
+
+            {editingTodo.due_date && editingTodo.due_time && (
+              <View className='flex-row items-center justify-end mt-1'>
+                <T className='text-sm'>
+                  {editingTodo.use_local_time
+                    ? 'Time will adjust in different timezones'
+                    : 'Time will use same time, regardless of timezone.'}
+                </T>
+                <Pressable onPress={handleReminderTimeUseChange} className='p-1'>
+                  <T weight='medium' className='text-accent text-sm'>
+                    Change
+                  </T>
+                </Pressable>
+              </View>
+            )}
+          </View>
         </View>
 
         <View className='px-4 mb-4'>
