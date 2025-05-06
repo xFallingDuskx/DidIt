@@ -7,8 +7,6 @@ interface OnDisplayNotificationProps {
   body?: string;
 }
 
-// TASK: test on iOS
-// TASK: show notification when app is in foreground
 export async function onDisplayNotification({
   title = 'Todo Reminder',
   body = 'You have a new todo reminder.',

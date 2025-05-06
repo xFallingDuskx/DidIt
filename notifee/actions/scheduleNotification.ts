@@ -8,8 +8,6 @@ interface OnDisplayNotificationProps {
   body?: string;
 }
 
-// TASK: test on iOS
-// TASK: show notification when app is in foreground
 export async function scheduleNotification({
   title = 'Scheduled Todo Reminder',
   body = 'You have a new todo reminder.',
@@ -18,7 +16,6 @@ export async function scheduleNotification({
   const channelId = await createTodoReminderChannel();
   const fiveSecondTrigger = createFiveSecondTrigger();
 
-  console.log('scheduling notification'); // REMOVE
   const notificationId = await notifee.createTriggerNotification(
     {
       title,
