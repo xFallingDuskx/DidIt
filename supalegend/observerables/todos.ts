@@ -8,7 +8,7 @@ export const todos$ = observable(
     collection: 'todos',
     select: (from) =>
       from.select(
-        'id,user_id,counter,text,details,done,created_at,updated_at,due_date,due_time,due_timezone,use_local_time,deleted'
+        'id,user_id,counter,text,details,done,created_at,updated_at,due_date,due_time,due_timezone,use_local_time,deleted',
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
@@ -20,5 +20,5 @@ export const todos$ = observable(
     retry: {
       infinite: true, // Retry changes with exponential backoff
     },
-  })
+  }),
 );

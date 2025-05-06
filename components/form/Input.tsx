@@ -10,14 +10,20 @@ interface InputProps extends React.ComponentProps<typeof TextInput> {
 }
 
 const Input = forwardRef<TextInput, InputProps>(
-  ({ className = '', inFocus, setInFocus, dismissKeyboard = true, ...props }, ref) => {
+  (
+    { className = '', inFocus, setInFocus, dismissKeyboard = true, ...props },
+    ref,
+  ) => {
     useEffect(() => {
-      const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-        setInFocus?.(false);
-        if (dismissKeyboard) {
-          Keyboard.dismiss();
-        }
-      });
+      const keyboardDidHideListener = Keyboard.addListener(
+        'keyboardDidHide',
+        () => {
+          setInFocus?.(false);
+          if (dismissKeyboard) {
+            Keyboard.dismiss();
+          }
+        },
+      );
 
       return () => {
         keyboardDidHideListener.remove();
@@ -33,7 +39,9 @@ const Input = forwardRef<TextInput, InputProps>(
         onBlur={() => setInFocus?.(false)}
       />
     );
-  }
+  },
 );
+
+Input.displayName = 'Input';
 
 export default Input;

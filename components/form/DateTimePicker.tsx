@@ -1,6 +1,9 @@
-import RNDateTimePicker, { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import RNDateTimePicker, {
+  DateTimePickerAndroid,
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import Modal from '../util/Modal';
 import T from '../util/T';
@@ -12,28 +15,36 @@ interface DateTimePickerProps {
   onChange: (event: DateTimePickerEvent, selectedDate: Date | null) => void;
 }
 
-export default function DateTimePicker({ isOpen, value, onChange, ...props }: DateTimePickerProps) {
+export default function DateTimePicker({
+  isOpen,
+  value,
+  onChange,
+  ...props
+}: DateTimePickerProps) {
   const [date, setDate] = useState(value || new Date());
 
-  const handleChange = (event: DateTimePickerEvent, selectedDate: Date) => {
-    const currentDate = date;
-    setDate(selectedDate);
+  const handleChange = useCallback(
+    (event: DateTimePickerEvent, selectedDate: Date) => {
+      const currentDate = date;
+      setDate(selectedDate);
 
-    if (Platform.OS === 'android') {
-      if (event.type === 'set') {
-        // confirm
-        onChange(event, selectedDate);
+      if (Platform.OS === 'android') {
+        if (event.type === 'set') {
+          // confirm
+          onChange(event, selectedDate);
+        }
+        if (event.type === 'neutralButtonPressed') {
+          // clear
+          onChange(event, null);
+        }
+        if (event.type === 'dismissed') {
+          // close
+          onChange(event, isNaN(value?.valueOf() || NaN) ? null : currentDate);
+        }
       }
-      if (event.type === 'neutralButtonPressed') {
-        // clear
-        onChange(event, null);
-      }
-      if (event.type === 'dismissed') {
-        // close
-        onChange(event, isNaN(value.valueOf()) ? null : currentDate);
-      }
-    }
-  };
+    },
+    [date, onChange, value],
+  );
 
   const handleClose = () => {
     onChange(null, date);
@@ -68,7 +79,7 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
         DateTimePickerAndroid.dismiss(props.mode);
       }
     }
-  }, [isOpen, props]);
+  }, [isOpen, props, date, handleChange]);
 
   return (
     <Modal
@@ -86,9 +97,11 @@ export default function DateTimePicker({ isOpen, value, onChange, ...props }: Da
         },
       ]}
     >
-      <View className='flex items-center gap-1'>
+      <View className="flex items-center gap-1">
         <RNDateTimePicker {...props} value={date} onChange={handleChange} />
-        {props.mode === 'date' && <T>{moment(date).format('dddd, MMMM D, YYYY')}</T>}
+        {props.mode === 'date' && (
+          <T>{moment(date).format('dddd, MMMM D, YYYY')}</T>
+        )}
         {/* {props.mode === 'time' && <Text className='font-body'>{momenttz.tz.guess().replace('_', ' ')}</Text>} */}
       </View>
     </Modal>

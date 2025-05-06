@@ -8,7 +8,15 @@ import Input from '../form/Input';
 import TodoInputActionBar from './TodoInputActionBar';
 
 export default function TodoInput() {
-  const { inputRef, openPicker, resetInput, dueDate, dueTime, showDetails, searchBarInFocus } = useTodoTab();
+  const {
+    inputRef,
+    openPicker,
+    resetInput,
+    dueDate,
+    dueTime,
+    showDetails,
+    searchBarInFocus,
+  } = useTodoTab();
   const [text, setText] = useState('');
   const [details, setDetails] = useState('');
   const [inFocus, setInFocus] = useState(false);
@@ -51,7 +59,7 @@ export default function TodoInput() {
         clearTimeout(timeout);
       }
     };
-  }, [inFocus, openPicker]);
+  }, [inFocus, openPicker, resetInput]);
 
   if (searchBarInFocus) {
     return <></>;
@@ -60,9 +68,17 @@ export default function TodoInput() {
   const ParentView = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
   return (
-    <ParentView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className={join('flex w-screen')}>
+    <ParentView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      className={join('flex w-screen')}
+    >
       {showAllOptions && <TodoInputActionBar />}
-      <View className={join('flex w-full pt-3 px-4 pb-3', inFocus ? 'bg-surface' : 'bg-surface-tab mt-2')}>
+      <View
+        className={join(
+          'flex w-full pt-3 px-4 pb-3',
+          inFocus ? 'bg-surface' : 'bg-surface-tab mt-2',
+        )}
+      >
         <View className={join('flex-row gap-1 items-center w-full')}>
           <Input
             ref={inputRef}
@@ -70,8 +86,11 @@ export default function TodoInput() {
             onChangeText={(text) => setText(text)}
             onSubmitEditing={handleSubmitEditing}
             setInFocus={setInFocus}
-            placeholder='What do you want to do next?'
-            className={join('input-rounded flex-1 !mb-0', inFocus && 'border-accent')}
+            placeholder="What do you want to do next?"
+            className={join(
+              'input-rounded flex-1 !mb-0',
+              inFocus && 'border-accent',
+            )}
           />
         </View>
         {showAllOptions && showDetails && (
@@ -79,12 +98,12 @@ export default function TodoInput() {
             value={details}
             onChangeText={(text) => setDetails(text)}
             onSubmitEditing={handleSubmitEditing}
-            placeholder='Add details...'
+            placeholder="Add details..."
             setInFocus={setInFocus}
             multiline={true}
             numberOfLines={4}
-            submitBehavior='submit'
-            className='px-4'
+            submitBehavior="submit"
+            className="px-4"
           />
         )}
       </View>

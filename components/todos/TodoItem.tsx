@@ -14,7 +14,12 @@ interface TodoItemProps {
   isForSection?: boolean;
 }
 
-export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection = false }: TodoItemProps) {
+export default function TodoItem({
+  todo,
+  isFirstItem,
+  isLastItem,
+  isForSection = false,
+}: TodoItemProps) {
   const router = useRouter();
 
   const handleStatusPress = () => {
@@ -22,7 +27,10 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
   };
 
   const handleEditPress = () => {
-    router.navigate({ pathname: '/todos/[todoId]', params: { todoId: todo.id } });
+    router.navigate({
+      pathname: '/todos/[todoId]',
+      params: { todoId: todo.id },
+    });
   };
 
   const handleDeletePress = () => {
@@ -49,10 +57,10 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
         'flex-row gap-1 p-4 pl-2 bg-surface',
         isLastItem && 'rounded-b-xl',
         isFirstItem && 'rounded-t-xl',
-        isForSection && isLastItem && 'mb-5'
+        isForSection && isLastItem && 'mb-5',
       )}
     >
-      <Pressable onPress={handleStatusPress} className='pl-2 pr-1'>
+      <Pressable onPress={handleStatusPress} className="pl-2 pr-1">
         <FontAwesome6
           name={todo.done ? 'check-circle' : 'circle'}
           size={20}
@@ -60,30 +68,54 @@ export default function TodoItem({ todo, isFirstItem, isLastItem, isForSection =
           className={join(todo.done && 'opacity-70')}
         />
       </Pressable>
-      <Pressable className='flex-1 flex' onPress={handleEditPress} onLongPress={handleDeletePress}>
-        <T weight='medium' className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}>
+      <Pressable
+        className="flex-1 flex"
+        onPress={handleEditPress}
+        onLongPress={handleDeletePress}
+      >
+        <T
+          weight="medium"
+          className={join('flex-1 pr-4 text-lg', todo.done && 'line-through')}
+        >
           {todo.text}
         </T>
         {todo.details && (
           <T
-            ellipsizeMode='tail'
+            ellipsizeMode="tail"
             numberOfLines={3}
-            className={join('flex-1 pr-4 text-sm text-muted', todo.done && 'line-through')}
+            className={join(
+              'flex-1 pr-4 text-sm text-muted',
+              todo.done && 'line-through',
+            )}
           >
             {todo.details}
           </T>
         )}
         {todo.due_date && (
-          <View className='flex-row items-center gap-1'>
+          <View className="flex-row items-center gap-1">
             {!isForSection && (
-              <T className={join('text-sm', isTodoPastDue(todo) && !todo.done ? 'text-danger' : 'text-muted')}>
+              <T
+                className={join(
+                  'text-sm',
+                  isTodoPastDue(todo) && !todo.done
+                    ? 'text-danger'
+                    : 'text-muted',
+                )}
+              >
                 {isInCurrentYear(todo.due_date)
                   ? moment(todo.due_date).format('ddd, MMM D')
                   : moment(todo.due_date).format('MMM D, YYYY')}
               </T>
             )}
             {todo.due_time && (
-              <T className={join('text-sm', isTodoPastDue(todo) && !todo.done ? 'text-danger' : 'text-muted')}>
+              <T
+                className={join(
+                  'text-sm',
+                  isTodoPastDue(todo) && !todo.done
+                    ? 'text-danger'
+                    : 'text-muted',
+                )}
+              >
                 {!isForSection ? '@ ' : ''}
                 {moment.utc(todo.due_time, 'HH:mm').local().format('h:mma')}
               </T>

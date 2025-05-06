@@ -9,7 +9,7 @@ export default function Layout() {
   }
 
   if (!session) {
-    return <Redirect href='/onboarding' />;
+    return <Redirect href="/onboarding" />;
   }
 
   return <Stack screenOptions={{ headerShown: false }} />;

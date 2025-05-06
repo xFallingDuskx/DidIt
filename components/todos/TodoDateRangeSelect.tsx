@@ -66,11 +66,14 @@ export default function TodoDateRangeSelect() {
           onChange={(value: 'single' | 'range') => {
             setMode(value);
           }}
-          className='-mt-8 mb-2'
+          className="-mt-8 mb-2"
         />
       </Modal>
-      <Pressable onPress={() => setIsModalOpen(true)} className='absolute right-0'>
-        <Octicons name='calendar' size={18} color='#1877f2' />
+      <Pressable
+        onPress={() => setIsModalOpen(true)}
+        className="absolute right-0"
+      >
+        <Octicons name="calendar" size={18} color="#1877f2" />
       </Pressable>
     </>
   );

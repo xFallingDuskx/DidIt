@@ -2,7 +2,14 @@ import { Text } from 'react-native';
 import { join } from '../../utils';
 
 type FontWeights = {
-  body: 'thin' | 'extra-light' | 'light' | 'regular' | 'medium' | 'semibold' | 'bold';
+  body:
+    | 'thin'
+    | 'extra-light'
+    | 'light'
+    | 'regular'
+    | 'medium'
+    | 'semibold'
+    | 'bold';
   header: 'regular' | 'medium' | 'semibold' | 'bold';
   brand: 'regular' | 'medium' | 'semibold' | 'bold';
 };
@@ -37,7 +44,12 @@ const FontClasses: Record<keyof FontWeights, Record<string, string>> = {
   },
 } as const;
 
-export default function T({ font = 'body', weight = 'regular', className, ...props }: TProps) {
+export default function T({
+  font = 'body',
+  weight = 'regular',
+  className,
+  ...props
+}: TProps) {
   const fontClass = FontClasses[font]?.[weight] || '';
   return <Text {...props} className={join(className, fontClass)} />;
 }

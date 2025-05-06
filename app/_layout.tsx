@@ -40,7 +40,12 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (!isLoading && headerFontsLoaded && brandFontsLoaded && bodyFontsLoaded) {
+    if (
+      !isLoading &&
+      headerFontsLoaded &&
+      brandFontsLoaded &&
+      bodyFontsLoaded
+    ) {
       // Hide the splash screen once the fonts are loaded and the app is ready
       SplashScreen.hideAsync();
     }
@@ -55,7 +60,7 @@ export default function RootLayout() {
           animation: 'slide_from_right',
         }}
       >
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </SessionProvider>
   );

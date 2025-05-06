@@ -1,7 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { Animated, useAnimatedValue, View } from 'react-native';
-import { AnimatedFeature, PrimaryButton, ScreenView, SecondaryButton } from '../components';
+import {
+  AnimatedFeature,
+  PrimaryButton,
+  ScreenView,
+  SecondaryButton,
+} from '../components';
 
 export default function Screen() {
   const router = useRouter();
@@ -59,25 +64,49 @@ export default function Screen() {
       delay: logoDuration + textDuration + textDelayGap * 4,
       useNativeDriver: true,
     }).start();
-  }, [logoTranslateY, text1TranslateX, text2TranslateX, text3TranslateX, text4TranslateX, buttonGroupOpacity]);
+  }, [
+    logoTranslateY,
+    text1TranslateX,
+    text2TranslateX,
+    text3TranslateX,
+    text4TranslateX,
+    text5Opacity,
+    buttonGroupOpacity,
+  ]);
 
   return (
-    <ScreenView className='p-8 h-screen'>
+    <ScreenView className="p-8 h-screen">
       <Animated.Image
         source={require('../assets/logo-blue-transparent.png')}
-        className='w-full h-48 my-5'
+        className="w-full h-48 my-5"
         style={{
           transform: [{ translateY: logoTranslateY }],
         }}
       />
-      <View className='flex-1 items-center'>
-        <View className='gap-4'>
-          <AnimatedFeature featureText="Todo's" iconName='check-circle' translateValue={text1TranslateX} />
-          <AnimatedFeature featureText='Reminders' iconName='bell' translateValue={text2TranslateX} />
-          <AnimatedFeature featureText='Lists' iconName='list-alt' translateValue={text3TranslateX} />
-          <AnimatedFeature featureText='Routines' iconName='clock' translateValue={text4TranslateX} />
+      <View className="flex-1 items-center">
+        <View className="gap-4">
+          <AnimatedFeature
+            featureText="Todo's"
+            iconName="check-circle"
+            translateValue={text1TranslateX}
+          />
+          <AnimatedFeature
+            featureText="Reminders"
+            iconName="bell"
+            translateValue={text2TranslateX}
+          />
+          <AnimatedFeature
+            featureText="Lists"
+            iconName="list-alt"
+            translateValue={text3TranslateX}
+          />
+          <AnimatedFeature
+            featureText="Routines"
+            iconName="clock"
+            translateValue={text4TranslateX}
+          />
           <Animated.Text
-            className='mx-auto text-center text-2xl font-header-bold text-accent'
+            className="mx-auto text-center text-2xl font-header-bold text-accent"
             style={{
               opacity: text5Opacity,
             }}
@@ -90,8 +119,16 @@ export default function Screen() {
         </View>
       </View>
       <Animated.View style={{ opacity: buttonGroupOpacity }}>
-        <PrimaryButton text='Get Started' onPress={() => router.replace('/signup')} className='w-full' />
-        <SecondaryButton text='Log In' onPress={() => router.replace('/login')} className='w-full' />
+        <PrimaryButton
+          text="Get Started"
+          onPress={() => router.replace('/signup')}
+          className="w-full"
+        />
+        <SecondaryButton
+          text="Log In"
+          onPress={() => router.replace('/login')}
+          className="w-full"
+        />
       </Animated.View>
     </ScreenView>
   );

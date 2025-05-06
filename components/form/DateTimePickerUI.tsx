@@ -1,5 +1,11 @@
-import DateTimePicker, { DateType, useDefaultStyles } from 'react-native-ui-datepicker';
-import { DatePickerRangeProps, DatePickerSingleProps } from 'react-native-ui-datepicker/lib/typescript/datetime-picker';
+import DateTimePicker, {
+  DateType,
+  useDefaultStyles,
+} from 'react-native-ui-datepicker';
+import {
+  DatePickerRangeProps,
+  DatePickerSingleProps,
+} from 'react-native-ui-datepicker/lib/typescript/datetime-picker';
 
 interface DateTimePickerUIProps
   extends Omit<DatePickerSingleProps, 'mode' | 'onChange'>,
@@ -12,15 +18,26 @@ interface DateTimePickerUIProps
   onChangeRange?: (startDate: DateType, endDate: DateType) => void;
 }
 
-export default function DateTimePickerUI({ onChangeSingle, onChangeRange, ...props }: DateTimePickerUIProps) {
+export default function DateTimePickerUI({
+  onChangeSingle,
+  onChangeRange,
+  ...props
+}: DateTimePickerUIProps) {
   const defaultStyles = useDefaultStyles();
 
   return (
     <DateTimePicker
       {...props}
-      onChange={(update: { startDate?: DateType; endDate?: DateType; date?: DateType }) => {
+      onChange={(update: {
+        startDate?: DateType;
+        endDate?: DateType;
+        date?: DateType;
+      }) => {
         if (props.mode === 'range' && onChangeRange) {
-          onChangeRange(update.startDate as DateType, update.endDate as DateType);
+          onChangeRange(
+            update.startDate as DateType,
+            update.endDate as DateType,
+          );
         }
         if (props.mode === 'single' && onChangeSingle) {
           onChangeSingle(update.date as DateType);
@@ -35,8 +52,16 @@ export default function DateTimePickerUI({ onChangeSingle, onChangeRange, ...pro
         range_end_label: { color: 'white' },
         button_next_image: { tintColor: '#1877f2' },
         button_prev_image: { tintColor: '#1877f2' },
-        month_selector_label: { color: 'black', fontFamily: 'HeaderBold', fontSize: 20 },
-        year_selector_label: { color: 'black', fontFamily: 'HeaderBold', fontSize: 20 },
+        month_selector_label: {
+          color: 'black',
+          fontFamily: 'HeaderBold',
+          fontSize: 20,
+        },
+        year_selector_label: {
+          color: 'black',
+          fontFamily: 'HeaderBold',
+          fontSize: 20,
+        },
         selected_month: { backgroundColor: '#1877f2' },
         selected_year: { backgroundColor: '#1877f2' },
         month_label: { color: 'black' },

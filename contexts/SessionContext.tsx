@@ -1,5 +1,11 @@
 import { Session, User } from '@supabase/supabase-js';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Alert } from 'react-native';
 import { supabase } from '../supabase';
 import { todos$, user$ } from '../supalegend';
@@ -10,7 +16,9 @@ type SessionContextType = {
   isLoading: boolean;
 };
 
-const SessionContext = createContext<SessionContextType>({} as SessionContextType);
+const SessionContext = createContext<SessionContextType>(
+  {} as SessionContextType,
+);
 
 export const useSession = () => {
   const context = useContext(SessionContext);
@@ -31,15 +39,21 @@ function clearState() {
  * @param session The session object from Supabase
  */
 async function fetchUserTodos(session: Session) {
-  const { error, data } = await supabase.from('todos').select('*').eq('user_id', session.user.id);
+  const { error, data } = await supabase
+    .from('todos')
+    .select('*')
+    .eq('user_id', session.user.id);
   if (error) {
     Alert.alert('Error fetching todos:', error.message);
   }
   if (data) {
-    const todosMap = data.reduce((acc, todo) => {
-      acc[todo.id] = todo;
-      return acc;
-    }, {} as Record<string, Todo>);
+    const todosMap = data.reduce(
+      (acc, todo) => {
+        acc[todo.id] = todo;
+        return acc;
+      },
+      {} as Record<string, Todo>,
+    );
     todos$.set(todosMap);
   }
 }
@@ -50,7 +64,11 @@ interface SessionProviderProps {
   setIsLoading: (isLoading: boolean) => void;
 }
 
-export const SessionProvider = ({ children, isLoading, setIsLoading }: SessionProviderProps) => {
+export const SessionProvider = ({
+  children,
+  isLoading,
+  setIsLoading,
+}: SessionProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -75,7 +93,11 @@ export const SessionProvider = ({ children, isLoading, setIsLoading }: SessionPr
       user$.set(session.user);
       setIsLoading(false);
     });
-  }, []);
+  }, [setIsLoading]);
 
-  return <SessionContext.Provider value={{ session, isLoading }}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider value={{ session, isLoading }}>
+      {children}
+    </SessionContext.Provider>
+  );
 };

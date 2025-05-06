@@ -10,7 +10,10 @@ export function isTodoPastDue(todo: Todo) {
     return false;
   }
 
-  if (todo.due_time && !isPastDate(dateWithTime(todo.due_date, todo.due_time))) {
+  if (
+    todo.due_time &&
+    !isPastDate(dateWithTime(todo.due_date, todo.due_time))
+  ) {
     return false;
   }
 

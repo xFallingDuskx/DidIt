@@ -12,7 +12,10 @@ interface FormState {
 export default function Screen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [formState, setFormState] = useState<FormState>({ email: '', password: '' });
+  const [formState, setFormState] = useState<FormState>({
+    email: '',
+    password: '',
+  });
 
   const handleLogIn = async () => {
     setIsLoading(true);
@@ -28,20 +31,24 @@ export default function Screen() {
   };
 
   return (
-    <AuthScreenContainer type='login' disableCtaButton={isLoading} handleClick={handleLogIn}>
+    <AuthScreenContainer
+      type="login"
+      disableCtaButton={isLoading}
+      handleClick={handleLogIn}
+    >
       <TextInput
-        keyboardType='email-address'
-        textContentType='emailAddress'
-        placeholder='Email'
+        keyboardType="email-address"
+        textContentType="emailAddress"
+        placeholder="Email"
         value={formState.email}
         onChangeText={(text) => setFormState({ ...formState, email: text })}
-        className='input w-3/4'
-        returnKeyType='done'
+        className="input w-3/4"
+        returnKeyType="done"
       />
       <PasswordInput
         value={formState.password}
         onChangeText={(text) => setFormState({ ...formState, password: text })}
-        className='w-3/4'
+        className="w-3/4"
       />
     </AuthScreenContainer>
   );

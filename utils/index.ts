@@ -8,7 +8,12 @@ export type { Todo };
 type Todo = Tables<'todos'>;
 
 // Date & Time
-export { dateWithTime, isInCurrentYear, isPastDate, useCurrentDate } from './datetime';
+export {
+  dateWithTime,
+  isInCurrentYear,
+  isPastDate,
+  useCurrentDate,
+} from './datetime';
 
 // Todos
 export { isTodoPastDue } from './todoUtils';
