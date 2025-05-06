@@ -51,7 +51,8 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
+    "start/1": "expo start --port 8081",
+    "start/2": "expo start --port 8082",
     "prebuild/i": "expo prebuild --platform ios",
     "prebuild/a": "expo prebuild --platform android",
     "android/adb": "export ANDROID_HOME=$HOME/Library/Android/sdk && export PATH=$PATH:$ANDROID_HOME/emulator && export PATH=$PATH:$ANDROID_HOME/platform-tools && source $HOME/.zshrc",
