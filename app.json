@@ -1,5 +1,5 @@
 {
-  "name": "did-it",
+  "name": "DidIt!",
   "slug": "did-it",
   "icon": "./assets/logo-white-background.png",
   "userInterfaceStyle": "automatic",
@@ -7,6 +7,13 @@
   "newArchEnabled": true,
   "plugins": [
     "expo-router",
+    ["./plugins/notifeeAndroidFix.ts", "custom"],
+    [
+      "./plugins/ndkVersionFix.ts",
+      {
+        "ndkVersion": "29.0.13113456"
+      }
+    ],
     [
       "expo-build-properties",
       {
