@@ -10,10 +10,12 @@ import TodoDateFilter from '../../components/todos/TodoDateFilter';
 import { TodoTabProvider } from '../../contexts/TodoContext';
 import T from '../../components/util/T';
 import { onDisplayNotification } from '../../notifee';
+import { scheduleNotification } from '../../notifee/actions/scheduleNotification';
 
 export default function Screen() {
   const handleNotificationPress = () => {
-    onDisplayNotification({});
+    // onDisplayNotification({});
+    scheduleNotification({});
   };
 
   return (
