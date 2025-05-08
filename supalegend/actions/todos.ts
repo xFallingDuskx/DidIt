@@ -1,4 +1,4 @@
-import { scheduleTodoNotification } from '../../notifee';
+import { cancelNotification, scheduleTodoNotification } from '../../notifee';
 import { generateId, Todo } from '../../utils';
 import { todos$ } from '../observerables/todos';
 import { user$ } from '../observerables/user';
@@ -15,7 +15,7 @@ export async function addTodo(fields: EditableTodo) {
     ...fields,
     user_id: user$.peek().id,
   });
-  await scheduleTodoNotification(fields, id);
+  await scheduleTodoNotification({ id, ...fields });
 }
 
 export function editTodo(id: string, updates: EditableTodo) {
@@ -28,8 +28,16 @@ export function editTodo(id: string, updates: EditableTodo) {
 
 export function deleteTodo(id: string) {
   todos$[id].deleted.set(true);
+  cancelNotification(id);
 }
 
 export function toggleDone(id: string) {
-  todos$[id].done.set((prev) => !prev);
+  const done = !todos$[id].done.peek();
+  todos$[id].done.set(done);
+
+  if (done) {
+    cancelNotification(id);
+  } else {
+    scheduleTodoNotification(todos$[id].peek());
+  }
 }
