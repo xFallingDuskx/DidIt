@@ -10,6 +10,7 @@ interface OnDisplayNotificationProps {
   trigger: TimestampTrigger;
 }
 
+// TASK: write function to delete notification
 export async function scheduleNotification({
   id,
   title = 'Scheduled Todo Reminder',

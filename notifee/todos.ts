@@ -1,13 +1,13 @@
 import { TimestampTrigger, TriggerType } from '@notifee/react-native';
-import { todos$ } from '../../supalegend/observerables/todos';
+import { todos$ } from '../supalegend/observerables/todos';
 import {
   dateWithTime,
   getUserCurrentTimezone,
   timeoutAsyncFunction,
   timezoneDateEquivalent,
   Todo,
-} from '../../utils';
-import { scheduleNotification } from './scheduleNotification';
+} from '../utils';
+import { scheduleNotification } from './actions/scheduleNotification';
 
 function createDateAndTimeTrigger(date: Date): TimestampTrigger {
   return {
