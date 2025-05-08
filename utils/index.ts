@@ -10,6 +10,7 @@ type Todo = Tables<'todos'>;
 // Date & Time
 export {
   dateWithTime,
+  getUserCurrentTimezone,
   isInCurrentYear,
   isPastDate,
   timezoneDateEquivalent,

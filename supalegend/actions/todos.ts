@@ -1,3 +1,4 @@
+import { scheduleTodoNotification } from '../../notifee';
 import { generateId, Todo } from '../../utils';
 import { todos$ } from '../observerables/todos';
 import { user$ } from '../observerables/user';
@@ -14,6 +15,7 @@ export async function addTodo(fields: EditableTodo) {
     ...fields,
     user_id: user$.peek().id,
   });
+  await scheduleTodoNotification(fields, id);
 }
 
 export function editTodo(id: string, updates: EditableTodo) {
@@ -21,6 +23,7 @@ export function editTodo(id: string, updates: EditableTodo) {
     ...todos$[id].peek(),
     ...updates,
   });
+  // TASK: check notification changes with edit
 }
 
 export function deleteTodo(id: string) {
