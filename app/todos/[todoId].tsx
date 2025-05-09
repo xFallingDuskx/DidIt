@@ -176,8 +176,8 @@ export default function TodosDetailedView() {
               <View className="flex-row items-center justify-end mt-1">
                 <T className="text-sm">
                   {editingTodo.use_local_time
-                    ? 'Time will adjust in different timezones'
-                    : 'Time will use same time, regardless of timezone.'}
+                    ? 'Time will use same time, regardless of timezone.'
+                    : 'Time will adjust in different timezones.'}
                 </T>
                 <Pressable
                   onPress={handleReminderTimeUseChange}

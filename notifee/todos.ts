@@ -45,8 +45,8 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
     const dueDate = getDateAndTime(
       dueDateString,
       dueTimeString,
-      todo?.use_local_time || false,
-      todo?.due_timezone || getUserCurrentTimezone(),
+      todo?.use_local_time ?? false,
+      todo?.due_timezone ?? getUserCurrentTimezone(),
     );
     trigger = createDateAndTimeTrigger(dueDate);
   }
