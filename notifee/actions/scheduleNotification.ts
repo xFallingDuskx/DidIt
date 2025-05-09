@@ -30,20 +30,18 @@ export async function scheduleNotification({
     return;
   }
 
-  const createTriggerNotificationFunc = notifee.createTriggerNotification(
-    {
-      id,
-      title,
-      body,
-      android: {
-        channelId: resolvedChannelId,
+  const notificationId = await timeoutAsyncFunction(() =>
+    notifee.createTriggerNotification(
+      {
+        id,
+        title,
+        body,
+        android: {
+          channelId: resolvedChannelId,
+        },
       },
-    },
-    trigger,
-  );
-
-  const notificationId = await timeoutAsyncFunction(
-    () => createTriggerNotificationFunc,
+      trigger,
+    ),
   );
   return notificationId;
 }
