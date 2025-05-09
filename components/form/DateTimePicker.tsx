@@ -21,7 +21,9 @@ export default function DateTimePicker({
   onChange,
   ...props
 }: DateTimePickerProps) {
-  const [date, setDate] = useState(value || new Date());
+  const [date, setDate] = useState(
+    isNaN(value?.getTime() || NaN) ? new Date() : value,
+  );
 
   const handleChange = useCallback(
     (event: DateTimePickerEvent, selectedDate: Date) => {
