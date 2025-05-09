@@ -1,31 +1,47 @@
-import notifee from '@notifee/react-native';
+import notifee, { TimestampTrigger } from '@notifee/react-native';
+import { timeoutAsyncFunction } from '../../utils';
 import { createTodoReminderChannel } from '../channels';
 import { requestNotificationPermissions } from '../config';
-import { createFiveSecondTrigger } from './createTrigger';
 
 interface OnDisplayNotificationProps {
+  id?: string;
   title?: string;
   body?: string;
+  channelId?: string;
+  trigger: TimestampTrigger;
 }
 
 export async function scheduleNotification({
-  title = 'Scheduled Todo Reminder',
-  body = 'You have a new todo reminder.',
+  id,
+  title,
+  body,
+  channelId,
+  trigger,
 }: OnDisplayNotificationProps) {
   await requestNotificationPermissions();
-  const channelId = await createTodoReminderChannel();
-  const fiveSecondTrigger = createFiveSecondTrigger();
+  const resolvedChannelId = channelId || (await createTodoReminderChannel());
 
-  const notificationId = await notifee.createTriggerNotification(
-    {
-      title,
-      body,
-      android: {
-        channelId,
+  if (!title) {
+    console.error('Title is required to schedule a notification');
+    return;
+  }
+  if (!trigger) {
+    console.error('Trigger is required to schedule a notification');
+    return;
+  }
+
+  const notificationId = await timeoutAsyncFunction(() =>
+    notifee.createTriggerNotification(
+      {
+        id,
+        title,
+        body,
+        android: {
+          channelId: resolvedChannelId,
+        },
       },
-    },
-    fiveSecondTrigger,
+      trigger,
+    ),
   );
-
   return notificationId;
 }
