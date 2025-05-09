@@ -20,7 +20,6 @@ function getDateAndTime(
   useLocalTime: boolean,
   originalTimezone: string,
 ): Date {
-  // TEST: scheduling notification in local time
   if (useLocalTime) {
     const utcDate = dateWithTime(dueDateString, dueTimeString, 'UTC');
     const dateEquivalent = timezoneDateEquivalent(utcDate, originalTimezone);

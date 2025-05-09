@@ -30,7 +30,7 @@ export async function editTodo(id: string, updates: EditableTodo) {
 
 export async function deleteTodo(id: string) {
   todos$[id].deleted.set(true);
-  cancelNotification(id);
+  await cancelNotification(id);
 }
 
 export async function toggleDone(id: string) {
@@ -38,8 +38,8 @@ export async function toggleDone(id: string) {
   todos$[id].done.set(done);
 
   if (done) {
-    cancelNotification(id);
+    await cancelNotification(id);
   } else {
-    scheduleTodoNotification(todos$[id].peek());
+    await scheduleTodoNotification(todos$[id].peek());
   }
 }

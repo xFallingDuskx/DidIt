@@ -42,7 +42,6 @@ export function dateWithTime(
  * // Returns {"date": 2025-03-20T13:00:00.000Z, "timeWithOffset": "2025-03-20T08:00:00-05:00"} (when outside of Daylight Saving Time)
  * // because the original time in New York is 8am (2025-03-20T08:00:00-04:00)
  */
-// TASK: write test and account for (1) UTC as toTimezone and (2) when both timezones are the same
 export function timezoneDateEquivalent(
   utcDate: Date,
   fromTimezone: string,
