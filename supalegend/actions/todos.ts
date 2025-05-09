@@ -18,20 +18,22 @@ export async function addTodo(fields: EditableTodo) {
   await scheduleTodoNotification({ id, ...fields });
 }
 
-export function editTodo(id: string, updates: EditableTodo) {
-  todos$[id].assign({
+export async function editTodo(id: string, updates: EditableTodo) {
+  const updatedTodo: Todo = {
     ...todos$[id].peek(),
     ...updates,
-  });
-  // TASK: check notification changes with edit
+  };
+  todos$[id].assign(updatedTodo);
+  await cancelNotification(id); // Cancel in case due date/time has changed or been removed
+  await scheduleTodoNotification(updatedTodo);
 }
 
-export function deleteTodo(id: string) {
+export async function deleteTodo(id: string) {
   todos$[id].deleted.set(true);
   cancelNotification(id);
 }
 
-export function toggleDone(id: string) {
+export async function toggleDone(id: string) {
   const done = !todos$[id].done.peek();
   todos$[id].done.set(done);
 

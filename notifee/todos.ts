@@ -52,6 +52,10 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
     trigger = createDateAndTimeTrigger(dueDate);
   }
 
+  if (!trigger) {
+    return;
+  }
+
   const notificationID = await scheduleNotification({
     id,
     title: todo.text,
