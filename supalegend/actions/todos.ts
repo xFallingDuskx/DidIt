@@ -9,9 +9,9 @@ export type EditableTodo = Partial<
 
 export async function addTodo(fields: EditableTodo) {
   const id = generateId();
-  // Add keyed by id to the todos$ observable to trigger a create in Supabase
   todos$[id].assign({
     id,
+    use_local_time: false,
     ...fields,
     user_id: user$.peek().id,
   });

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
 import '.././global.css';
 import { SessionProvider } from '../contexts/SessionContext';
+import { onNotificationEvents } from '../notifee';
 enableScreens();
 
 // Keep the splash screen visible while we fetch resources
@@ -14,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState(true);
+  const [notificationsSetup, setNotificationsSetup] = useState(false);
 
   const [brandFontsLoaded] = Montserrat.useFonts({
     BrandRegular: Montserrat.Montserrat_400Regular,
@@ -40,16 +42,41 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    let unsubscribeForegroundEvent: (() => void) | undefined;
+
+    const setupNotificationEvents = async () => {
+      const result = await onNotificationEvents();
+      unsubscribeForegroundEvent = result.unsubscribeForegroundEvent;
+      setNotificationsSetup(true);
+    };
+
+    setupNotificationEvents();
+
+    return () => {
+      if (unsubscribeForegroundEvent) {
+        unsubscribeForegroundEvent();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (
       !isLoading &&
       headerFontsLoaded &&
       brandFontsLoaded &&
-      bodyFontsLoaded
+      bodyFontsLoaded &&
+      notificationsSetup
     ) {
       // Hide the splash screen once the fonts are loaded and the app is ready
       SplashScreen.hideAsync();
     }
-  }, [isLoading, headerFontsLoaded, brandFontsLoaded, bodyFontsLoaded]);
+  }, [
+    isLoading,
+    headerFontsLoaded,
+    brandFontsLoaded,
+    bodyFontsLoaded,
+    notificationsSetup,
+  ]);
 
   // Set up the auth context and render our layout inside of it.
   return (

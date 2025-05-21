@@ -6,6 +6,7 @@ import {
   Todo,
 } from '../utils';
 import { scheduleNotification } from './actions/scheduleNotification';
+import { NotificationData } from './util';
 
 function createDateAndTimeTrigger(date: Date): TimestampTrigger {
   return {
@@ -40,15 +41,19 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
   const dueDateString = todo?.due_date;
   const dueTimeString = todo?.due_time;
   let trigger: TimestampTrigger;
+  let data: NotificationData;
 
   if (dueDateString && dueTimeString) {
     const dueDate = getDateAndTime(
       dueDateString,
       dueTimeString,
-      todo?.use_local_time || false,
-      todo?.due_timezone || getUserCurrentTimezone(),
+      todo?.use_local_time ?? false,
+      todo?.due_timezone ?? getUserCurrentTimezone(),
     );
     trigger = createDateAndTimeTrigger(dueDate);
+    data = {
+      type: 'todo-with-time',
+    };
   }
 
   if (!trigger) {
@@ -60,6 +65,7 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
     title: todo.text,
     body: todo?.details || undefined,
     trigger,
+    data,
   });
   return notificationID;
 }

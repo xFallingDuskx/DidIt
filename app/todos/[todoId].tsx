@@ -32,11 +32,11 @@ export default function TodosDetailedView() {
   const [confirmationVisible, setConfirmationVisible] = useState(false);
 
   const handleSave = useCallback(() => {
-    if (Object.keys(todoChanges).length > 0) {
+    if (todo && Object.keys(todoChanges).length > 0) {
       editTodo(todo.id, todoChanges);
       setTodoChanges({});
     }
-  }, [todo.id, todoChanges]);
+  }, [todo, todoChanges]);
 
   // Save before navigating back — meant to address swipes to go back
   useEffect(() => {
@@ -176,8 +176,8 @@ export default function TodosDetailedView() {
               <View className="flex-row items-center justify-end mt-1">
                 <T className="text-sm">
                   {editingTodo.use_local_time
-                    ? 'Time will adjust in different timezones'
-                    : 'Time will use same time, regardless of timezone.'}
+                    ? 'Time will use same time, regardless of timezone.'
+                    : 'Time will adjust in different timezones.'}
                 </T>
                 <Pressable
                   onPress={handleReminderTimeUseChange}
