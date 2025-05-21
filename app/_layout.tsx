@@ -8,6 +8,7 @@ import { enableScreens } from 'react-native-screens';
 import '.././global.css';
 import { SessionProvider } from '../contexts/SessionContext';
 import { onNotificationEvents } from '../notifee';
+
 enableScreens();
 
 // Keep the splash screen visible while we fetch resources

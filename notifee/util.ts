@@ -1,3 +1,5 @@
+import { TODO_DATA_TYPE } from './constants';
+
 export type NotificationData = {
-  type: 'todo-with-time';
+  type: typeof TODO_DATA_TYPE;
 };

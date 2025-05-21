@@ -33,8 +33,8 @@ export async function deleteTodo(id: string) {
   await cancelNotification(id);
 }
 
-export async function toggleDone(id: string) {
-  const done = !todos$[id].done.peek();
+export async function toggleDone(id: string, isNowDone?: boolean) {
+  const done = isNowDone ?? !todos$[id].done.peek();
   todos$[id].done.set(done);
 
   if (done) {
