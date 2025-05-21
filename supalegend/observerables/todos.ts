@@ -2,6 +2,7 @@ import { observable } from '@legendapp/state';
 import { supabase } from '../../supabase/index';
 import { customSynced } from '../config';
 
+// use_local_time = `true` means to keep the time consistent between timezones (e.g. 8:00 AM in New York is 8:00 AM in London)
 export const todos$ = observable(
   customSynced({
     supabase,

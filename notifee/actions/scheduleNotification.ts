@@ -32,6 +32,12 @@ export async function scheduleNotification({
     console.error('Trigger is required to schedule a notification');
     return;
   }
+  if (trigger.timestamp < Date.now()) {
+    console.log(
+      'Trigger timestamp must be in the future to schedule a notification',
+    );
+    return;
+  }
 
   const notificationId = await timeoutAsyncFunction(() =>
     notifee.createTriggerNotification(
