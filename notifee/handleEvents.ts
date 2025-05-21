@@ -8,7 +8,10 @@ async function onInitial() {
   if (initialNotification) {
     const { notification, pressAction } = initialNotification;
     const detail: EventDetail = { notification, pressAction };
-    onEvent(EventType.PRESS, detail, 'background');
+    setTimeout(() => {
+      // give the app time to load
+      onEvent(EventType.PRESS, detail, 'background');
+    }, 3000);
   }
 }
 
@@ -35,8 +38,6 @@ async function onEvent(
 }
 
 export default async function onNotificationEvents() {
-  onInitial();
-
   notifee.onBackgroundEvent(async ({ type, detail }) => {
     onEvent(type, detail, 'background');
   });
@@ -47,5 +48,6 @@ export default async function onNotificationEvents() {
     },
   );
 
+  onInitial();
   return { unsubscribeForegroundEvent };
 }
