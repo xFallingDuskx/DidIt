@@ -2,12 +2,14 @@ import notifee, { TimestampTrigger } from '@notifee/react-native';
 import { timeoutAsyncFunction } from '../../utils';
 import { createTodoReminderChannel } from '../channels';
 import { requestNotificationPermissions } from '../config';
+import { NotificationData } from '../util';
 
 interface OnDisplayNotificationProps {
   id?: string;
   title?: string;
   body?: string;
   channelId?: string;
+  data?: NotificationData;
   trigger: TimestampTrigger;
 }
 
@@ -16,6 +18,7 @@ export async function scheduleNotification({
   title,
   body,
   channelId,
+  data,
   trigger,
 }: OnDisplayNotificationProps) {
   await requestNotificationPermissions();
@@ -36,8 +39,12 @@ export async function scheduleNotification({
         id,
         title,
         body,
+        data,
         android: {
           channelId: resolvedChannelId,
+          pressAction: {
+            id: 'default',
+          },
         },
       },
       trigger,

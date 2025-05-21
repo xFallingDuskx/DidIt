@@ -32,11 +32,11 @@ export default function TodosDetailedView() {
   const [confirmationVisible, setConfirmationVisible] = useState(false);
 
   const handleSave = useCallback(() => {
-    if (Object.keys(todoChanges).length > 0) {
+    if (todo && Object.keys(todoChanges).length > 0) {
       editTodo(todo.id, todoChanges);
       setTodoChanges({});
     }
-  }, [todo.id, todoChanges]);
+  }, [todo, todoChanges]);
 
   // Save before navigating back — meant to address swipes to go back
   useEffect(() => {
