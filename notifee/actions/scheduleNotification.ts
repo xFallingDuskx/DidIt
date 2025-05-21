@@ -1,7 +1,9 @@
 import notifee, { TimestampTrigger } from '@notifee/react-native';
 import { timeoutAsyncFunction } from '../../utils';
+import { createTodoReminderCategory } from '../categories';
 import { createTodoReminderChannel } from '../channels';
 import { requestNotificationPermissions } from '../config';
+import { PressAction } from '../pressActions';
 import { NotificationData } from '../util';
 
 interface OnDisplayNotificationProps {
@@ -9,8 +11,10 @@ interface OnDisplayNotificationProps {
   title?: string;
   body?: string;
   channelId?: string;
+  categoryId?: string;
   data?: NotificationData;
   trigger: TimestampTrigger;
+  androidPressActions?: PressAction[];
 }
 
 export async function scheduleNotification({
@@ -18,11 +22,14 @@ export async function scheduleNotification({
   title,
   body,
   channelId,
+  categoryId,
   data,
   trigger,
+  androidPressActions,
 }: OnDisplayNotificationProps) {
   await requestNotificationPermissions();
   const resolvedChannelId = channelId || (await createTodoReminderChannel());
+  const resolvedCategoryId = categoryId || (await createTodoReminderCategory());
 
   if (!title) {
     console.error('Title is required to schedule a notification');
@@ -51,6 +58,17 @@ export async function scheduleNotification({
           pressAction: {
             id: 'default',
           },
+          actions: [
+            ...androidPressActions.map((action) => ({
+              title: action.title,
+              pressAction: {
+                id: action.id,
+              },
+            })),
+          ],
+        },
+        ios: {
+          categoryId: resolvedCategoryId,
         },
       },
       trigger,

@@ -7,6 +7,7 @@ import {
 } from '../utils';
 import { scheduleNotification } from './actions/scheduleNotification';
 import { NotificationData } from './util';
+import { PressAction, TODO_PRESS_ACTIONS } from './pressActions';
 
 function createDateAndTimeTrigger(date: Date): TimestampTrigger {
   return {
@@ -42,6 +43,7 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
   const dueTimeString = todo?.due_time;
   let trigger: TimestampTrigger;
   let data: NotificationData;
+  let androidPressActions: PressAction[] = [];
 
   if (dueDateString && dueTimeString) {
     const dueDate = getDateAndTime(
@@ -54,6 +56,7 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
     data = {
       type: 'todo-with-time',
     };
+    androidPressActions = TODO_PRESS_ACTIONS;
   }
 
   if (!trigger) {
@@ -66,6 +69,7 @@ export async function scheduleTodoNotification(todo: Partial<Todo>) {
     body: todo?.details || undefined,
     trigger,
     data,
+    androidPressActions,
   });
   return notificationID;
 }
